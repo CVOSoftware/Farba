@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="@SolidColorBrush/WhiteSmoke" Color="{StaticResource ResourceKey=@Color/WhiteSmoke}" />
+    <SolidColorBrush x:Key="@SolidColorBrush/Gray" Color="{StaticResource ResourceKey=@Color/Gray}" />
+    <SolidColorBrush x:Key="@SolidColorBrush/DarkGray" Color="{StaticResource ResourceKey=@Color/DarkGray}" />
+    <SolidColorBrush x:Key="@SolidColorBrush/SingleGray" Color="{StaticResource ResourceKey=@Color/SingleGray}" />
+    <SolidColorBrush x:Key="@SolidColorBrush/DoubleGray" Color="{StaticResource ResourceKey=@Color/DoubleGray}" />
+    <SolidColorBrush x:Key="@SolidColorBrush/DoubleGray30" Color="{StaticResource ResourceKey=@Color/DoubleGray30}" />
+    <SolidColorBrush x:Key="@SolidColorBrush/DoubleGray60" Color="{StaticResource ResourceKey=@Color/DoubleGray60}" />
+    <SolidColorBrush x:Key="@SolidColorBrush/MegaGray" Color="{StaticResource ResourceKey=@Color/MegaGray}" />
+    <SolidColorBrush x:Key="@SolidColorBrush/Blue" Color="{StaticResource ResourceKey=@Color/Blue}" />
+    <SolidColorBrush x:Key="@SolidColorBrush/DarkBlue" Color="{StaticResource ResourceKey=@Color/DarkBlue}" />
+
+    <LinearGradientBrush x:Key="@LinearGradientBrush/SingleToDoubleGray" StartPoint="0, 0" EndPoint="0, 1">
+        <GradientStop Offset="0" Color="{StaticResource ResourceKey=@Color/SingleGray}" />
+        <GradientStop Offset="1" Color="{StaticResource ResourceKey=@Color/DoubleGray}" />
+    </LinearGradientBrush>
+
+    <RadialGradientBrush x:Key="@RadialGradientBrush/GrayToDarkGray" Center="0.5, 0.1" GradientOrigin="0.5, 0.1" RadiusX="0.8" RadiusY="0.9">
+        <GradientStop Offset="0" Color="{StaticResource ResourceKey=@Color/Gray}" />
+        <GradientStop Offset="1" Color="{StaticResource ResourceKey=@Color/DarkGray}" />
+    </RadialGradientBrush>
+
+</ResourceDictionary>

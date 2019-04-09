@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Storyboard x:Key="@Storyboard/ScrollbarMouseOver">
+        <ColorAnimation
+            FillBehavior="HoldEnd"
+            Storyboard.TargetName="Thumbs"
+            Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)"
+            From="{StaticResource ResourceKey=@Color/MegaGray}"
+            To="{StaticResource ResourceKey=@Color/Blue}"
+            Duration="0:0:0.2" />
+    </Storyboard>
+
+    <Storyboard x:Key="@Storyboard/ScrollbarMouseDown">
+        <ColorAnimation
+            FillBehavior="HoldEnd"
+            Storyboard.TargetName="Thumbs"
+            Storyboard.TargetProperty="(Rectangle.Fill).(SolidColorBrush.Color)"
+            From="{StaticResource ResourceKey=@Color/Blue}"
+            To="{StaticResource ResourceKey=@Color/MegaGray}"
+            Duration="0:0:0.2" />
+    </Storyboard>
+
+</ResourceDictionary>

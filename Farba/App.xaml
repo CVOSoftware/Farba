@@ -1,0 +1,31 @@
+﻿<Application
+    x:Class="Farba.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    StartupUri="View/MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--#region Reset system parameters-->
+                <ResourceDictionary Source="pack://application:,,,/Resources/Reset.xaml" />
+                <!--#endregion-->
+
+                <!--#region Fonts-->
+                <ResourceDictionary Source="pack://application:,,,/Resources/Fonts.xaml" />
+                <!--#endregion-->
+
+                <!--#region Images-->
+                <ResourceDictionary Source="pack://application:,,,/Resources/Images.xaml" />
+                <!--#endregion-->
+
+                <!--#region Themes-->
+                <ResourceDictionary Source="pack://application:,,,/Resources/Themes/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resources/Themes/Brushes.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resources/Themes/Effects.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resources/Themes/Animation.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resources/Themes/Style.xaml" />
+                <!--#endregion-->
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

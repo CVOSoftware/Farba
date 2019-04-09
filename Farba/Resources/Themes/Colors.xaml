@@ -1,0 +1,27 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Farba.Resources.Themes">
+
+    <Color x:Key="@Color/WhiteSmoke">#e9edee</Color>
+    <Color x:Key="@Color/Gray">#c1d1d0</Color>
+    <Color x:Key="@Color/DarkGray">#657382</Color>
+    <Color x:Key="@Color/SingleGray">#69737d</Color>
+    <Color x:Key="@Color/DoubleGray">#47515e</Color>
+    <Color x:Key="@Color/MegaGray">#4f5963</Color>
+    <Color
+        x:Key="@Color/DoubleGray30"
+        A="77"
+        B="94"
+        G="81"
+        R="71" />
+    <Color
+        x:Key="@Color/DoubleGray60"
+        A="120"
+        B="94"
+        G="81"
+        R="71" />
+    <Color x:Key="@Color/Blue">#41adeb</Color>
+    <Color x:Key="@Color/DarkBlue">#427ca2</Color>
+
+</ResourceDictionary>
