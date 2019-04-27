@@ -37,7 +37,7 @@
             set { this._K = value; }
         }
 
-        public CMYK(double c, double m, double y, double k)
+        private CMYK(double c, double m, double y, double k)
         {
             this._C = c;
             this._M = m;
@@ -45,12 +45,17 @@
             this._K = k;
         }
 
-        public CMY Cmy()
+        public static CMYK Set(double c, double m, double y, double k)
         {
-            double c = this._C * (1 - this._K) + K,
-                   m = this._M * (1 - this._K) + K,
-                   y = this._Y * (1 - this._K) + K;
-            return new CMY(c, m, y);
+            return new CMYK(c, m, y, k);
+        }
+
+        public RGB ToRgb()
+        {
+            double r = (1 - this._C) * (1 - this._K),
+                   g = (1 - this._M) * (1 - this._K),
+                   b = (1 - this._Y) * (1 - this._K);
+            return RGB.Set(r, g, b);
         }
     }
 }

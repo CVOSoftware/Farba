@@ -1,0 +1,15 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Farba.Resources"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <system:String x:Key="@String/SelectButton">Select image</system:String>
+    <system:String x:Key="@String/ProcessButton">Process</system:String>
+    <system:String x:Key="@String/DeleteButton">Delete</system:String>
+    <system:String x:Key="@String/PalettesTitle">Palette</system:String>
+    <system:String x:Key="@String/TabView">View</system:String>
+    <system:String x:Key="@String/TabImages">Images</system:String>
+    <system:String x:Key="@String/CombinationTitle">Color combination</system:String>
+
+</ResourceDictionary>

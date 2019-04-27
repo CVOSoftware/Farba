@@ -10,12 +10,20 @@
                 <ResourceDictionary Source="pack://application:,,,/Resources/Reset.xaml" />
                 <!--#endregion-->
 
+                <!--#region String-->
+                <ResourceDictionary Source="pack://application:,,,/Resources/String.xaml" />
+                <!--#endregion-->
+
                 <!--#region Fonts-->
                 <ResourceDictionary Source="pack://application:,,,/Resources/Fonts.xaml" />
                 <!--#endregion-->
 
                 <!--#region Images-->
                 <ResourceDictionary Source="pack://application:,,,/Resources/Images.xaml" />
+                <!--#endregion-->
+
+                <!--#region Converters-->
+                <ResourceDictionary Source="pack://application:,,,/Resources/Converters.xaml" />
                 <!--#endregion-->
 
                 <!--#region Themes-->
