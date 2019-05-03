@@ -21,7 +21,7 @@
         #region Constructors
         public Palette(string fileName, BitmapImage image)
         {
-            _isProcess = false;
+            _isProcess = true;
             _fileName = fileName;
             _image = image;
         }

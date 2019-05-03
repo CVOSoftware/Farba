@@ -13,14 +13,27 @@
     using Farba.Common.Enum;
     using Farba.Model;
     
-    class PaletteViewModel
+    class PaletteViewModel : NotifyPropertyChanged
     {
         #region Fields
-        private PaletteCollection _paletteModel;
+        private ColorCombination _combination;
+        private ObservableCollection<Palette> _palettes;
+        private Palette _activePalette;
+        private int _imageViewerTab;
+        private bool _processState;
+        private bool _deleteState;
+        private bool _leftArrowState;
+        private bool _rightArrowState;
+        private string _imageViewerConter;
+        #endregion
+
+        #region Commands fields
         private Command _select;
         private Command _process;
         private Command _delete;
         private Command _setup;
+        private Command _next;
+        private Command _prev;
         private Command _setTile;
         private Command _setList;
         #endregion
@@ -28,34 +41,131 @@
         #region Constructors
         public PaletteViewModel()
         {
-            _paletteModel = new PaletteCollection();
-            _select = new Command(SelectAndAdd);
+            _combination = ColorCombination.Tile;
+            _palettes = new ObservableCollection<Palette>();
+            _activePalette = null;
+            _imageViewerTab = 0;
+            _processState = false;
+            _deleteState = false;
+            _leftArrowState = false;
+            _rightArrowState = false;
+            _imageViewerConter = String.Empty;
+            _select = new Command(SelectImage);
             _process = new Command(StartProcess);
-            _delete = new Command(DeletePalette);
-            _setup = new Command(SetupSelectImage);
+            _delete = new Command(DeleteImage);
+            _setup = new Command(SetFirstTabImageViewer);
+            _next = new Command(NextImage);
+            _prev = new Command(PrevImage);
             _setTile = new Command(SwitchTile);
             _setList = new Command(SwitchList);
         }
         #endregion
 
         #region Properties
-        public PaletteCollection PaletteModel => _paletteModel;
+        public ColorCombination Combination
+        {
+            get => _combination;
+            set
+            {
+                _combination = value;
+                OnPropertyChanged("Combination");
+            }
+        }
+
+        public ObservableCollection<Palette> Palettes
+        {
+            get => _palettes;
+            set
+            {
+                _palettes = value;
+                OnPropertyChanged("Palettes");
+            }
+        }
+
+        public Palette ActivePalette
+        {
+            get => _activePalette;
+            set
+            {
+                _activePalette = value;
+                OnPropertyChanged("ActivePalette");
+            }
+        }
+
+        public int ImageViewerTab
+        {
+            get => _imageViewerTab;
+            set
+            {
+                _imageViewerTab= value;
+                OnPropertyChanged("ImageViewerTab");
+            }
+        }
         
+        public bool ProcessState
+        {
+            get => _processState;
+            set
+            {
+                _processState = value;
+                OnPropertyChanged("ProcessState");
+            }
+        }
+
+        public bool DeleteState
+        {
+            get => _deleteState;
+            set
+            {
+                _deleteState = value;
+                OnPropertyChanged("DeleteState");
+            }
+        }
+        
+        public bool LeftArrowState
+        {
+            get => _leftArrowState;
+            set
+            {
+                _leftArrowState = value;
+                OnPropertyChanged("LeftArrowState");
+            }
+        }
+
+        public bool RightArrowState
+        {
+            get => _rightArrowState;
+            set
+            {
+                _rightArrowState = value;
+                OnPropertyChanged("RightArrowState");
+            }
+        }
+        
+        public string ImageViewerCounter
+        {
+            get => _imageViewerConter;
+            set
+            {
+                _imageViewerConter = value;
+                OnPropertyChanged("ImageViewerCounter");
+            }
+        }
+        #endregion
+
+        #region Commands properties
         public Command Select => _select;
-
         public Command Process => _process;
-
         public Command Delete => _delete;
-
         public Command Setup => _setup;
-
+        public Command Next => _next;
+        public Command Prev => _prev;
         public Command SetTile => _setTile;
-
         public Command SetList => _setList;
         #endregion
 
-        #region CommandMethods
-        private void SelectAndAdd(object o)
+        #region Command methods
+        private void SelectImage(object o)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             string filter = "Image files (*.jpg, *.jpeg, *.png) | *.jpg; *.jpeg; *.png";
@@ -64,12 +174,12 @@
             {
                 bool match = true;
                 string fileName = openFileDialog.FileName;
-                int count = _paletteModel.Palettes.Count;
+                int count = _palettes.Count;
                 if (count > 0)
                 {
                     for (int i = 0; i < count; i++)
                     {
-                        if (_paletteModel.Palettes[i].FileName == fileName)
+                        if (_palettes[i].FileName == fileName)
                         {
                             match = false;
                             break;
@@ -81,54 +191,127 @@
                     Uri uri = new Uri(fileName);
                     BitmapImage image = new BitmapImage(uri);
                     Palette palette = new Palette(fileName, image);
-                    _paletteModel.Palettes.Add(palette);
-                    _paletteModel.ActivePalette = palette;
+                    Palettes.Add(palette);
+                    ActivePalette = palette;
+                    DeleteState = true;
+                    ImageViewerCounterFormat();
                 }
             }
+            ProcessState = true;
+            SwitchArrowState();
         }
         
         private void StartProcess(object o)
         {
-            MessageBox.Show("StartProcess");
+            ActivePalette.IsProcess = false;
+            ProcessState = ActivePalette.IsProcess;
         }
 
-        private void DeletePalette(object o)
+        private void DeleteImage(object o)
         {
-            int count = _paletteModel.Palettes.Count;
+            int count = _palettes.Count;
             if (count > 0)
             {
-                _paletteModel.Palettes.Remove(_paletteModel.ActivePalette);
-                count = _paletteModel.Palettes.Count;
+                int index = _palettes.IndexOf(_activePalette);
+                Palettes.Remove(ActivePalette);
+                count = _palettes.Count;
                 if (count > 0)
                 {
-                    _paletteModel.ActivePalette = _paletteModel.Palettes[count - 1];
+                    if (index == count) index--;
+                    ActivePalette = _palettes[index];
+                    ProcessState = ActivePalette.IsProcess;
                 }
+                ImageViewerCounterFormat();
             }
-            else
+            if (count == 0)
             {
-                _paletteModel.Palettes.Clear();
+                ProcessState = false;
+                DeleteState = false;
             }
+            SwitchArrowState();
         }
 
-        private void SetupSelectImage(object o)
+        private void NextImage(object o)
         {
-            _paletteModel.SelectedTabImagesViewer = 0;
+            int count = _palettes.Count,
+                index = _palettes.IndexOf(ActivePalette);
+            if (count > 1 && index != count - 1)
+            {
+                ActivePalette = _palettes[index + 1];
+                ProcessState = ActivePalette.IsProcess;
+            }
+            SwitchArrowState();
+            ImageViewerCounterFormat();
         }
 
+        private void PrevImage(object o)
+        {
+            int count = _palettes.Count,
+                index = _palettes.IndexOf(ActivePalette);
+            if(count > 1 && index != 0)
+            {
+                ActivePalette = _palettes[index - 1];
+                ProcessState = ActivePalette.IsProcess;
+            }
+            SwitchArrowState();
+            ImageViewerCounterFormat();
+        }
+
+        private void SetFirstTabImageViewer(object o)
+        {
+            ProcessState = ActivePalette.IsProcess;
+            ImageViewerTab = 0;
+            SwitchArrowState();
+            ImageViewerCounterFormat();
+        }
+        
         private void SwitchTile(object o)
         {
-            if(_paletteModel.Combination == ColorCombination.List)
+            if (Combination == ColorCombination.List)
             {
-                _paletteModel.Combination = ColorCombination.Tile;
+                Combination = ColorCombination.Tile;
             }
         }
 
         private void SwitchList(object o)
         {
-            if (_paletteModel.Combination == ColorCombination.Tile)
+            if (Combination == ColorCombination.Tile)
             {
-                _paletteModel.Combination = ColorCombination.List;
+                Combination = ColorCombination.List;
             }
+        }
+        #endregion
+
+        #region Methods
+        private void SwitchArrowState()
+        {
+            int count = _palettes.Count,
+                index = _palettes.IndexOf(_activePalette);
+            if(count > 1)
+            {
+                LeftArrowState = index == 0 ? false : true;
+                RightArrowState = index == count - 1 ? false : true;
+            }
+            else
+            {
+                LeftArrowState = false;
+                RightArrowState = false;
+            }
+        }
+        private void ImageViewerCounterFormat()
+        {
+            int count = _palettes.Count,
+                index = _palettes.IndexOf(_activePalette) + 1;
+            string format = String.Empty;
+            if(count == 1)
+            {
+                format = "1";
+            }
+            else if (count > 1)
+            {
+                format = index + "/" + count;
+            }
+            ImageViewerCounter = format;
         }
         #endregion
     }

@@ -40,6 +40,13 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Border" Property="Background" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
                         </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource ResourceKey=@SolidColorBrush/DoubleGray30}" />
+                            <Setter Property="Foreground" Value="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}" />
+                            <Setter TargetName="Border" Property="Padding" Value="4" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="1" />
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

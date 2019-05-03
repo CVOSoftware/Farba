@@ -57,7 +57,7 @@
                                     <!--#region ImageViewer-->
                                     <TabControl
                                         Margin="0,0,0,10"
-                                        SelectedIndex="{Binding PaletteModel.SelectedTabImagesViewer}"
+                                        SelectedIndex="{Binding ImageViewerTab}"
                                         Style="{StaticResource ResourceKey=@Style/TabControlViewer}">
                                         <TabItem Header="{StaticResource ResourceKey=@String/TabView}" Style="{StaticResource ResourceKey=@Style/TabItemViewer}">
                                             <Grid Grid.Row="0" Style="{StaticResource ResourceKey=@Style/BackgroundView}">
@@ -72,27 +72,59 @@
                                                     <Image
                                                         Width="{Binding ElementName=WrapImage, Path=ActualWidth}"
                                                         Height="{Binding ElementName=WrapImage, Path=ActualHeight}"
-                                                        Source="{Binding PaletteModel.ActivePalette.Image}" />
+                                                        Source="{Binding ActivePalette.Image}" />
                                                 </StackPanel>
-                                                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                                                <Grid Grid.Row="1" Height="46">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto" />
+                                                        <ColumnDefinition Width="auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="auto" />
+                                                        <ColumnDefinition Width="auto" />
+                                                    </Grid.ColumnDefinitions>
                                                     <Button
+                                                        Grid.Column="0"
                                                         Margin="10,10,5,10"
                                                         Command="{Binding Process}"
                                                         Content="{StaticResource ResourceKey=@String/ProcessButton}"
+                                                        IsEnabled="{Binding ProcessState}"
                                                         Style="{StaticResource ResourceKey=@Style/Button}" />
                                                     <Button
-                                                        Margin="5,10,10,10"
+                                                        Grid.Column="1"
+                                                        Margin="5,10,5,10"
                                                         Command="{Binding Delete}"
                                                         Content="{StaticResource ResourceKey=@String/DeleteButton}"
+                                                        IsEnabled="{Binding DeleteState}"
                                                         Style="{StaticResource ResourceKey=@Style/Button}" />
-                                                </StackPanel>
+                                                    <TextBlock
+                                                        Grid.Column="2"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding ImageViewerCounter}" />
+                                                    <Button
+                                                        Grid.Column="3"
+                                                        Margin="5,10,5,10"
+                                                        Command="{Binding Prev}"
+                                                        IsEnabled="{Binding LeftArrowState}"
+                                                        Style="{StaticResource ResourceKey=@Style/Button}">
+                                                        <Image Source="{StaticResource ResourceKey=@Image/Left}" />
+                                                    </Button>
+                                                    <Button
+                                                        Grid.Column="4"
+                                                        Margin="5,10,10,10"
+                                                        Command="{Binding Next}"
+                                                        IsEnabled="{Binding RightArrowState}"
+                                                        Style="{StaticResource ResourceKey=@Style/Button}">
+                                                        <Image Source="{StaticResource ResourceKey=@Image/Right}" />
+                                                    </Button>
+                                                </Grid>
                                             </Grid>
                                         </TabItem>
                                         <TabItem Header="{StaticResource ResourceKey=@String/TabImages}" Style="{StaticResource ResourceKey=@Style/TabItemViewer}">
                                             <Grid Grid.Row="0" Style="{StaticResource ResourceKey=@Style/BackgroundView}">
                                                 <ListBox
-                                                    ItemsSource="{Binding PaletteModel.Palettes}"
-                                                    SelectedItem="{Binding PaletteModel.ActivePalette}"
+                                                    ItemsSource="{Binding Palettes}"
+                                                    SelectedItem="{Binding ActivePalette}"
                                                     Style="{StaticResource ResourceKey=@Style/ListBoxImagesViewer}">
                                                     <i:Interaction.Behaviors>
                                                         <Behaviors:ScrollToSelectBottom />
@@ -136,7 +168,7 @@
                                     </Grid>
                                     <!--#endregion-->
                                     <Grid Grid.Row="2">
-                                        <TextBlock Text="{Binding PaletteModel.Combination}" />
+                                        <TextBlock Text="{Binding Combination}" />
                                     </Grid>
                                 </Grid>
                             </Grid>

@@ -8,5 +8,7 @@
     <BitmapImage x:Key="@Image/Converter" UriSource="pack://application:,,,/Resources/Images/Converter.ico" />
     <BitmapImage x:Key="@Image/Tile" UriSource="pack://application:,,,/Resources/Images/Tile.ico" />
     <BitmapImage x:Key="@Image/List" UriSource="pack://application:,,,/Resources/Images/List.ico" />
+    <BitmapImage x:Key="@Image/Left" UriSource="pack://application:,,,/Resources/Images/Left.ico" />
+    <BitmapImage x:Key="@Image/Right" UriSource="pack://application:,,,/Resources/Images/Right.ico" />
 
 </ResourceDictionary>

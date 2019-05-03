@@ -118,7 +118,7 @@
     <Compile Include="Common\NotifyPropertyChanged.cs" />
     <Compile Include="Common\Enum\ColorCombination.cs" />
     <Compile Include="Model\Palette.cs" />
-    <Compile Include="Model\PaletteCollection.cs" />
+    <Compile Include="Resources\Converters\ImageCounter.cs" />
     <Compile Include="ViewModel\ConverterViewModel.cs" />
     <Compile Include="ViewModel\PaletteViewModel.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
@@ -155,7 +155,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\Converters\" />
+    <Resource Include="Resources\Images\Right.ico" />
+    <Resource Include="Resources\Images\Left.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Converter.ico" />
