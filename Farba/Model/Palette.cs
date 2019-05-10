@@ -7,6 +7,7 @@
     using System.Threading.Tasks;
     using System.Windows.Media.Imaging;
     using Farba.Common;
+    using ImageCluster;
 
     class Palette : NotifyPropertyChanged
     {
@@ -16,6 +17,8 @@
         private string _fileName;
 
         private BitmapImage _image;
+
+        private List<ClusterColor> _cluster;
         #endregion
 
         #region Constructors
@@ -24,6 +27,7 @@
             _isProcess = true;
             _fileName = fileName;
             _image = image;
+            _cluster = null;
         }
         #endregion
 
@@ -41,6 +45,16 @@
         public string FileName => _fileName;
 
         public BitmapImage Image => _image;
+
+        public List<ClusterColor> Cluster
+        {
+            get => _cluster;
+            set
+            {
+                _cluster = value;
+                OnPropertyChanged("Cluster");
+            }
+        }
         #endregion
     }
 }

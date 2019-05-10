@@ -1,9 +1,10 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Converter="clr-namespace:Farba.Resources.Converters"
-    xmlns:local="clr-namespace:Farba.Resources">
+    xmlns:Converter="clr-namespace:Farba.Resources.Converters">
 
-    <Converter:ImageCounter x:Key="@Converter/ImageCounter" />
+    <Converter:BrushConverter x:Key="@Converter/BrushConverter" />
+    <Converter:RGBConverter x:Key="@Converter/RGBConverter" />
+    <Converter:HEXConverter x:Key="@Converter/HEXConverter" />
 
 </ResourceDictionary>

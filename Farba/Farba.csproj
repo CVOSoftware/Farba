@@ -118,7 +118,9 @@
     <Compile Include="Common\NotifyPropertyChanged.cs" />
     <Compile Include="Common\Enum\ColorCombination.cs" />
     <Compile Include="Model\Palette.cs" />
-    <Compile Include="Resources\Converters\ImageCounter.cs" />
+    <Compile Include="Resources\Converters\BrushConverter.cs" />
+    <Compile Include="Resources\Converters\HEXConverter.cs" />
+    <Compile Include="Resources\Converters\RGBConverter.cs" />
     <Compile Include="ViewModel\ConverterViewModel.cs" />
     <Compile Include="ViewModel\PaletteViewModel.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
@@ -173,6 +175,12 @@
   <ItemGroup>
     <Resource Include="Resources\Images\Tile.ico" />
     <Resource Include="Resources\Images\List.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ImageCluster\ImageCluster.csproj">
+      <Project>{8b5710b8-7ecb-4dec-a229-7844ecfa6377}</Project>
+      <Name>ImageCluster</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -12,6 +12,7 @@
     using Farba.Common;
     using Farba.Common.Enum;
     using Farba.Model;
+    using ImageCluster;
     
     class PaletteViewModel : NotifyPropertyChanged
     {
@@ -203,6 +204,8 @@
         
         private void StartProcess(object o)
         {
+            List<ClusterColor> clusterColor = Handler.RandomColor();
+            _activePalette.Cluster = clusterColor;
             ActivePalette.IsProcess = false;
             ProcessState = ActivePalette.IsProcess;
         }
@@ -259,10 +262,13 @@
 
         private void SetFirstTabImageViewer(object o)
         {
-            ProcessState = ActivePalette.IsProcess;
-            ImageViewerTab = 0;
-            SwitchArrowState();
-            ImageViewerCounterFormat();
+            if (ActivePalette != null)
+            {
+                ProcessState = ActivePalette.IsProcess;
+                ImageViewerTab = 0;
+                SwitchArrowState();
+                ImageViewerCounterFormat();
+            }
         }
         
         private void SwitchTile(object o)

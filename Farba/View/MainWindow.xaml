@@ -36,13 +36,22 @@
                         </Grid.ColumnDefinitions>
                         <!--#region ControllPalette-->
                         <StackPanel Grid.Column="0" Style="{StaticResource ResourceKey=@Style/BackgroundControll}">
-                            <StackPanel Margin="20">
+                            <Grid Margin="20">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
                                 <Button
+                                    Grid.Row="0"
+                                    Margin="0,0,0,10"
                                     Command="{Binding Select}"
                                     Content="{StaticResource ResourceKey=@String/SelectButton}"
                                     Style="{StaticResource ResourceKey=@Style/Button}" />
-                                <TextBlock Margin="0,20,0,10" Text="{StaticResource ResourceKey=@String/PalettesTitle}" />
-                            </StackPanel>
+                                <ListBox
+                                    Grid.Row="1"
+                                    ItemsSource="{Binding ActivePalette.Cluster}"
+                                    Style="{StaticResource ResourceKey=@Style/ListBoxCluster}" />
+                            </Grid>
                         </StackPanel>
                         <!--#endregion-->
                         <!--#region ViewerPalette-->
@@ -50,7 +59,7 @@
                             <Grid Margin="20">
                                 <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="300" />
+                                        <RowDefinition Height="301" />
                                         <RowDefinition Height="40" />
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
@@ -167,9 +176,7 @@
                                         </Button>
                                     </Grid>
                                     <!--#endregion-->
-                                    <Grid Grid.Row="2">
-                                        <TextBlock Text="{Binding Combination}" />
-                                    </Grid>
+                                    <Grid Grid.Row="2" />
                                 </Grid>
                             </Grid>
                         </ScrollViewer>

@@ -387,4 +387,76 @@
         </Setter>
     </Style>
 
+    <Style x:Key="@Style/ListBoxItemCluster" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border x:Name="border" Padding="{TemplateBinding Property=Padding}">
+                        <ContentControl x:Name="contentControl" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}">
+                            <ContentPresenter
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="Center"
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}" />
+                        </ContentControl>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}" />
+                            <Setter TargetName="border" Property="BorderThickness" Value="1" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
+                            <Setter TargetName="border" Property="Padding" Value="4" />
+                            <Setter TargetName="contentControl" Property="Foreground" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="@Style/ListBoxCluster" TargetType="{x:Type ListBox}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Margin" Value="0,5,0,0" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource ResourceKey=@Style/ListBoxItemCluster}" />
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border
+                            Grid.Column="0"
+                            Margin="0,0,10,0"
+                            Background="{Binding Color, Converter={StaticResource ResourceKey=@Converter/BrushConverter}}"
+                            BorderBrush="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}"
+                            BorderThickness="1" />
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Text="{Binding Percent, StringFormat=\{\0\}%}" />
+                            <TextBlock Grid.Row="1" Text="{Binding Color, Converter={StaticResource ResourceKey=@Converter/RGBConverter}}" />
+                            <TextBlock Grid.Row="2" Text="{Binding Color, Converter={StaticResource ResourceKey=@Converter/HEXConverter}}" />
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border Background="{StaticResource ResourceKey=@SolidColorBrush/DoubleGray60}">
+                        <ItemsPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
