@@ -8,16 +8,15 @@
     using System.Threading.Tasks;
     using Microsoft.Win32;
     using System.Windows;
+    using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using Farba.Common;
-    using Farba.Common.Enum;
     using Farba.Model;
     using ImageCluster;
     
     class PaletteViewModel : NotifyPropertyChanged
     {
         #region Fields
-        private ColorCombination _combination;
         private ObservableCollection<Palette> _palettes;
         private Palette _activePalette;
         private int _imageViewerTab;
@@ -26,6 +25,7 @@
         private bool _leftArrowState;
         private bool _rightArrowState;
         private string _imageViewerConter;
+        private List<ColorComb> _combination;
         #endregion
 
         #region Commands fields
@@ -35,14 +35,11 @@
         private Command _setup;
         private Command _next;
         private Command _prev;
-        private Command _setTile;
-        private Command _setList;
         #endregion
 
         #region Constructors
         public PaletteViewModel()
         {
-            _combination = ColorCombination.Tile;
             _palettes = new ObservableCollection<Palette>();
             _activePalette = null;
             _imageViewerTab = 0;
@@ -51,28 +48,17 @@
             _leftArrowState = false;
             _rightArrowState = false;
             _imageViewerConter = String.Empty;
+            _combination = null;
             _select = new Command(SelectImage);
             _process = new Command(StartProcess);
             _delete = new Command(DeleteImage);
             _setup = new Command(SetFirstTabImageViewer);
             _next = new Command(NextImage);
             _prev = new Command(PrevImage);
-            _setTile = new Command(SwitchTile);
-            _setList = new Command(SwitchList);
         }
         #endregion
 
         #region Properties
-        public ColorCombination Combination
-        {
-            get => _combination;
-            set
-            {
-                _combination = value;
-                OnPropertyChanged("Combination");
-            }
-        }
-
         public ObservableCollection<Palette> Palettes
         {
             get => _palettes;
@@ -93,6 +79,16 @@
             }
         }
 
+        public List<ColorComb> Combination
+        {
+            get => _combination;
+            set
+            {
+                _combination = value;
+                OnPropertyChanged("Combination");
+            }
+        }
+        
         public int ImageViewerTab
         {
             get => _imageViewerTab;
@@ -161,8 +157,6 @@
         public Command Setup => _setup;
         public Command Next => _next;
         public Command Prev => _prev;
-        public Command SetTile => _setTile;
-        public Command SetList => _setList;
         #endregion
 
         #region Command methods
@@ -204,10 +198,11 @@
         
         private void StartProcess(object o)
         {
-            List<ClusterColor> clusterColor = Handler.RandomColor();
+            List<ClusterColor> clusterColor = Handler.RandomColor(5);
             _activePalette.Cluster = clusterColor;
             ActivePalette.IsProcess = false;
             ProcessState = ActivePalette.IsProcess;
+            SetCombination();
         }
 
         private void DeleteImage(object o)
@@ -232,6 +227,7 @@
                 DeleteState = false;
             }
             SwitchArrowState();
+            GC.Collect();
         }
 
         private void NextImage(object o)
@@ -270,22 +266,6 @@
                 ImageViewerCounterFormat();
             }
         }
-        
-        private void SwitchTile(object o)
-        {
-            if (Combination == ColorCombination.List)
-            {
-                Combination = ColorCombination.Tile;
-            }
-        }
-
-        private void SwitchList(object o)
-        {
-            if (Combination == ColorCombination.Tile)
-            {
-                Combination = ColorCombination.List;
-            }
-        }
         #endregion
 
         #region Methods
@@ -304,6 +284,7 @@
                 RightArrowState = false;
             }
         }
+
         private void ImageViewerCounterFormat()
         {
             int count = _palettes.Count,
@@ -318,6 +299,44 @@
                 format = index + "/" + count;
             }
             ImageViewerCounter = format;
+        }
+
+        private void SetCombination()
+        {
+            int length = _activePalette.Cluster.Count;
+            List<ColorComb> combList = new List<ColorComb>();
+            for (int i = 0; i < length - 1; i++)
+            {
+                for (int j = i + 1; j < length; j++)
+                {
+                    ColorComb cc = new ColorComb(
+                        _activePalette.Cluster[i].Hex,
+                        _activePalette.Cluster[j].Hex,
+                        _activePalette.Cluster[i].Brush,
+                        _activePalette.Cluster[j].Brush
+                    );
+                    combList.Add(cc);
+                }
+            }
+            int count = CombinationCount(length, 2);
+            _activePalette.Count = count != -1 ? count.ToString() : String.Empty;
+            _activePalette.Comb = combList;
+        }
+
+        public int Factorial(int n)
+        {
+            if(n < 0) return 0;
+            else if(n == 0) return 1;
+            else return n * Factorial(n - 1);
+        }
+
+        public int CombinationCount(int n, int k)
+        {
+            if(k > 0 && k <= n)
+            {
+                return Factorial(n) / (Factorial(n - k) * Factorial(k));
+            }
+            return -1;
         }
         #endregion
     }

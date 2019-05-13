@@ -431,7 +431,7 @@
                         <Border
                             Grid.Column="0"
                             Margin="0,0,10,0"
-                            Background="{Binding Color, Converter={StaticResource ResourceKey=@Converter/BrushConverter}}"
+                            Background="{Binding Brush}"
                             BorderBrush="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}"
                             BorderThickness="1" />
                         <Grid Grid.Column="1">
@@ -441,8 +441,8 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0" Text="{Binding Percent, StringFormat=\{\0\}%}" />
-                            <TextBlock Grid.Row="1" Text="{Binding Color, Converter={StaticResource ResourceKey=@Converter/RGBConverter}}" />
-                            <TextBlock Grid.Row="2" Text="{Binding Color, Converter={StaticResource ResourceKey=@Converter/HEXConverter}}" />
+                            <TextBlock Grid.Row="1" Text="{Binding Hex, StringFormat=HEX: \{\0\}}" />
+                            <TextBlock Grid.Row="2" Text="{Binding Rgb, StringFormat=RGB: \{\0\}}" />
                         </Grid>
                     </Grid>
                 </DataTemplate>
@@ -452,6 +452,109 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBox}">
                     <Border Background="{StaticResource ResourceKey=@SolidColorBrush/DoubleGray60}">
+                        <ItemsPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="@Style/ListBoxItemCombination" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Padding" Value="0,0,0,10" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border Padding="{TemplateBinding Property=Padding}">
+                        <ContentControl x:Name="contentControl" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}">
+                            <ContentPresenter
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="Center"
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}" />
+                        </ContentControl>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="@Style/ListBoxCombination" TargetType="{x:Type ListBox}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource ResourceKey=@Style/ListBoxItemCombination}" />
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Border
+                        x:Name="BorderOne"
+                        BorderBrush="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}"
+                        BorderThickness="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Border
+                                    Grid.Column="0"
+                                    Padding="15,15,0,15"
+                                    Background="{Binding BrushOne}">
+                                    <Border Padding="10" Background="{Binding BrushTwo}" />
+                                </Border>
+                                <Border
+                                    Grid.Column="1"
+                                    Padding="0,15,15,15"
+                                    Background="{Binding BrushTwo}">
+                                    <Border Padding="10" Background="{Binding BrushOne}" />
+                                </Border>
+                            </Grid>
+                            <Border
+                                x:Name="BorderTwo"
+                                Grid.Row="1"
+                                Padding="2"
+                                Background="{StaticResource ResourceKey=@SolidColorBrush/DoubleGray30}"
+                                BorderBrush="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}"
+                                BorderThickness="0,1,0,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        x:Name="TextOne"
+                                        Grid.Column="0"
+                                        Text="{Binding HexOne}"
+                                        TextAlignment="Center" />
+                                    <TextBlock
+                                        x:Name="TextTwo"
+                                        Grid.Column="1"
+                                        Text="{Binding HexTwo}"
+                                        TextAlignment="Center" />
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <DataTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="BorderOne" Property="Background" Value="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}" />
+                            <Setter TargetName="BorderOne" Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
+                            <Setter TargetName="BorderTwo" Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
+                            <Setter TargetName="TextOne" Property="Foreground" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
+                            <Setter TargetName="TextTwo" Property="Foreground" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
+                        </Trigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border>
                         <ItemsPresenter />
                     </Border>
                 </ControlTemplate>

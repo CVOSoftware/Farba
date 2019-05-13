@@ -16,9 +16,13 @@
 
         private string _fileName;
 
+        private string _count;
+
         private BitmapImage _image;
 
         private List<ClusterColor> _cluster;
+
+        private List<ColorComb> _comb;
         #endregion
 
         #region Constructors
@@ -28,6 +32,7 @@
             _fileName = fileName;
             _image = image;
             _cluster = null;
+            _comb = null;
         }
         #endregion
 
@@ -44,7 +49,25 @@
 
         public string FileName => _fileName;
 
-        public BitmapImage Image => _image;
+        public string Count
+        {
+            get => _count;
+            set
+            {
+                _count = value;
+                OnPropertyChanged("Count");
+            }
+        }
+
+        public BitmapImage Image
+        {
+            get => _image;
+            set
+            {
+                _image = value;
+                OnPropertyChanged("Image");
+            }
+        }
 
         public List<ClusterColor> Cluster
         {
@@ -53,6 +76,16 @@
             {
                 _cluster = value;
                 OnPropertyChanged("Cluster");
+            }
+        }
+
+        public List<ColorComb> Comb
+        {
+            get => _comb;
+            set
+            {
+                _comb = value;
+                OnPropertyChanged("Comb");
             }
         }
         #endregion

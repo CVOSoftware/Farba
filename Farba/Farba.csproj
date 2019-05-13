@@ -116,7 +116,7 @@
     <Compile Include="Common\Command.cs" />
     <Compile Include="Common\Converter.cs" />
     <Compile Include="Common\NotifyPropertyChanged.cs" />
-    <Compile Include="Common\Enum\ColorCombination.cs" />
+    <Compile Include="Model\ColorComb.cs" />
     <Compile Include="Model\Palette.cs" />
     <Compile Include="Resources\Converters\BrushConverter.cs" />
     <Compile Include="Resources\Converters\HEXConverter.cs" />

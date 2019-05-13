@@ -8,13 +8,12 @@ namespace ImageCluster
 {
     public class Handler
     {
-        public static List<ClusterColor> RandomColor()
+        public static List<ClusterColor> RandomColor(int count)
         {
             Random rand = new Random();
-            int colorCount = 5;
-            List<ClusterColor> colorList = new List<ClusterColor>(colorCount);
+            List<ClusterColor> colorList = new List<ClusterColor>(count);
 
-            for(int i = 0; i < colorCount; i++)
+            for(int i = 0; i < count; i++)
             {
                 byte r = (byte)rand.Next(255),
                      g = (byte)rand.Next(255),
