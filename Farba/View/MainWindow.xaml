@@ -2,9 +2,8 @@
     x:Class="Farba.View.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Behaviors="clr-namespace:Farba.Common.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:uc="clr-namespace:Farba.View.UserControllers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Farba"
     Width="711"
@@ -24,147 +23,7 @@
                         Source="{StaticResource ResourceKey=@Image/Palette}" />
                 </TabItem.Header>
                 <TabItem.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="240" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Style="{StaticResource ResourceKey=@Style/BackgroundControll}">
-                            <Grid Margin="20">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="auto" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Button
-                                    Grid.Row="0"
-                                    Margin="0,0,0,10"
-                                    Command="{Binding Select}"
-                                    Content="{StaticResource ResourceKey=@String/SelectButton}"
-                                    Style="{StaticResource ResourceKey=@Style/Button}" />
-                                <ListBox
-                                    Grid.Row="1"
-                                    ItemsSource="{Binding ActivePalette.Cluster}"
-                                    Style="{StaticResource ResourceKey=@Style/ListBoxCluster}" />
-                            </Grid>
-                        </StackPanel>
-                        <ScrollViewer Grid.Column="1" Style="{StaticResource ResourceKey=@Style/ScrollViewer}">
-                            <Grid Margin="20,20,20,10">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="301" />
-                                        <RowDefinition Height="40" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <TabControl
-                                        Margin="0,0,0,10"
-                                        SelectedIndex="{Binding ImageViewerTab}"
-                                        Style="{StaticResource ResourceKey=@Style/TabControlViewer}">
-                                        <TabItem Header="{StaticResource ResourceKey=@String/TabView}" Style="{StaticResource ResourceKey=@Style/TabItemViewer}">
-                                            <Grid Grid.Row="0" Style="{StaticResource ResourceKey=@Style/BackgroundView}">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="*" />
-                                                    <RowDefinition Height="auto" />
-                                                </Grid.RowDefinitions>
-                                                <StackPanel
-                                                    x:Name="WrapImage"
-                                                    Grid.Row="0"
-                                                    Margin="10,10,10,0">
-                                                    <Image
-                                                        Width="{Binding ElementName=WrapImage, Path=ActualWidth}"
-                                                        Height="{Binding ElementName=WrapImage, Path=ActualHeight}"
-                                                        Source="{Binding ActivePalette.Image}" />
-                                                </StackPanel>
-                                                <Grid Grid.Row="1" Height="46">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="auto" />
-                                                        <ColumnDefinition Width="auto" />
-                                                        <ColumnDefinition Width="*" />
-                                                        <ColumnDefinition Width="auto" />
-                                                        <ColumnDefinition Width="auto" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <Button
-                                                        Grid.Column="0"
-                                                        Margin="10,10,5,10"
-                                                        Command="{Binding Process}"
-                                                        Content="{StaticResource ResourceKey=@String/ProcessButton}"
-                                                        IsEnabled="{Binding ProcessState}"
-                                                        Style="{StaticResource ResourceKey=@Style/Button}" />
-                                                    <Button
-                                                        Grid.Column="1"
-                                                        Margin="5,10,5,10"
-                                                        Command="{Binding Delete}"
-                                                        Content="{StaticResource ResourceKey=@String/DeleteButton}"
-                                                        IsEnabled="{Binding DeleteState}"
-                                                        Style="{StaticResource ResourceKey=@Style/Button}" />
-                                                    <TextBlock
-                                                        Grid.Column="2"
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Text="{Binding ImageViewerCounter}" />
-                                                    <Button
-                                                        Grid.Column="3"
-                                                        Margin="5,10,5,10"
-                                                        Command="{Binding Prev}"
-                                                        IsEnabled="{Binding LeftArrowState}"
-                                                        Style="{StaticResource ResourceKey=@Style/Button}">
-                                                        <Image Source="{StaticResource ResourceKey=@Image/Left}" />
-                                                    </Button>
-                                                    <Button
-                                                        Grid.Column="4"
-                                                        Margin="5,10,10,10"
-                                                        Command="{Binding Next}"
-                                                        IsEnabled="{Binding RightArrowState}"
-                                                        Style="{StaticResource ResourceKey=@Style/Button}">
-                                                        <Image Source="{StaticResource ResourceKey=@Image/Right}" />
-                                                    </Button>
-                                                </Grid>
-                                            </Grid>
-                                        </TabItem>
-                                        <TabItem Header="{StaticResource ResourceKey=@String/TabImages}" Style="{StaticResource ResourceKey=@Style/TabItemViewer}">
-                                            <Grid Grid.Row="0" Style="{StaticResource ResourceKey=@Style/BackgroundView}">
-                                                <ListBox
-                                                    ItemsSource="{Binding Palettes}"
-                                                    SelectedItem="{Binding ActivePalette}"
-                                                    Style="{StaticResource ResourceKey=@Style/ListBoxImagesViewer}">
-                                                    <i:Interaction.Behaviors>
-                                                        <Behaviors:ScrollToSelectBottom />
-                                                    </i:Interaction.Behaviors>
-                                                    <i:Interaction.Triggers>
-                                                        <i:EventTrigger EventName="MouseLeftButtonUp">
-                                                            <i:InvokeCommandAction Command="{Binding Setup}" />
-                                                        </i:EventTrigger>
-                                                    </i:Interaction.Triggers>
-                                                </ListBox>
-                                            </Grid>
-                                        </TabItem>
-                                    </TabControl>
-                                    <Grid
-                                        Grid.Row="1"
-                                        Margin="0,0,0,10"
-                                        Style="{StaticResource ResourceKey=@Style/BackgroundView}">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock
-                                            Grid.Column="0"
-                                            Margin="10,0,0,0"
-                                            VerticalAlignment="Center"
-                                            Text="{StaticResource ResourceKey=@String/CombinationTitle}" />
-                                        <TextBlock
-                                            Margin="0, 0, 10, 0"
-                                            Grid.Column="1"
-                                            VerticalAlignment="Center"
-                                            Text="{Binding ActivePalette.Count}" />
-                                    </Grid>
-                                    <ListBox
-                                        Grid.Row="2"
-                                        ItemsSource="{Binding ActivePalette.Comb}"
-                                        Style="{StaticResource ResourceKey=@Style/ListBoxCombination}" />
-                                </Grid>
-                            </Grid>
-                        </ScrollViewer>
-                    </Grid>
+                    <uc:Palette/>
                 </TabItem.Content>
             </TabItem>
             <TabItem Style="{StaticResource ResourceKey=@Style/TabItem}" DataContext="{Binding PaletteVM.ConverterVM}">
@@ -175,16 +34,7 @@
                         Source="{StaticResource ResourceKey=@Image/Converter}" />
                 </TabItem.Header>
                 <TabItem.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="240" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0" Style="{StaticResource ResourceKey=@Style/BackgroundControll}" />
-                        <ScrollViewer Grid.Column="1" Style="{StaticResource ResourceKey=@Style/ScrollViewer}">
-                            <StackPanel Height="700" />
-                        </ScrollViewer>
-                    </Grid>
+                    <uc:Converter/>
                 </TabItem.Content>
             </TabItem>
         </TabControl>
