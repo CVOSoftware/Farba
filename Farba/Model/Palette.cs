@@ -9,7 +9,7 @@
     using Farba.Common;
     using ImageCluster;
 
-    class Palette : NotifyPropertyChanged
+    class Palette : BaseViewModel
     {
         #region Fields
         private bool _isProcess;

@@ -1,13 +1,8 @@
-﻿namespace Farba.ViewModel
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using Farba.Common;
+﻿using Farba.Common;
 
-    class ConverterViewModel :NotifyPropertyChanged
+namespace Farba.ViewModel
+{
+    class ConverterViewModel :BaseViewModel
     {
         public ConverterViewModel()
         {

@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.438
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Farba", "Farba\Farba.csproj", "{A1CB66A5-335A-4E1C-BC3B-2D7273A95981}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorModels", "ColorModels\ColorModels.csproj", "{5F6FD644-8D4E-47BD-B3CB-5F91921EDF18}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{72195342-876A-4D6C-BDB5-0BD24DE9D86C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageCluster", "ImageCluster\ImageCluster.csproj", "{8B5710B8-7ECB-4DEC-A229-7844ECFA6377}"
 EndProject
@@ -25,10 +23,6 @@ Global
 		{5F6FD644-8D4E-47BD-B3CB-5F91921EDF18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F6FD644-8D4E-47BD-B3CB-5F91921EDF18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F6FD644-8D4E-47BD-B3CB-5F91921EDF18}.Release|Any CPU.Build.0 = Release|Any CPU
-		{72195342-876A-4D6C-BDB5-0BD24DE9D86C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{72195342-876A-4D6C-BDB5-0BD24DE9D86C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{72195342-876A-4D6C-BDB5-0BD24DE9D86C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{72195342-876A-4D6C-BDB5-0BD24DE9D86C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8B5710B8-7ECB-4DEC-A229-7844ECFA6377}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8B5710B8-7ECB-4DEC-A229-7844ECFA6377}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B5710B8-7ECB-4DEC-A229-7844ECFA6377}.Release|Any CPU.ActiveCfg = Release|Any CPU

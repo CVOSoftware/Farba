@@ -1,14 +1,14 @@
-﻿namespace Farba.Common.Behaviors
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Windows.Threading;
-    using System.Threading.Tasks;
-    using System.Windows.Interactivity;
-    using System.Windows.Controls;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows.Threading;
+using System.Threading.Tasks;
+using System.Windows.Interactivity;
+using System.Windows.Controls;
 
+namespace Farba.Common.Behaviors
+{
     class ScrollToSelectBottom : Behavior<ListBox>
     {
         protected override void OnAttached()

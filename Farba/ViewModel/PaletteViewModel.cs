@@ -1,43 +1,57 @@
-﻿namespace Farba.ViewModel
-{
-    using System;
-    using System.Collections.ObjectModel;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using Microsoft.Win32;
-    using System.Windows;
-    using System.Windows.Media;
-    using System.Windows.Media.Imaging;
-    using Farba.Common;
-    using Farba.Model;
-    using ImageCluster;
-    
-    class PaletteViewModel : NotifyPropertyChanged
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.Windows.Input;
+using Microsoft.Win32;
+using System.Windows.Media.Imaging;
+using Farba.Common;
+using Farba.Model;
+using ImageCluster;
+
+namespace Farba.ViewModel
+{ 
+    class PaletteViewModel : BaseViewModel
     {
-        #region Fields
+        #region CommandFields
+
+        private RelayCommand _select;
+
+        private RelayCommand _process;
+
+        private RelayCommand _delete;
+
+        private RelayCommand _setup;
+
+        private RelayCommand _next;
+
+        private RelayCommand _prev;
+
+        #endregion
+
+        #region ViewModelFields
+
         private ObservableCollection<Palette> _palettes;
+
         private Palette _activePalette;
+
         private int _imageViewerTab;
+
         private bool _processState;
+
         private bool _deleteState;
+
         private bool _leftArrowState;
+
         private bool _rightArrowState;
+
         private string _imageViewerConter;
+
         private List<ColorComb> _combination;
+
         #endregion
 
-        #region Commands fields
-        private Command _select;
-        private Command _process;
-        private Command _delete;
-        private Command _setup;
-        private Command _next;
-        private Command _prev;
-        #endregion
+        #region Constructor
 
-        #region Constructors
         public PaletteViewModel()
         {
             _palettes = new ObservableCollection<Palette>();
@@ -47,25 +61,32 @@
             _deleteState = false;
             _leftArrowState = false;
             _rightArrowState = false;
-            _imageViewerConter = String.Empty;
+            _imageViewerConter = string.Empty;
             _combination = null;
-            _select = new Command(SelectImage);
-            _process = new Command(StartProcess);
-            _delete = new Command(DeleteImage);
-            _setup = new Command(SetFirstTabImageViewer);
-            _next = new Command(NextImage);
-            _prev = new Command(PrevImage);
         }
+
         #endregion
 
-        #region Properties
+        #region CommandProperties
+
+        public ICommand Select => RelayCommand.Register(ref _select, SelectImage);
+        public ICommand Process => RelayCommand.Register(ref _process, StartProcess);
+        public ICommand Delete => RelayCommand.Register(ref _delete, DeleteImage);
+        public ICommand Setup => RelayCommand.Register(ref _setup, SetFirstTabImageViewer);
+        public ICommand Next => RelayCommand.Register(ref _next, NextImage);
+        public ICommand Prev => RelayCommand.Register(ref _prev, PrevImage);
+        
+        #endregion
+
+        #region ViewModelProperties
+
         public ObservableCollection<Palette> Palettes
         {
             get => _palettes;
             set
             {
                 _palettes = value;
-                OnPropertyChanged("Palettes");
+                OnPropertyChanged();
             }
         }
 
@@ -75,7 +96,7 @@
             set
             {
                 _activePalette = value;
-                OnPropertyChanged("ActivePalette");
+                OnPropertyChanged();
             }
         }
 
@@ -85,7 +106,7 @@
             set
             {
                 _combination = value;
-                OnPropertyChanged("Combination");
+                OnPropertyChanged();
             }
         }
         
@@ -95,7 +116,7 @@
             set
             {
                 _imageViewerTab= value;
-                OnPropertyChanged("ImageViewerTab");
+                OnPropertyChanged();
             }
         }
         
@@ -105,7 +126,7 @@
             set
             {
                 _processState = value;
-                OnPropertyChanged("ProcessState");
+                OnPropertyChanged();
             }
         }
 
@@ -115,7 +136,7 @@
             set
             {
                 _deleteState = value;
-                OnPropertyChanged("DeleteState");
+                OnPropertyChanged();
             }
         }
         
@@ -125,7 +146,7 @@
             set
             {
                 _leftArrowState = value;
-                OnPropertyChanged("LeftArrowState");
+                OnPropertyChanged();
             }
         }
 
@@ -135,7 +156,7 @@
             set
             {
                 _rightArrowState = value;
-                OnPropertyChanged("RightArrowState");
+                OnPropertyChanged();
             }
         }
         
@@ -145,21 +166,13 @@
             set
             {
                 _imageViewerConter = value;
-                OnPropertyChanged("ImageViewerCounter");
+                OnPropertyChanged();
             }
         }
+        
         #endregion
 
-        #region Commands properties
-        public Command Select => _select;
-        public Command Process => _process;
-        public Command Delete => _delete;
-        public Command Setup => _setup;
-        public Command Next => _next;
-        public Command Prev => _prev;
-        #endregion
-
-        #region Command methods
+        #region CommandExecuteMethods
         private void SelectImage(object o)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -266,9 +279,11 @@
                 ImageViewerCounterFormat();
             }
         }
+        
         #endregion
 
         #region Methods
+
         private void SwitchArrowState()
         {
             int count = _palettes.Count,
@@ -338,6 +353,7 @@
             }
             return -1;
         }
+        
         #endregion
     }
 }
