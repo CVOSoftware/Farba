@@ -6,10 +6,10 @@
     xmlns:uc="clr-namespace:Farba.View.UserControllers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="Farba"
-    Width="711"
-    Height="550"
+    MinWidth="1024"
+    MinHeight="690"
     Icon="{StaticResource ResourceKey=@Image/Icon}"
-    ResizeMode="CanMinimize"
+    WindowState="Maximized"
     Style="{StaticResource ResourceKey=@Style/Window}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">

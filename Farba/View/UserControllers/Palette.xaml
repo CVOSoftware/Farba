@@ -21,7 +21,7 @@
                 <Button
                     Grid.Row="0"
                     Margin="0,0,0,10"
-                    Command="{Binding Select}"
+                    Command="{Binding SelectImageCommand}"
                     Content="{StaticResource ResourceKey=@String/SelectButton}"
                     Style="{StaticResource ResourceKey=@Style/Button}" />
                 <ListBox
@@ -34,16 +34,17 @@
             <Grid Margin="20,20,20,10">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="301" />
+                        <RowDefinition Height="*" />
                         <RowDefinition Height="40" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <TabControl
+                        Grid.Row="0"
                         Margin="0,0,0,10"
                         SelectedIndex="{Binding ImageViewerTab}"
                         Style="{StaticResource ResourceKey=@Style/TabControlViewer}">
-                        <TabItem Header="{StaticResource ResourceKey=@String/TabView}" Style="{StaticResource ResourceKey=@Style/TabItemViewer}">
-                            <Grid Grid.Row="0" Style="{StaticResource ResourceKey=@Style/BackgroundView}">
+                        <TabItem x:Name="ImageTab" Header="{StaticResource ResourceKey=@String/TabView}" Style="{StaticResource ResourceKey=@Style/TabItemViewer}">
+                            <Grid Style="{StaticResource ResourceKey=@Style/BackgroundView}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="auto" />
@@ -68,14 +69,14 @@
                                     <Button
                                         Grid.Column="0"
                                         Margin="10,10,5,10"
-                                        Command="{Binding Process}"
+                                        Command="{Binding CreatePaletteCommand}"
                                         Content="{StaticResource ResourceKey=@String/ProcessButton}"
                                         IsEnabled="{Binding ProcessState}"
                                         Style="{StaticResource ResourceKey=@Style/Button}" />
                                     <Button
                                         Grid.Column="1"
                                         Margin="5,10,5,10"
-                                        Command="{Binding Delete}"
+                                        Command="{Binding RemoveImageCommand}"
                                         Content="{StaticResource ResourceKey=@String/DeleteButton}"
                                         IsEnabled="{Binding DeleteState}"
                                         Style="{StaticResource ResourceKey=@Style/Button}" />
@@ -87,7 +88,7 @@
                                     <Button
                                         Grid.Column="3"
                                         Margin="5,10,5,10"
-                                        Command="{Binding Prev}"
+                                        Command="{Binding PrevImageCommand}"
                                         IsEnabled="{Binding LeftArrowState}"
                                         Style="{StaticResource ResourceKey=@Style/Button}">
                                         <Image Source="{StaticResource ResourceKey=@Image/Left}" />
@@ -95,7 +96,7 @@
                                     <Button
                                         Grid.Column="4"
                                         Margin="5,10,10,10"
-                                        Command="{Binding Next}"
+                                        Command="{Binding NextImageCommand}"
                                         IsEnabled="{Binding RightArrowState}"
                                         Style="{StaticResource ResourceKey=@Style/Button}">
                                         <Image Source="{StaticResource ResourceKey=@Image/Right}" />
@@ -103,8 +104,10 @@
                                 </Grid>
                             </Grid>
                         </TabItem>
-                        <TabItem Header="{StaticResource ResourceKey=@String/TabImages}" Style="{StaticResource ResourceKey=@Style/TabItemViewer}">
-                            <Grid Grid.Row="0" Style="{StaticResource ResourceKey=@Style/BackgroundView}">
+                        <TabItem 
+                            Header="{StaticResource ResourceKey=@String/TabImages}" 
+                            Style="{StaticResource ResourceKey=@Style/TabItemViewer}">
+                            <Grid Style="{StaticResource ResourceKey=@Style/BackgroundView}">
                                 <ListBox
                                     ItemsSource="{Binding Palettes}"
                                     SelectedItem="{Binding ActivePalette}"
@@ -114,7 +117,7 @@
                                     </i:Interaction.Behaviors>
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseLeftButtonUp">
-                                            <i:InvokeCommandAction Command="{Binding Setup}" />
+                                            <i:InvokeCommandAction Command="{Binding SwitchFirstTabImageViewerCommand}" />
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </ListBox>

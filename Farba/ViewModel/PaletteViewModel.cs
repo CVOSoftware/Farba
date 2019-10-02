@@ -14,17 +14,17 @@ namespace Farba.ViewModel
     {
         #region CommandFields
 
-        private RelayCommand _select;
+        private RelayCommand selectImageCommand;
 
-        private RelayCommand _process;
+        private RelayCommand createPaletteCommand;
 
-        private RelayCommand _delete;
+        private RelayCommand removeImageCommand;
 
-        private RelayCommand _setup;
+        private RelayCommand switchFirstTabImageViewerCommand;
 
-        private RelayCommand _next;
+        private RelayCommand nextImageCommand;
 
-        private RelayCommand _prev;
+        private RelayCommand prevImageCommand;
 
         #endregion
 
@@ -69,12 +69,12 @@ namespace Farba.ViewModel
 
         #region CommandProperties
 
-        public ICommand Select => RelayCommand.Register(ref _select, SelectImage);
-        public ICommand Process => RelayCommand.Register(ref _process, StartProcess);
-        public ICommand Delete => RelayCommand.Register(ref _delete, DeleteImage);
-        public ICommand Setup => RelayCommand.Register(ref _setup, SetFirstTabImageViewer);
-        public ICommand Next => RelayCommand.Register(ref _next, NextImage);
-        public ICommand Prev => RelayCommand.Register(ref _prev, PrevImage);
+        public ICommand SelectImageCommand => RelayCommand.Register(ref selectImageCommand, OnSelectImage);
+        public ICommand CreatePaletteCommand => RelayCommand.Register(ref createPaletteCommand, OnCreatePalette);
+        public ICommand RemoveImageCommand => RelayCommand.Register(ref removeImageCommand, OmRemoveImage);
+        public ICommand SwitchFirstTabImageViewerCommand => RelayCommand.Register(ref switchFirstTabImageViewerCommand, OnSwitchFirstTabImageViewer);
+        public ICommand NextImageCommand => RelayCommand.Register(ref nextImageCommand, OnNextImage);
+        public ICommand PrevImageCommand => RelayCommand.Register(ref prevImageCommand, OnPrevImage);
         
         #endregion
 
@@ -173,7 +173,7 @@ namespace Farba.ViewModel
         #endregion
 
         #region CommandExecuteMethods
-        private void SelectImage(object o)
+        private void OnSelectImage(object o)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             string filter = "Image files (*.jpg, *.jpeg, *.png) | *.jpg; *.jpeg; *.png";
@@ -209,7 +209,7 @@ namespace Farba.ViewModel
             SwitchArrowState();
         }
         
-        private void StartProcess(object o)
+        private void OnCreatePalette(object o)
         {
             List<ClusterColor> clusterColor = Handler.RandomColor(5);
             _activePalette.Cluster = clusterColor;
@@ -218,7 +218,7 @@ namespace Farba.ViewModel
             SetCombination();
         }
 
-        private void DeleteImage(object o)
+        private void OmRemoveImage(object o)
         {
             int count = _palettes.Count;
             if (count > 0)
@@ -243,7 +243,7 @@ namespace Farba.ViewModel
             GC.Collect();
         }
 
-        private void NextImage(object o)
+        private void OnNextImage(object o)
         {
             int count = _palettes.Count,
                 index = _palettes.IndexOf(ActivePalette);
@@ -256,7 +256,7 @@ namespace Farba.ViewModel
             ImageViewerCounterFormat();
         }
 
-        private void PrevImage(object o)
+        private void OnPrevImage(object o)
         {
             int count = _palettes.Count,
                 index = _palettes.IndexOf(ActivePalette);
@@ -269,7 +269,7 @@ namespace Farba.ViewModel
             ImageViewerCounterFormat();
         }
 
-        private void SetFirstTabImageViewer(object o)
+        private void OnSwitchFirstTabImageViewer(object o)
         {
             if (ActivePalette != null)
             {
