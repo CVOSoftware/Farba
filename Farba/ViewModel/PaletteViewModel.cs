@@ -249,7 +249,7 @@ namespace Farba.ViewModel
                 }
             }
             int count = CombinationCount(length, 2);
-            activePalette.Count = count != -1 ? count.ToString() : String.Empty;
+            activePalette.ColorCombination = count != -1 ? count.ToString() : String.Empty;
             activePalette.Comb = combList;
         }
 

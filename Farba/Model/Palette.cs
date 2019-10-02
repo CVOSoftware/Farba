@@ -1,93 +1,75 @@
-﻿namespace Farba.Model
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Windows.Media.Imaging;
-    using Farba.Common;
-    using ImageCluster;
+﻿using System.Collections.Generic;
+using System.Windows.Media.Imaging;
+using Farba.Common;
+using ImageCluster;
 
+namespace Farba.Model
+{
     class Palette : BaseViewModel
     {
         #region Fields
-        private bool _isProcess;
 
-        private string _fileName;
+        private string colorCombination;
 
-        private string _count;
+        private BitmapImage image;
 
-        private BitmapImage _image;
+        private List<ClusterColor> cluster;
 
-        private List<ClusterColor> _cluster;
+        private List<ColorComb> comb;
 
-        private List<ColorComb> _comb;
         #endregion
 
-        #region Constructors
+        #region Constructor
+
         public Palette(string fileName, BitmapImage image)
         {
-            _isProcess = true;
-            _fileName = fileName;
-            _image = image;
-            _cluster = null;
-            _comb = null;
+            IsProcess = true;
+            FileName = fileName;
+            Image = image;
+            cluster = null;
+            comb = null;
         }
+
         #endregion
 
         #region Properties
-        public bool IsProcess
+
+        public bool IsProcess { get; set; }
+
+        public string FileName { get; }
+
+        public string ColorCombination
         {
-            get => _isProcess;
+            get => colorCombination;
             set
             {
-                _isProcess = value;
-                OnPropertyChanged("IsProcess");
+                colorCombination = value;
+                OnPropertyChanged();
             }
         }
 
-        public string FileName => _fileName;
-
-        public string Count
-        {
-            get => _count;
-            set
-            {
-                _count = value;
-                OnPropertyChanged("Count");
-            }
-        }
-
-        public BitmapImage Image
-        {
-            get => _image;
-            set
-            {
-                _image = value;
-                OnPropertyChanged("Image");
-            }
-        }
+        public BitmapImage Image { get; }
 
         public List<ClusterColor> Cluster
         {
-            get => _cluster;
+            get => cluster;
             set
             {
-                _cluster = value;
-                OnPropertyChanged("Cluster");
+                cluster = value;
+                OnPropertyChanged();
             }
         }
 
         public List<ColorComb> Comb
         {
-            get => _comb;
+            get => comb;
             set
             {
-                _comb = value;
-                OnPropertyChanged("Comb");
+                comb = value;
+                OnPropertyChanged();
             }
         }
+
         #endregion
     }
 }
