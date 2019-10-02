@@ -5,6 +5,7 @@ using System.Windows.Input;
 using Microsoft.Win32;
 using System.Windows.Media.Imaging;
 using Farba.Common;
+using Farba.Helpers;
 using Farba.Model;
 using ImageCluster;
 
@@ -175,13 +176,10 @@ namespace Farba.ViewModel
         #region CommandExecuteMethods
         private void OnSelectImage(object o)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            string filter = "Image files (*.jpg, *.jpeg, *.png) | *.jpg; *.jpeg; *.png";
-            openFileDialog.Filter = filter;
-            if (openFileDialog.ShowDialog() == true)
+            var fileName = DialogWindowHelper.FileDialog(FileFilter.Images);
+            if(fileName != string.Empty)
             {
                 bool match = true;
-                string fileName = openFileDialog.FileName;
                 int count = _palettes.Count;
                 if (count > 0)
                 {

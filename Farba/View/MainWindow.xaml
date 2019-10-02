@@ -5,14 +5,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:uc="clr-namespace:Farba.View.UserControllers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
     Title="Farba"
     MinWidth="1024"
     MinHeight="690"
-    Icon="{StaticResource ResourceKey=@Image/Icon}"
     WindowState="Maximized"
-    Style="{StaticResource ResourceKey=@Style/Window}"
     WindowStartupLocation="CenterScreen"
-    mc:Ignorable="d">
+    Icon="{StaticResource ResourceKey=@Image/Icon}"
+    Style="{StaticResource ResourceKey=@Style/Window}">
     <Grid Style="{StaticResource ResourceKey=@Style/WindowBackground}">
         <TabControl Style="{StaticResource ResourceKey=@Style/TabControl}" TabStripPlacement="Left">
             <TabItem Style="{StaticResource ResourceKey=@Style/TabItem}" DataContext="{Binding PaletteVM}">
