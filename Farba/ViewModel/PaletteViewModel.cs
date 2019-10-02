@@ -30,15 +30,15 @@ namespace Farba.ViewModel
 
         #region ViewModelFields
 
-        private ObservableCollection<Palette> _palettes;
+        private ObservableCollection<Palette> palettes;
 
-        private Palette _activePalette;
+        private Palette activePalette;
 
-        private int _imageViewerTab;
+        private int imageViewerTab;
         
-        private string _imageViewerConter;
+        private string imageViewerConter;
 
-        private List<ColorComb> _combination;
+        private List<ColorComb> combination;
 
         #endregion
 
@@ -46,11 +46,11 @@ namespace Farba.ViewModel
 
         public PaletteViewModel()
         {
-            _palettes = new ObservableCollection<Palette>();
-            _activePalette = null;
-            _imageViewerTab = 0;
-            _imageViewerConter = string.Empty;
-            _combination = null;
+            palettes = new ObservableCollection<Palette>();
+            activePalette = null;
+            imageViewerTab = 0;
+            imageViewerConter = string.Empty;
+            combination = null;
         }
 
         #endregion
@@ -75,50 +75,50 @@ namespace Farba.ViewModel
 
         public ObservableCollection<Palette> Palettes
         {
-            get => _palettes;
+            get => palettes;
             set
             {
-                _palettes = value;
+                palettes = value;
                 OnPropertyChanged();
             }
         }
 
         public Palette ActivePalette
         {
-            get => _activePalette;
+            get => activePalette;
             set
             {
-                _activePalette = value;
+                activePalette = value;
                 OnPropertyChanged();
             }
         }
 
         public List<ColorComb> Combination
         {
-            get => _combination;
+            get => combination;
             set
             {
-                _combination = value;
+                combination = value;
                 OnPropertyChanged();
             }
         }
         
         public int ImageViewerTab
         {
-            get => _imageViewerTab;
+            get => imageViewerTab;
             set
             {
-                _imageViewerTab= value;
+                imageViewerTab= value;
                 OnPropertyChanged();
             }
         }
         
         public string ImageViewerCounter
         {
-            get => _imageViewerConter;
+            get => imageViewerConter;
             set
             {
-                _imageViewerConter = value;
+                imageViewerConter = value;
                 OnPropertyChanged();
             }
         }
@@ -131,70 +131,70 @@ namespace Farba.ViewModel
         {
             var fileName = DialogWindowHelper.FileDialog(FileFilter.Images);
             if(fileName != string.Empty 
-               && IsCreatePalette(fileName, _palettes))
+               && IsCreatePalette(fileName, palettes))
             {
                 var uri = new Uri(fileName);
                 var image = new BitmapImage(uri);
                 var palette = new Palette(fileName, image);
                 Palettes.Add(palette);
                 ActivePalette = palette;
-                ImageViewerCounter = GetCurrentImageCountStringFormat(palette, _palettes);
+                ImageViewerCounter = GetCurrentImageCountStringFormat(palette, palettes);
             }
         }
         
         private void OnCreatePalette(object parameter)
         {
             List<ClusterColor> clusterColor = Handler.RandomColor(5);
-            _activePalette.Cluster = clusterColor;
-            ActivePalette.IsProcess = false;
+            activePalette.Cluster = clusterColor;
+            activePalette.IsProcess = false;
             SetCombination();
         }
 
         private void OmRemovePalette(object parameter)
         {
-            int count = _palettes.Count;
+            int count = palettes.Count;
             if (count > 0)
             {
-                int index = _palettes.IndexOf(_activePalette);
-                Palettes.Remove(ActivePalette);
-                count = _palettes.Count;
+                int index = palettes.IndexOf(activePalette);
+                Palettes.Remove(activePalette);
+                count = palettes.Count;
                 if (count > 0)
                 {
                     if (index == count) index--;
-                    ActivePalette = _palettes[index];
+                    ActivePalette = palettes[index];
                 }
-                ImageViewerCounter = GetCurrentImageCountStringFormat(_activePalette, _palettes);
+                ImageViewerCounter = GetCurrentImageCountStringFormat(activePalette, palettes);
             }
         }
 
         private void OnNextImage(object parameter)
         {
-            int count = _palettes.Count,
-                index = _palettes.IndexOf(ActivePalette);
+            int count = palettes.Count,
+                index = palettes.IndexOf(activePalette);
             if (count > 1 && index != count - 1)
             {
-                ActivePalette = _palettes[index + 1];
+                ActivePalette = palettes[index + 1];
             }
-            ImageViewerCounter = GetCurrentImageCountStringFormat(_activePalette, _palettes);
+            ImageViewerCounter = GetCurrentImageCountStringFormat(activePalette, palettes);
         }
 
         private void OnPrevImage(object parameter)
         {
-            int count = _palettes.Count,
-                index = _palettes.IndexOf(ActivePalette);
+            int count = palettes.Count,
+                index = palettes.IndexOf(activePalette);
             if(count > 1 && index != 0)
             {
-                ActivePalette = _palettes[index - 1];
+                ActivePalette = palettes[index - 1];
             }
-            ImageViewerCounter = GetCurrentImageCountStringFormat(_activePalette, _palettes);
+            ImageViewerCounter = GetCurrentImageCountStringFormat(activePalette, palettes);
         }
 
         private void OnSwitchFirstTabImageViewer(object parameter)
         {
-            if (ActivePalette != null)
+            if (activePalette != null)
             {
                 ImageViewerTab = 0;
-                ImageViewerCounter = GetCurrentImageCountStringFormat(_activePalette, _palettes);
+                ImageViewerCounter = GetCurrentImageCountStringFormat(activePalette, palettes);
             }
         }
 
@@ -204,27 +204,27 @@ namespace Farba.ViewModel
 
         private bool CanCreatePalette(object parameter)
         {
-            return _activePalette != null
-                   && _activePalette.IsProcess == true; 
+            return activePalette != null
+                   && activePalette.IsProcess == true; 
         }
 
         private bool CanRemovePalette(object parameter)
         {
-            return _palettes.Count > 0;
+            return palettes.Count > 0;
         }
 
         private bool CanPrevImage(object parameter)
         {
-            return _palettes.Count > 1
-                   && _palettes[0] != _activePalette;
+            return palettes.Count > 1
+                   && palettes[0] != activePalette;
         }
 
         private bool CanNextImage(object parameter)
         {
-            var palettesCount = _palettes.Count;
+            var palettesCount = palettes.Count;
 
             return palettesCount > 1
-                   && _palettes[palettesCount - 1] != _activePalette;
+                   && palettes[palettesCount - 1] != activePalette;
         }
 
         #endregion
@@ -233,24 +233,24 @@ namespace Farba.ViewModel
 
         private void SetCombination()
         {
-            int length = _activePalette.Cluster.Count;
+            int length = activePalette.Cluster.Count;
             List<ColorComb> combList = new List<ColorComb>();
             for (int i = 0; i < length - 1; i++)
             {
                 for (int j = i + 1; j < length; j++)
                 {
                     ColorComb cc = new ColorComb(
-                        _activePalette.Cluster[i].Hex,
-                        _activePalette.Cluster[j].Hex,
-                        _activePalette.Cluster[i].Brush,
-                        _activePalette.Cluster[j].Brush
+                        activePalette.Cluster[i].Hex,
+                        activePalette.Cluster[j].Hex,
+                        activePalette.Cluster[i].Brush,
+                        activePalette.Cluster[j].Brush
                     );
                     combList.Add(cc);
                 }
             }
             int count = CombinationCount(length, 2);
-            _activePalette.Count = count != -1 ? count.ToString() : String.Empty;
-            _activePalette.Comb = combList;
+            activePalette.Count = count != -1 ? count.ToString() : String.Empty;
+            activePalette.Comb = combList;
         }
 
         public int Factorial(int n)
