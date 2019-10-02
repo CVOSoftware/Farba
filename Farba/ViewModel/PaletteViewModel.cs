@@ -18,7 +18,7 @@ namespace Farba.ViewModel
 
         private RelayCommand createPaletteCommand;
 
-        private RelayCommand removeImageCommand;
+        private RelayCommand removePaletteCommand;
 
         private RelayCommand switchFirstTabImageViewerCommand;
 
@@ -67,7 +67,7 @@ namespace Farba.ViewModel
 
         public ICommand CreatePaletteCommand => RelayCommand.Register(ref createPaletteCommand, OnCreatePalette, CanCreatePalette);
 
-        public ICommand RemoveImageCommand => RelayCommand.Register(ref removeImageCommand, OmRemoveImage, CanRemoveImageCommand);
+        public ICommand RemovePaletteCommand => RelayCommand.Register(ref removePaletteCommand, OmRemovePalette, CanRemovePalette);
 
         public ICommand NextImageCommand => RelayCommand.Register(ref nextImageCommand, OnNextImage);
 
@@ -177,7 +177,7 @@ namespace Farba.ViewModel
             SetCombination();
         }
 
-        private void OmRemoveImage(object parameter)
+        private void OmRemovePalette(object parameter)
         {
             int count = _palettes.Count;
             if (count > 0)
@@ -239,7 +239,7 @@ namespace Farba.ViewModel
                    && _activePalette.IsProcess == true; 
         }
 
-        private bool CanRemoveImageCommand( object parameter)
+        private bool CanRemovePalette( object parameter)
         {
             return _palettes.Count > 0;
         }
