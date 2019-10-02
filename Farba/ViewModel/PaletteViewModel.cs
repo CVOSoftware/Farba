@@ -36,8 +36,6 @@ namespace Farba.ViewModel
 
         private int _imageViewerTab;
 
-        private bool _processState;
-
         private bool _deleteState;
 
         private bool _leftArrowState;
@@ -57,7 +55,6 @@ namespace Farba.ViewModel
             _palettes = new ObservableCollection<Palette>();
             _activePalette = null;
             _imageViewerTab = 0;
-            _processState = false;
             _deleteState = false;
             _leftArrowState = false;
             _rightArrowState = false;
@@ -70,12 +67,17 @@ namespace Farba.ViewModel
         #region CommandProperties
 
         public ICommand SelectImageCommand => RelayCommand.Register(ref selectImageCommand, OnSelectImage);
-        public ICommand CreatePaletteCommand => RelayCommand.Register(ref createPaletteCommand, OnCreatePalette);
+
+        public ICommand CreatePaletteCommand => RelayCommand.Register(ref createPaletteCommand, OnCreatePalette, CanCreatePalette);
+
         public ICommand RemoveImageCommand => RelayCommand.Register(ref removeImageCommand, OmRemoveImage);
-        public ICommand SwitchFirstTabImageViewerCommand => RelayCommand.Register(ref switchFirstTabImageViewerCommand, OnSwitchFirstTabImageViewer);
+
         public ICommand NextImageCommand => RelayCommand.Register(ref nextImageCommand, OnNextImage);
+
         public ICommand PrevImageCommand => RelayCommand.Register(ref prevImageCommand, OnPrevImage);
-        
+
+        public ICommand SwitchFirstTabImageViewerCommand => RelayCommand.Register(ref switchFirstTabImageViewerCommand, OnSwitchFirstTabImageViewer);
+
         #endregion
 
         #region ViewModelProperties
@@ -120,16 +122,6 @@ namespace Farba.ViewModel
             }
         }
         
-        public bool ProcessState
-        {
-            get => _processState;
-            set
-            {
-                _processState = value;
-                OnPropertyChanged();
-            }
-        }
-
         public bool DeleteState
         {
             get => _deleteState;
@@ -173,7 +165,8 @@ namespace Farba.ViewModel
         #endregion
 
         #region CommandExecuteMethods
-        private void OnSelectImage(object o)
+
+        private void OnSelectImage(object parameter)
         {
             var fileName = DialogWindowHelper.FileDialog(FileFilter.Images);
             if(fileName != string.Empty 
@@ -187,20 +180,18 @@ namespace Farba.ViewModel
                 DeleteState = true;
                 ImageViewerCounter = GetCurrentImageCountStringFormat(palette, _palettes);
             }
-            ProcessState = true;
             SwitchArrowState();
         }
         
-        private void OnCreatePalette(object o)
+        private void OnCreatePalette(object parameter)
         {
             List<ClusterColor> clusterColor = Handler.RandomColor(5);
             _activePalette.Cluster = clusterColor;
             ActivePalette.IsProcess = false;
-            ProcessState = ActivePalette.IsProcess;
             SetCombination();
         }
 
-        private void OmRemoveImage(object o)
+        private void OmRemoveImage(object parameter)
         {
             int count = _palettes.Count;
             if (count > 0)
@@ -212,56 +203,60 @@ namespace Farba.ViewModel
                 {
                     if (index == count) index--;
                     ActivePalette = _palettes[index];
-                    ProcessState = ActivePalette.IsProcess;
                 }
                 ImageViewerCounter = GetCurrentImageCountStringFormat(_activePalette, _palettes);
             }
             if (count == 0)
             {
-                ProcessState = false;
                 DeleteState = false;
             }
             SwitchArrowState();
-            GC.Collect();
         }
 
-        private void OnNextImage(object o)
+        private void OnNextImage(object parameter)
         {
             int count = _palettes.Count,
                 index = _palettes.IndexOf(ActivePalette);
             if (count > 1 && index != count - 1)
             {
                 ActivePalette = _palettes[index + 1];
-                ProcessState = ActivePalette.IsProcess;
             }
             SwitchArrowState();
             ImageViewerCounter = GetCurrentImageCountStringFormat(_activePalette, _palettes);
         }
 
-        private void OnPrevImage(object o)
+        private void OnPrevImage(object parameter)
         {
             int count = _palettes.Count,
                 index = _palettes.IndexOf(ActivePalette);
             if(count > 1 && index != 0)
             {
                 ActivePalette = _palettes[index - 1];
-                ProcessState = ActivePalette.IsProcess;
             }
             SwitchArrowState();
             ImageViewerCounter = GetCurrentImageCountStringFormat(_activePalette, _palettes);
         }
 
-        private void OnSwitchFirstTabImageViewer(object o)
+        private void OnSwitchFirstTabImageViewer(object parameter)
         {
             if (ActivePalette != null)
             {
-                ProcessState = ActivePalette.IsProcess;
                 ImageViewerTab = 0;
                 SwitchArrowState();
                 ImageViewerCounter = GetCurrentImageCountStringFormat(_activePalette, _palettes);
             }
         }
-        
+
+        #endregion
+
+        #region CommandCanExecuteMethods
+
+        private bool CanCreatePalette(object parameter)
+        {
+            return _activePalette != null
+                   && _activePalette.IsProcess == true; 
+        }
+
         #endregion
 
         #region ViewModelHelperMethods
@@ -319,7 +314,11 @@ namespace Farba.ViewModel
             }
             return -1;
         }
-        
+
+        #endregion
+
+        #region ViewModelStaticHelperMethods
+
         private static bool IsCreatePalette(string fileName, ObservableCollection<Palette> palettes)
         {
             var isFile = true;
