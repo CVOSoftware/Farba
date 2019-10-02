@@ -87,7 +87,6 @@
                                         Grid.Column="3"
                                         Margin="5,10,5,10"
                                         Command="{Binding PrevImageCommand}"
-                                        IsEnabled="{Binding LeftArrowState}"
                                         Style="{StaticResource ResourceKey=@Style/Button}">
                                         <Image Source="{StaticResource ResourceKey=@Image/Left}" />
                                     </Button>
@@ -95,7 +94,6 @@
                                         Grid.Column="4"
                                         Margin="5,10,10,10"
                                         Command="{Binding NextImageCommand}"
-                                        IsEnabled="{Binding RightArrowState}"
                                         Style="{StaticResource ResourceKey=@Style/Button}">
                                         <Image Source="{StaticResource ResourceKey=@Image/Right}" />
                                     </Button>

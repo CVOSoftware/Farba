@@ -22,9 +22,9 @@ namespace Farba.ViewModel
 
         private RelayCommand switchFirstTabImageViewerCommand;
 
-        private RelayCommand nextImageCommand;
-
         private RelayCommand prevImageCommand;
+
+        private RelayCommand nextImageCommand;
 
         #endregion
 
@@ -35,11 +35,7 @@ namespace Farba.ViewModel
         private Palette _activePalette;
 
         private int _imageViewerTab;
-
-        private bool _leftArrowState;
-
-        private bool _rightArrowState;
-
+        
         private string _imageViewerConter;
 
         private List<ColorComb> _combination;
@@ -53,8 +49,6 @@ namespace Farba.ViewModel
             _palettes = new ObservableCollection<Palette>();
             _activePalette = null;
             _imageViewerTab = 0;
-            _leftArrowState = false;
-            _rightArrowState = false;
             _imageViewerConter = string.Empty;
             _combination = null;
         }
@@ -69,9 +63,9 @@ namespace Farba.ViewModel
 
         public ICommand RemovePaletteCommand => RelayCommand.Register(ref removePaletteCommand, OmRemovePalette, CanRemovePalette);
 
-        public ICommand NextImageCommand => RelayCommand.Register(ref nextImageCommand, OnNextImage);
+        public ICommand PrevImageCommand => RelayCommand.Register(ref prevImageCommand, OnPrevImage, CanPrevImage);
 
-        public ICommand PrevImageCommand => RelayCommand.Register(ref prevImageCommand, OnPrevImage);
+        public ICommand NextImageCommand => RelayCommand.Register(ref nextImageCommand, OnNextImage, CanNextImage);
 
         public ICommand SwitchFirstTabImageViewerCommand => RelayCommand.Register(ref switchFirstTabImageViewerCommand, OnSwitchFirstTabImageViewer);
 
@@ -119,26 +113,6 @@ namespace Farba.ViewModel
             }
         }
         
-        public bool LeftArrowState
-        {
-            get => _leftArrowState;
-            set
-            {
-                _leftArrowState = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool RightArrowState
-        {
-            get => _rightArrowState;
-            set
-            {
-                _rightArrowState = value;
-                OnPropertyChanged();
-            }
-        }
-        
         public string ImageViewerCounter
         {
             get => _imageViewerConter;
@@ -166,7 +140,6 @@ namespace Farba.ViewModel
                 ActivePalette = palette;
                 ImageViewerCounter = GetCurrentImageCountStringFormat(palette, _palettes);
             }
-            SwitchArrowState();
         }
         
         private void OnCreatePalette(object parameter)
@@ -192,7 +165,6 @@ namespace Farba.ViewModel
                 }
                 ImageViewerCounter = GetCurrentImageCountStringFormat(_activePalette, _palettes);
             }
-            SwitchArrowState();
         }
 
         private void OnNextImage(object parameter)
@@ -203,7 +175,6 @@ namespace Farba.ViewModel
             {
                 ActivePalette = _palettes[index + 1];
             }
-            SwitchArrowState();
             ImageViewerCounter = GetCurrentImageCountStringFormat(_activePalette, _palettes);
         }
 
@@ -215,7 +186,6 @@ namespace Farba.ViewModel
             {
                 ActivePalette = _palettes[index - 1];
             }
-            SwitchArrowState();
             ImageViewerCounter = GetCurrentImageCountStringFormat(_activePalette, _palettes);
         }
 
@@ -224,7 +194,6 @@ namespace Farba.ViewModel
             if (ActivePalette != null)
             {
                 ImageViewerTab = 0;
-                SwitchArrowState();
                 ImageViewerCounter = GetCurrentImageCountStringFormat(_activePalette, _palettes);
             }
         }
@@ -239,30 +208,28 @@ namespace Farba.ViewModel
                    && _activePalette.IsProcess == true; 
         }
 
-        private bool CanRemovePalette( object parameter)
+        private bool CanRemovePalette(object parameter)
         {
             return _palettes.Count > 0;
+        }
+
+        private bool CanPrevImage(object parameter)
+        {
+            return _palettes.Count > 1
+                   && _palettes[0] != _activePalette;
+        }
+
+        private bool CanNextImage(object parameter)
+        {
+            var palettesCount = _palettes.Count;
+
+            return palettesCount > 1
+                   && _palettes[palettesCount - 1] != _activePalette;
         }
 
         #endregion
 
         #region ViewModelHelperMethods
-
-        private void SwitchArrowState()
-        {
-            int count = _palettes.Count,
-                index = _palettes.IndexOf(_activePalette);
-            if(count > 1)
-            {
-                LeftArrowState = index == 0 ? false : true;
-                RightArrowState = index == count - 1 ? false : true;
-            }
-            else
-            {
-                LeftArrowState = false;
-                RightArrowState = false;
-            }
-        }
 
         private void SetCombination()
         {
