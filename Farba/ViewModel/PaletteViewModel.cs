@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Windows.Input;
-using Microsoft.Win32;
 using System.Windows.Media.Imaging;
 using Farba.Common;
 using Farba.Helpers;
@@ -177,31 +176,16 @@ namespace Farba.ViewModel
         private void OnSelectImage(object o)
         {
             var fileName = DialogWindowHelper.FileDialog(FileFilter.Images);
-            if(fileName != string.Empty)
+            if(fileName != string.Empty 
+               && IsCreatePalette(fileName, _palettes))
             {
-                bool match = true;
-                int count = _palettes.Count;
-                if (count > 0)
-                {
-                    for (int i = 0; i < count; i++)
-                    {
-                        if (_palettes[i].FileName == fileName)
-                        {
-                            match = false;
-                            break;
-                        }
-                    }
-                }
-                if (match)
-                {
-                    Uri uri = new Uri(fileName);
-                    BitmapImage image = new BitmapImage(uri);
-                    Palette palette = new Palette(fileName, image);
-                    Palettes.Add(palette);
-                    ActivePalette = palette;
-                    DeleteState = true;
-                    ImageViewerCounterFormat();
-                }
+                var uri = new Uri(fileName);
+                var image = new BitmapImage(uri);
+                var palette = new Palette(fileName, image);
+                Palettes.Add(palette);
+                ActivePalette = palette;
+                DeleteState = true;
+                ImageViewerCounter = GetCurrentImageCountStringFormat(palette, _palettes);
             }
             ProcessState = true;
             SwitchArrowState();
@@ -230,7 +214,7 @@ namespace Farba.ViewModel
                     ActivePalette = _palettes[index];
                     ProcessState = ActivePalette.IsProcess;
                 }
-                ImageViewerCounterFormat();
+                ImageViewerCounter = GetCurrentImageCountStringFormat(_activePalette, _palettes);
             }
             if (count == 0)
             {
@@ -251,7 +235,7 @@ namespace Farba.ViewModel
                 ProcessState = ActivePalette.IsProcess;
             }
             SwitchArrowState();
-            ImageViewerCounterFormat();
+            ImageViewerCounter = GetCurrentImageCountStringFormat(_activePalette, _palettes);
         }
 
         private void OnPrevImage(object o)
@@ -264,7 +248,7 @@ namespace Farba.ViewModel
                 ProcessState = ActivePalette.IsProcess;
             }
             SwitchArrowState();
-            ImageViewerCounterFormat();
+            ImageViewerCounter = GetCurrentImageCountStringFormat(_activePalette, _palettes);
         }
 
         private void OnSwitchFirstTabImageViewer(object o)
@@ -274,13 +258,13 @@ namespace Farba.ViewModel
                 ProcessState = ActivePalette.IsProcess;
                 ImageViewerTab = 0;
                 SwitchArrowState();
-                ImageViewerCounterFormat();
+                ImageViewerCounter = GetCurrentImageCountStringFormat(_activePalette, _palettes);
             }
         }
         
         #endregion
 
-        #region Methods
+        #region ViewModelHelperMethods
 
         private void SwitchArrowState()
         {
@@ -296,22 +280,6 @@ namespace Farba.ViewModel
                 LeftArrowState = false;
                 RightArrowState = false;
             }
-        }
-
-        private void ImageViewerCounterFormat()
-        {
-            int count = _palettes.Count,
-                index = _palettes.IndexOf(_activePalette) + 1;
-            string format = String.Empty;
-            if(count == 1)
-            {
-                format = "1";
-            }
-            else if (count > 1)
-            {
-                format = index + "/" + count;
-            }
-            ImageViewerCounter = format;
         }
 
         private void SetCombination()
@@ -352,6 +320,41 @@ namespace Farba.ViewModel
             return -1;
         }
         
+        private static bool IsCreatePalette(string fileName, ObservableCollection<Palette> palettes)
+        {
+            var isFile = true;
+            var palettesCount = palettes.Count;
+            if (palettesCount > 0)
+            {
+                for (int i = 0; i < palettesCount; i++)
+                {
+                    if (palettes[i].FileName == fileName)
+                    {
+                        isFile = false;
+                        break;
+                    }
+                }
+            }
+            return isFile;
+        }
+
+        private static string GetCurrentImageCountStringFormat(Palette current, ObservableCollection<Palette> palettes)
+        {
+            var count = palettes.Count;
+            
+            if(count == 1)
+            {
+                return $"{count}";
+            }
+            else if(count > 1)
+            {
+                var index = palettes.IndexOf(current) + 1;
+                return $"{index}/{count}";
+            }
+
+            return string.Empty;
+        }
+
         #endregion
     }
 }
