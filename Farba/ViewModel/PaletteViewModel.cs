@@ -36,8 +36,6 @@ namespace Farba.ViewModel
 
         private int _imageViewerTab;
 
-        private bool _deleteState;
-
         private bool _leftArrowState;
 
         private bool _rightArrowState;
@@ -55,7 +53,6 @@ namespace Farba.ViewModel
             _palettes = new ObservableCollection<Palette>();
             _activePalette = null;
             _imageViewerTab = 0;
-            _deleteState = false;
             _leftArrowState = false;
             _rightArrowState = false;
             _imageViewerConter = string.Empty;
@@ -70,7 +67,7 @@ namespace Farba.ViewModel
 
         public ICommand CreatePaletteCommand => RelayCommand.Register(ref createPaletteCommand, OnCreatePalette, CanCreatePalette);
 
-        public ICommand RemoveImageCommand => RelayCommand.Register(ref removeImageCommand, OmRemoveImage);
+        public ICommand RemoveImageCommand => RelayCommand.Register(ref removeImageCommand, OmRemoveImage, CanRemoveImageCommand);
 
         public ICommand NextImageCommand => RelayCommand.Register(ref nextImageCommand, OnNextImage);
 
@@ -122,16 +119,6 @@ namespace Farba.ViewModel
             }
         }
         
-        public bool DeleteState
-        {
-            get => _deleteState;
-            set
-            {
-                _deleteState = value;
-                OnPropertyChanged();
-            }
-        }
-        
         public bool LeftArrowState
         {
             get => _leftArrowState;
@@ -177,7 +164,6 @@ namespace Farba.ViewModel
                 var palette = new Palette(fileName, image);
                 Palettes.Add(palette);
                 ActivePalette = palette;
-                DeleteState = true;
                 ImageViewerCounter = GetCurrentImageCountStringFormat(palette, _palettes);
             }
             SwitchArrowState();
@@ -205,10 +191,6 @@ namespace Farba.ViewModel
                     ActivePalette = _palettes[index];
                 }
                 ImageViewerCounter = GetCurrentImageCountStringFormat(_activePalette, _palettes);
-            }
-            if (count == 0)
-            {
-                DeleteState = false;
             }
             SwitchArrowState();
         }
@@ -255,6 +237,11 @@ namespace Farba.ViewModel
         {
             return _activePalette != null
                    && _activePalette.IsProcess == true; 
+        }
+
+        private bool CanRemoveImageCommand( object parameter)
+        {
+            return _palettes.Count > 0;
         }
 
         #endregion

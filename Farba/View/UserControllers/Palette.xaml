@@ -77,7 +77,6 @@
                                         Margin="5,10,5,10"
                                         Command="{Binding RemoveImageCommand}"
                                         Content="{StaticResource ResourceKey=@String/DeleteButton}"
-                                        IsEnabled="{Binding DeleteState}"
                                         Style="{StaticResource ResourceKey=@Style/Button}" />
                                     <TextBlock
                                         Grid.Column="2"
