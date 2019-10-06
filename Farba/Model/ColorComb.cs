@@ -9,28 +9,28 @@ namespace Farba.Model
 {
     class ColorComb
     {
-        #region Fields
-        private string _hexOne;
-        private string _hexTwo;
-        private SolidColorBrush _brushOne;
-        private SolidColorBrush _brushTwo;
-        #endregion
-
         #region Constructor
+
         public ColorComb(string hexOne, string hexTwo, SolidColorBrush brushOne, SolidColorBrush brushTwo)
         {
-            this._hexOne = hexOne;
-            this._hexTwo = hexTwo;
-            this._brushOne = brushOne;
-            this._brushTwo = brushTwo;
+            HexOne = hexOne;
+            HexTwo = hexTwo;
+            BrushOne = brushOne;
+            BrushTwo = brushTwo;
         }
+
         #endregion
 
         #region Properties
-        public string HexOne => _hexOne;
-        public string HexTwo => _hexTwo;
-        public SolidColorBrush BrushOne => _brushOne;
-        public SolidColorBrush BrushTwo => _brushTwo;
+
+        public string HexOne { get; }
+
+        public string HexTwo { get; }
+
+        public SolidColorBrush BrushOne { get; }
+
+        public SolidColorBrush BrushTwo { get; }
+
         #endregion
     }
 }

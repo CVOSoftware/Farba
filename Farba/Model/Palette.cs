@@ -41,11 +41,7 @@ namespace Farba.Model
         public string ColorCombination
         {
             get => colorCombination;
-            set
-            {
-                colorCombination = value;
-                OnPropertyChanged();
-            }
+            set => SetValue(ref colorCombination, value);
         }
 
         public BitmapImage Image { get; }
@@ -53,21 +49,13 @@ namespace Farba.Model
         public List<ClusterColor> Cluster
         {
             get => cluster;
-            set
-            {
-                cluster = value;
-                OnPropertyChanged();
-            }
+            set => SetValue(ref cluster, value);
         }
 
         public List<ColorComb> Comb
         {
             get => comb;
-            set
-            {
-                comb = value;
-                OnPropertyChanged();
-            }
+            set => SetValue(ref comb, value);
         }
 
         #endregion

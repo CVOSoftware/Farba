@@ -76,51 +76,31 @@ namespace Farba.ViewModel
         public ObservableCollection<Palette> Palettes
         {
             get => palettes;
-            set
-            {
-                palettes = value;
-                OnPropertyChanged();
-            }
+            set => SetValue(ref palettes, value);
         }
 
         public Palette ActivePalette
         {
             get => activePalette;
-            set
-            {
-                activePalette = value;
-                OnPropertyChanged();
-            }
+            set => SetValue(ref activePalette, value);
         }
 
         public List<ColorComb> Combination
         {
             get => combination;
-            set
-            {
-                combination = value;
-                OnPropertyChanged();
-            }
+            set => SetValue(ref combination, value);
         }
         
         public int ImageViewerTab
         {
             get => imageViewerTab;
-            set
-            {
-                imageViewerTab= value;
-                OnPropertyChanged();
-            }
+            set => SetValue(ref imageViewerTab, value);
         }
         
         public string ImageViewerCounter
         {
             get => imageViewerConter;
-            set
-            {
-                imageViewerConter = value;
-                OnPropertyChanged();
-            }
+            set => SetValue(ref imageViewerConter, value);
         }
         
         #endregion

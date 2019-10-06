@@ -67,6 +67,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helpers\DialogWindowHelper.cs" />
+    <Compile Include="Helpers\UIHelper.cs" />
     <Compile Include="View\UserControllers\Converter.xaml.cs">
       <DependentUpon>Converter.xaml</DependentUpon>
     </Compile>
