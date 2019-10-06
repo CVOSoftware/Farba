@@ -54,6 +54,19 @@
         </Setter>
     </Style>
 
+    <Style x:Key="@Style/RepeatButton" TargetType="{x:Type RepeatButton}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Grid Background="Transparent">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style x:Key="@Style/TabControl" TargetType="TabControl">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -194,17 +207,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Rectangle x:Name="Thumbs" Fill="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}" />
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource ResourceKey=@Storyboard/ScrollbarMouseOver}" />
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource ResourceKey=@Storyboard/ScrollbarMouseDown}" />
-                            </Trigger.ExitActions>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
+                    <Rectangle x:Name="Thumbs" Fill="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -218,9 +221,15 @@
                 <ControlTemplate TargetType="{x:Type ScrollBar}">
                     <Grid Background="{StaticResource ResourceKey=@SolidColorBrush/DoubleGray60}">
                         <Track Name="PART_Track" IsDirectionReversed="True">
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton Style="{StaticResource ResourceKey=@Style/RepeatButton}" Command="ScrollBar.PageDownCommand"/>
+                            </Track.IncreaseRepeatButton>
                             <Track.Thumb>
                                 <Thumb Style="{StaticResource ResourceKey=@Style/Thumb}" />
                             </Track.Thumb>
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Style="{StaticResource ResourceKey=@Style/RepeatButton}" Command="ScrollBar.PageUpCommand"/>
+                            </Track.DecreaseRepeatButton>
                         </Track>
                     </Grid>
                     <ControlTemplate.Triggers>
