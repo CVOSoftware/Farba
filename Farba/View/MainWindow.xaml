@@ -26,7 +26,7 @@
                     <uc:Palette/>
                 </TabItem.Content>
             </TabItem>
-            <TabItem Style="{StaticResource ResourceKey=@Style/TabItem}" DataContext="{Binding PaletteVM.ConverterVM}">
+            <TabItem Style="{StaticResource ResourceKey=@Style/TabItem}" DataContext="{Binding PaletteVM.ConverterVM}" Visibility="Collapsed">
                 <TabItem.Header>
                     <Image
                         Width="30"
