@@ -242,11 +242,7 @@ namespace Farba.ViewModel
 
         public int CombinationCount(int n, int k)
         {
-            if(k > 0 && k <= n)
-            {
-                return Factorial(n) / (Factorial(n - k) * Factorial(k));
-            }
-            return -1;
+            return k > 0 && k <= n ? Factorial(n) / (Factorial(n - k) * Factorial(k)) : -1;
         }
 
         #endregion
