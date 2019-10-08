@@ -2,7 +2,6 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:Behaviors="clr-namespace:Farba.Common.Behaviors"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"   
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
@@ -108,9 +107,6 @@
                                     ItemsSource="{Binding Palettes}"
                                     SelectedItem="{Binding ActivePalette}"
                                     Style="{StaticResource ResourceKey=@Style/ListBoxImagesViewer}">
-                                    <i:Interaction.Behaviors>
-                                        <Behaviors:ScrollToSelectBottom />
-                                    </i:Interaction.Behaviors>
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseLeftButtonUp">
                                             <i:InvokeCommandAction Command="{Binding SwitchFirstTabImageViewerCommand}" />

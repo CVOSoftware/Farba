@@ -124,7 +124,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\Behaviors\ScrollToSelectBottom.cs" />
     <Compile Include="Common\Command.cs" />
     <Compile Include="Common\Converter.cs" />
     <Compile Include="Common\BaseViewModel.cs" />
