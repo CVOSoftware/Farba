@@ -6,5 +6,6 @@
     <Converter:BrushConverter x:Key="@Converter/BrushConverter" />
     <Converter:RGBConverter x:Key="@Converter/RGBConverter" />
     <Converter:HEXConverter x:Key="@Converter/HEXConverter" />
-
+    <Converter:AdaptiveWidthConverter x:Key="@Converter/AdaptiveWidthConverter"/>
+    <Converter:AdaptiveHeightConverter x:Key="@Converter/AdaptiveHeightConverter"/>
 </ResourceDictionary>

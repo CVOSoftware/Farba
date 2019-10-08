@@ -384,10 +384,7 @@
             <Setter.Value>
                 <DataTemplate>
                     <StackPanel>
-                        <Image
-                            Width="138"
-                            Height="100"
-                            Source="{Binding Image}" />
+                        <Image Source="{Binding Image}" Height="{Binding RelativeSource={RelativeSource Self}, Path=Width, Converter={StaticResource ResourceKey=@Converter/AdaptiveHeightConverter}}" Width="{Binding RelativeSource={RelativeSource AncestorType=ListBox}, Path=ActualWidth, Converter={StaticResource @Converter/AdaptiveWidthConverter}}"/>
                     </StackPanel>
                 </DataTemplate>
             </Setter.Value>
