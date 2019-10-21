@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Threading.Tasks;
 
-namespace Farba.Helpers
+namespace Farba.Common.Helpers
 {
     internal static class UIHelper
     {

@@ -66,8 +66,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Helpers\DialogWindowHelper.cs" />
-    <Compile Include="Helpers\UIHelper.cs" />
+    <Compile Include="Common\Clusters\ClusterColor.cs" />
+    <Compile Include="Common\Clusters\Handler.cs" />
+    <Compile Include="Common\Helpers\DialogWindowHelper.cs" />
+    <Compile Include="Common\Helpers\UIHelper.cs" />
     <Compile Include="Resources\Converters\AdaptiveHeightContainer.cs" />
     <Compile Include="Resources\Converters\AdaptiveWidthConverter.cs" />
     <Compile Include="View\UserControllers\Converter.xaml.cs">
@@ -124,17 +126,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\Command.cs" />
+    <Compile Include="ViewModel\Base\RelayCommand.cs" />
     <Compile Include="Common\Converter.cs" />
-    <Compile Include="Common\BaseViewModel.cs" />
-    <Compile Include="Model\ColorComb.cs" />
-    <Compile Include="Model\Palette.cs" />
+    <Compile Include="ViewModel\Base\BaseViewModel.cs" />
+    <Compile Include="ViewModel\ColorCombViewModel.cs" />
+    <Compile Include="ViewModel\PaletteViewModel.cs" />
     <Compile Include="Resources\Converters\BrushConverter.cs" />
     <Compile Include="Resources\Converters\HEXConverter.cs" />
     <Compile Include="Resources\Converters\RGBConverter.cs" />
     <Compile Include="ViewModel\ConverterViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\PaletteViewModel.cs" />
+    <Compile Include="ViewModel\PalettesViewModel.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -197,11 +199,7 @@
     <Resource Include="Resources\Images\List.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ImageCluster\ImageCluster.csproj">
-      <Project>{8b5710b8-7ecb-4dec-a229-7844ecfa6377}</Project>
-      <Name>ImageCluster</Name>
-    </ProjectReference>
+    <Folder Include="Common\Spaces\" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace ImageCluster
+namespace Farba.Common.Clusters
 {
     public class ClusterColor
     {

@@ -1,4 +1,4 @@
-﻿using Farba.Common;
+﻿using Farba.ViewModel.Base;
 
 namespace Farba.ViewModel
 {

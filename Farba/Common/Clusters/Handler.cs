@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Farba.Common.Clusters;
 
-namespace ImageCluster
+namespace Farba.Common.Clusters
 {
     public class Handler
     {

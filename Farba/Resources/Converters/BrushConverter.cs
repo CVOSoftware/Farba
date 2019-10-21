@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Globalization;
 using Farba.Common;
-using Farba.Model;
-using ImageCluster;
+using Farba.ViewModel;
+using Farba.Common.Clusters;
 
 namespace Farba.Resources.Converters
 {

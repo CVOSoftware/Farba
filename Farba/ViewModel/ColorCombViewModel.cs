@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
+﻿using System.Windows.Media;
+using Farba.ViewModel.Base;
 
-namespace Farba.Model
+namespace Farba.ViewModel
 {
-    class ColorComb
+    class ColorCombViewModel : BaseViewModel
     {
         #region Constructor
 
-        public ColorComb(string hexOne, string hexTwo, SolidColorBrush brushOne, SolidColorBrush brushTwo)
+        public ColorCombViewModel(string hexOne, string hexTwo, SolidColorBrush brushOne, SolidColorBrush brushTwo)
         {
             HexOne = hexOne;
             HexTwo = hexTwo;

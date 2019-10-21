@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Farba.Common
+namespace Farba.ViewModel.Base
 {
     internal class RelayCommand : ICommand
     {

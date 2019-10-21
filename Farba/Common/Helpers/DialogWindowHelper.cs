@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace Farba.Helpers
+namespace Farba.Common.Helpers
 {
     internal static class DialogWindowHelper
     {

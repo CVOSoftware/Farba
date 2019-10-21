@@ -1,4 +1,4 @@
-﻿using Farba.Common;
+﻿using Farba.ViewModel.Base;
 
 namespace Farba.ViewModel
 {
@@ -6,13 +6,13 @@ namespace Farba.ViewModel
     {
         public MainViewModel()
         {
-            PaletteVM = new PaletteViewModel();
+            PaletteVM = new PalettesViewModel();
             ConverterVM = new ConverterViewModel();
         }
 
         #region ViewModelProperties
 
-        public PaletteViewModel PaletteVM { get; }
+        public PalettesViewModel PaletteVM { get; }
 
         public ConverterViewModel ConverterVM { get; }
 

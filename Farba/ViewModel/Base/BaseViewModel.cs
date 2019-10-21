@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Farba.Helpers;
+using Farba.Common.Helpers;
 
-namespace Farba.Common
+namespace Farba.ViewModel.Base
 {
     class BaseViewModel : INotifyPropertyChanged
     {
