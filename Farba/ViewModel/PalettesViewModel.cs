@@ -5,7 +5,6 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Farba.ViewModel.Base;
 using Farba.Common.Helpers;
-using Farba.ViewModel;
 using Farba.Common.Clusters;
 
 namespace Farba.ViewModel
@@ -124,10 +123,12 @@ namespace Farba.ViewModel
         
         private void OnCreatePalette(object parameter)
         {
-            List<ClusterColor> clusterColor = Handler.RandomColor(5);
-            activePalette.Cluster = clusterColor;
-            activePalette.IsProcess = false;
-            SetCombination();
+            using (var kmeans = new Kmeans(activePalette.Image))
+            {
+                activePalette.Cluster = kmeans.GetClusters();
+                activePalette.IsProcess = false;
+                SetCombination();
+            }
         }
 
         private void OmRemovePalette(object parameter)

@@ -44,6 +44,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
@@ -67,7 +68,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\Clusters\ClusterColor.cs" />
-    <Compile Include="Common\Clusters\Handler.cs" />
+    <Compile Include="Common\Clusters\Kmeans.cs" />
+    <Compile Include="Common\Extansion\ColorExtansion.cs" />
     <Compile Include="Common\Helpers\DialogWindowHelper.cs" />
     <Compile Include="Common\Helpers\UIHelper.cs" />
     <Compile Include="Resources\Converters\AdaptiveHeightContainer.cs" />
@@ -127,7 +129,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModel\Base\RelayCommand.cs" />
-    <Compile Include="Common\Converter.cs" />
     <Compile Include="ViewModel\Base\BaseViewModel.cs" />
     <Compile Include="ViewModel\ColorCombViewModel.cs" />
     <Compile Include="ViewModel\PaletteViewModel.cs" />
@@ -198,8 +199,6 @@
     <Resource Include="Resources\Images\Tile.ico" />
     <Resource Include="Resources\Images\List.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Common\Spaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

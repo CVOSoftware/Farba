@@ -1,30 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
 using System.Windows.Media;
 using System.Globalization;
-using Farba.Common;
-using Farba.ViewModel;
-using Farba.Common.Clusters;
+using Farba.Common.Extansion;
 
 namespace Farba.Resources.Converters
 {
-    class HEXConverter : Converter
+    class HEXConverter : IValueConverter
     {
-        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Color color = (Color)value;
-            string rh = color.R.ToString("X"),
-                   gh = color.G.ToString("X"),
-                   bh = color.B.ToString("X");
-            return "HEX: #" + rh + gh + bh;
+            var format = ((Color)value).HexFormat();
+            return $"HEX: {format}";
         }
 
-        public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return DependencyProperty.UnsetValue;
         }
     }
 }
