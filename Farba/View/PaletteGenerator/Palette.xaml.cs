@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Farba.View.UserControllers
+namespace Farba.View.PaletteGenerator
 {
     public partial class Palette : UserControl
     {

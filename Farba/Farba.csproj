@@ -74,10 +74,10 @@
     <Compile Include="Common\Helpers\UIHelper.cs" />
     <Compile Include="Resources\Converters\AdaptiveHeightContainer.cs" />
     <Compile Include="Resources\Converters\AdaptiveWidthConverter.cs" />
-    <Compile Include="View\UserControllers\Converter.xaml.cs">
+    <Compile Include="View\ColorSpaceConverter\Converter.xaml.cs">
       <DependentUpon>Converter.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControllers\Palette.xaml.cs">
+    <Compile Include="View\PaletteGenerator\Palette.xaml.cs">
       <DependentUpon>Palette.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\Converters.xaml">
@@ -142,11 +142,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\UserControllers\Converter.xaml">
+    <Page Include="View\ColorSpaceConverter\Converter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControllers\Palette.xaml">
+    <Page Include="View\PaletteGenerator\Palette.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
