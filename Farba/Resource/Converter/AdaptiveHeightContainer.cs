@@ -1,18 +1,16 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
-using System.Windows.Media;
-using System.Globalization;
-using Farba.Extansion;
 
-namespace Farba.Resources.Converters
+namespace Farba.Resources.Converter
 {
-    class HEXConverter : IValueConverter
+    internal class AdaptiveHeightConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var format = ((Color)value).HexFormat();
-            return $"HEX: {format}";
+            var width = (double)value;
+            return width + width / 3.5;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

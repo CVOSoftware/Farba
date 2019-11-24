@@ -1,16 +1,17 @@
 ﻿using System;
-using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
+using System.Globalization;
+using Farba.Extansion;
 
-namespace Farba.Resources.Converters
+namespace Farba.Resources.Converter
 {
-    internal class AdaptiveWidthConverter : IValueConverter
+    class BrushConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var width = (double)value - 10;
-            return (width / 5) - 26;
+            return ((Color)value).GetBrash();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

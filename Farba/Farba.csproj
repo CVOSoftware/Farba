@@ -72,51 +72,51 @@
     <Compile Include="Extansion\ColorExtansion.cs" />
     <Compile Include="Helper\DialogWindowHelper.cs" />
     <Compile Include="Helper\UIHelper.cs" />
-    <Compile Include="Resources\Converters\AdaptiveHeightContainer.cs" />
-    <Compile Include="Resources\Converters\AdaptiveWidthConverter.cs" />
+    <Compile Include="Resource\Converter\AdaptiveHeightContainer.cs" />
+    <Compile Include="Resource\Converter\AdaptiveWidthConverter.cs" />
     <Compile Include="View\ColorSpaceConverter\Converter.xaml.cs">
       <DependentUpon>Converter.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PaletteGenerator\Palette.xaml.cs">
       <DependentUpon>Palette.xaml</DependentUpon>
     </Compile>
-    <Page Include="Resources\Converters.xaml">
+    <Page Include="Resource\Converter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Fonts.xaml">
+    <Page Include="Resource\Fonts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Images.xaml">
+    <Page Include="Resource\Images.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\String.xaml">
+    <Page Include="Resource\String.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Themes\Animation.xaml">
+    <Page Include="Resource\Theme\Animation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Themes\Brushes.xaml">
+    <Page Include="Resource\Theme\Brush.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Themes\Colors.xaml">
+    <Page Include="Resource\Theme\Color.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Themes\Effects.xaml">
+    <Page Include="Resource\Theme\Effect.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Reset.xaml">
+    <Page Include="Resource\Reset.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\Themes\Style.xaml">
+    <Page Include="Resource\Theme\Style.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -132,9 +132,9 @@
     <Compile Include="ViewModel\Base\BaseViewModel.cs" />
     <Compile Include="ViewModel\ColorCombViewModel.cs" />
     <Compile Include="ViewModel\PaletteViewModel.cs" />
-    <Compile Include="Resources\Converters\BrushConverter.cs" />
-    <Compile Include="Resources\Converters\HEXConverter.cs" />
-    <Compile Include="Resources\Converters\RGBConverter.cs" />
+    <Compile Include="Resource\Converter\BrushConverter.cs" />
+    <Compile Include="Resource\Converter\HEXConverter.cs" />
+    <Compile Include="Resource\Converter\RGBConverter.cs" />
     <Compile Include="ViewModel\ConverterViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\PalettesViewModel.cs" />
@@ -174,30 +174,30 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Resource Include="Resources\Fonts\ShareTechMono-Regular.ttf" />
+    <Resource Include="Resource\Font\ShareTechMono-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\Right.ico" />
-    <Resource Include="Resources\Images\Left.ico" />
+    <Resource Include="Resource\Image\Right.ico" />
+    <Resource Include="Resource\Image\Left.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\Converter.ico" />
+    <Resource Include="Resource\Image\Converter.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\Palette.ico" />
+    <Resource Include="Resource\Image\Palette.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\Icon.ico" />
+    <Resource Include="Resource\Image\Icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\Tile.ico" />
-    <Resource Include="Resources\Images\List.ico" />
+    <Resource Include="Resource\Image\Tile.ico" />
+    <Resource Include="Resource\Image\List.ico" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

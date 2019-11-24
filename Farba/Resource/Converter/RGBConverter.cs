@@ -5,7 +5,7 @@ using System.Windows.Media;
 using System.Globalization;
 using Farba.Extansion;
 
-namespace Farba.Resources.Converters
+namespace Farba.Resources.Converter
 {
     class RGBConverter : IValueConverter
     {

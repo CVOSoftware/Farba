@@ -1,0 +1,13 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:c="clr-namespace:Farba.Resources.Converter"
+    xmlns:local="clr-namespace:Farba.Resource">
+
+    <c:BrushConverter x:Key="@Converter/BrushConverter" />
+    <c:RGBConverter x:Key="@Converter/RGBConverter" />
+    <c:HEXConverter x:Key="@Converter/HEXConverter" />
+    <c:AdaptiveWidthConverter x:Key="@Converter/AdaptiveWidthConverter"/>
+    <c:AdaptiveHeightConverter x:Key="@Converter/AdaptiveHeightConverter"/>
+
+</ResourceDictionary>

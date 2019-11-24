@@ -1,0 +1,14 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Farba.Resource">
+
+    <BitmapImage x:Key="@Image/Icon" UriSource="pack://application:,,,/Resource/Image/Icon.ico" />
+    <BitmapImage x:Key="@Image/Palette" UriSource="pack://application:,,,/Resource/Image/Palette.ico" />
+    <BitmapImage x:Key="@Image/Converter" UriSource="pack://application:,,,/Resource/Image/Converter.ico" />
+    <BitmapImage x:Key="@Image/Tile" UriSource="pack://application:,,,/Resource/Image/Tile.ico" />
+    <BitmapImage x:Key="@Image/List" UriSource="pack://application:,,,/Resource/Image/List.ico" />
+    <BitmapImage x:Key="@Image/Left" UriSource="pack://application:,,,/Resource/Image/Left.ico" />
+    <BitmapImage x:Key="@Image/Right" UriSource="pack://application:,,,/Resource/Image/Right.ico" />
+
+</ResourceDictionary>

@@ -5,16 +5,16 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Resources/Reset.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Resources/String.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Resources/Fonts.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Resources/Images.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Resources/Converters.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Resources/Themes/Colors.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Resources/Themes/Brushes.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Resources/Themes/Effects.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Resources/Themes/Animation.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Resources/Themes/Style.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resource/Reset.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resource/String.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resource/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resource/Images.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resource/Converter.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resource/Theme/Color.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resource/Theme/Brush.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resource/Theme/Effect.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resource/Theme/Animation.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resource/Theme/Style.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
