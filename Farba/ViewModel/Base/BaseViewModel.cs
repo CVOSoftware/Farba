@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Farba.Common.Helpers;
+using Farba.Helper;
 
 namespace Farba.ViewModel.Base
 {

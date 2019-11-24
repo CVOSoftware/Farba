@@ -1,5 +1,5 @@
 ﻿using System.Windows.Media;
-using Farba.Common.Extansion;
+using Farba.Extansion;
 
 namespace Farba.Common.Clusters
 {

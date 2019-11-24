@@ -69,9 +69,9 @@
     </ApplicationDefinition>
     <Compile Include="Common\Clusters\ClusterColor.cs" />
     <Compile Include="Common\Clusters\Kmeans.cs" />
-    <Compile Include="Common\Extansion\ColorExtansion.cs" />
-    <Compile Include="Common\Helpers\DialogWindowHelper.cs" />
-    <Compile Include="Common\Helpers\UIHelper.cs" />
+    <Compile Include="Extansion\ColorExtansion.cs" />
+    <Compile Include="Helper\DialogWindowHelper.cs" />
+    <Compile Include="Helper\UIHelper.cs" />
     <Compile Include="Resources\Converters\AdaptiveHeightContainer.cs" />
     <Compile Include="Resources\Converters\AdaptiveWidthConverter.cs" />
     <Compile Include="View\ColorSpaceConverter\Converter.xaml.cs">

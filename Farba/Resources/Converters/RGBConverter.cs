@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Globalization;
-using Farba.Common.Extansion;
+using Farba.Extansion;
 
 namespace Farba.Resources.Converters
 {

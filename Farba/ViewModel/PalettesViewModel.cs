@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Farba.ViewModel.Base;
-using Farba.Common.Helpers;
+using Farba.Helper;
 using Farba.Common.Clusters;
 
 namespace Farba.ViewModel
