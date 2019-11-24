@@ -74,11 +74,14 @@
     <Compile Include="Helper\UIHelper.cs" />
     <Compile Include="Resource\Converter\AdaptiveHeightContainer.cs" />
     <Compile Include="Resource\Converter\AdaptiveWidthConverter.cs" />
-    <Compile Include="View\ColorSpaceConverter\Converter.xaml.cs">
-      <DependentUpon>Converter.xaml</DependentUpon>
+    <Compile Include="View\Component\ColorConverter.xaml.cs">
+      <DependentUpon>ColorConverter.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PaletteGenerator\Palette.xaml.cs">
-      <DependentUpon>Palette.xaml</DependentUpon>
+    <Compile Include="View\Component\ImageViewer.xaml.cs">
+      <DependentUpon>ImageViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Component\PaletteGenerator.xaml.cs">
+      <DependentUpon>PaletteGenerator.xaml</DependentUpon>
     </Compile>
     <Page Include="Resource\Converter.xaml">
       <SubType>Designer</SubType>
@@ -120,6 +123,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Component\ImageViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Component\PaletteGeneratorMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Component\PaletteGeneratorSidebar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Component\PaletteList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -138,15 +157,24 @@
     <Compile Include="ViewModel\ConverterViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\PalettesViewModel.cs" />
+    <Compile Include="View\Component\PaletteGeneratorMain.xaml.cs">
+      <DependentUpon>PaletteGeneratorMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Component\PaletteGeneratorSidebar.xaml.cs">
+      <DependentUpon>PaletteGeneratorSidebar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Component\PaletteList.xaml.cs">
+      <DependentUpon>PaletteList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\ColorSpaceConverter\Converter.xaml">
+    <Page Include="View\Component\ColorConverter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\PaletteGenerator\Palette.xaml">
+    <Page Include="View\Component\PaletteGenerator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -199,6 +227,8 @@
     <Resource Include="Resource\Image\Tile.ico" />
     <Resource Include="Resource\Image\List.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resource\Image\SaveList.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,6 +6,7 @@
     <BitmapImage x:Key="@Image/Icon" UriSource="pack://application:,,,/Resource/Image/Icon.ico" />
     <BitmapImage x:Key="@Image/Palette" UriSource="pack://application:,,,/Resource/Image/Palette.ico" />
     <BitmapImage x:Key="@Image/Converter" UriSource="pack://application:,,,/Resource/Image/Converter.ico" />
+    <BitmapImage x:Key="@Image/SaveList" UriSource="pack://application:,,,/Resource/Image/SaveList.ico" />
     <BitmapImage x:Key="@Image/Tile" UriSource="pack://application:,,,/Resource/Image/Tile.ico" />
     <BitmapImage x:Key="@Image/List" UriSource="pack://application:,,,/Resource/Image/List.ico" />
     <BitmapImage x:Key="@Image/Left" UriSource="pack://application:,,,/Resource/Image/Left.ico" />
