@@ -6,7 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:local="clr-namespace:Farba.View.Component"
     mc:Ignorable="d" 
-    d:DesignHeight="800" d:DesignWidth="240">
+    d:DesignHeight="800" 
+    d:DesignWidth="240">
     <StackPanel Style="{StaticResource ResourceKey=@Style/BackgroundControll}">
         <Grid Margin="20">
             <Grid.RowDefinitions>

@@ -16,6 +16,10 @@
         <Setter Property="Background" Value="{StaticResource ResourceKey=@SolidColorBrush/DoubleGray60}" />
     </Style>
 
+    <Style x:Key="@Style/BackgroundMegaGray" TargetType="Panel">
+        <Setter Property="Background" Value="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}"/>
+    </Style>
+
     <Style x:Key="@Style/Button" TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -577,7 +581,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBox}">
-                    <Border>
+                    <Border Padding="10, 0">
                         <ItemsPresenter />
                     </Border>
                 </ControlTemplate>
