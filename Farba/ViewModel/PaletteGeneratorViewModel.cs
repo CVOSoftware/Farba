@@ -110,14 +110,14 @@ namespace Farba.ViewModel
         {
             var fileName = DialogWindowHelper.FileDialog(FileFilter.Images);
             if(fileName != string.Empty 
-               && IsCreatePalette(fileName, palettes))
+               && IsAddPalette(fileName))
             {
                 var uri = new Uri(fileName);
                 var image = new BitmapImage(uri);
                 var palette = new PaletteViewModel(fileName, image);
                 Palettes.Add(palette);
                 ActivePalette = palette;
-                ImageViewerCounter = GetCurrentImageCountStringFormat(palette, palettes);
+                ImageViewerCounter = GetCurrentImageCountStringFormat();
             }
         }
         
@@ -144,7 +144,7 @@ namespace Farba.ViewModel
                     if (index == count) index--;
                     ActivePalette = palettes[index];
                 }
-                ImageViewerCounter = GetCurrentImageCountStringFormat(activePalette, palettes);
+                ImageViewerCounter = GetCurrentImageCountStringFormat();
             }
         }
 
@@ -156,7 +156,7 @@ namespace Farba.ViewModel
             {
                 ActivePalette = palettes[index + 1];
             }
-            ImageViewerCounter = GetCurrentImageCountStringFormat(activePalette, palettes);
+            ImageViewerCounter = GetCurrentImageCountStringFormat();
         }
 
         private void OnPrevImage(object parameter)
@@ -167,7 +167,7 @@ namespace Farba.ViewModel
             {
                 ActivePalette = palettes[index - 1];
             }
-            ImageViewerCounter = GetCurrentImageCountStringFormat(activePalette, palettes);
+            ImageViewerCounter = GetCurrentImageCountStringFormat();
         }
 
         private void OnSwitchFirstTabImageViewer(object parameter)
@@ -175,7 +175,7 @@ namespace Farba.ViewModel
             if (activePalette != null)
             {
                 ImageViewerTab = 0;
-                ImageViewerCounter = GetCurrentImageCountStringFormat(activePalette, palettes);
+                ImageViewerCounter = GetCurrentImageCountStringFormat();
             }
         }
 
@@ -210,15 +210,16 @@ namespace Farba.ViewModel
 
         #endregion
 
-        #region ViewModelHelperMethods
+        #region Protected
 
-        private void SetCombination()
+        protected void SetCombination()
         {
-            int length = activePalette.Cluster.Count;
-            List<ColorCombViewModel> combList = new List<ColorCombViewModel>();
-            for (int i = 0; i < length - 1; i++)
+            var length = activePalette.Cluster.Count;
+            var combList = new List<ColorCombViewModel>();
+
+            for (var i = 0; i < length - 1; i++)
             {
-                for (int j = i + 1; j < length; j++)
+                for (var j = i + 1; j < length; j++)
                 {
                     ColorCombViewModel cc = new ColorCombViewModel(
                         activePalette.Cluster[i].Hex,
@@ -229,60 +230,52 @@ namespace Farba.ViewModel
                     combList.Add(cc);
                 }
             }
-            int count = CombinationCount(length, 2);
+
+            var count = MathHelper.CombinationCount(length, 2);
+
             activePalette.ColorCombination = count != -1 ? count.ToString() : String.Empty;
             activePalette.Comb = combList;
         }
 
-        public int Factorial(int n)
+        protected bool IsAddPalette(string fileName)
         {
-            if(n < 0) return 0;
-            else if(n == 0) return 1;
-            else return n * Factorial(n - 1);
-        }
-
-        public int CombinationCount(int n, int k)
-        {
-            return k > 0 && k <= n ? Factorial(n) / (Factorial(n - k) * Factorial(k)) : -1;
-        }
-
-        #endregion
-
-        #region ViewModelStaticHelperMethods
-
-        private static bool IsCreatePalette(string fileName, ObservableCollection<PaletteViewModel> palettes)
-        {
-            var isFile = true;
             var palettesCount = palettes.Count;
-            if (palettesCount > 0)
+
+            if (palettesCount == 0)
             {
-                for (int i = 0; i < palettesCount; i++)
+                return true;
+            }
+
+            for (var i = 0; i < palettesCount; i++)
+            {
+                if (palettes[i].FileName != fileName)
                 {
-                    if (palettes[i].FileName == fileName)
-                    {
-                        isFile = false;
-                        break;
-                    }
+                    continue;
+                }
+
+                return false;
+            }
+
+            return true;
+        }
+
+        protected string GetCurrentImageCountStringFormat()
+        {
+            var palettesCount = palettes.Count;
+
+            switch (palettesCount)
+            {
+                case 0:
+                    return string.Empty;
+                case 1:
+                    return palettesCount.ToString();
+                default:
+                {
+                    var current = palettes.IndexOf(activePalette) + 1;
+
+                    return $"{current}/{palettesCount}";
                 }
             }
-            return isFile;
-        }
-
-        private static string GetCurrentImageCountStringFormat(PaletteViewModel current, ObservableCollection<PaletteViewModel> palettes)
-        {
-            var count = palettes.Count;
-            
-            if(count == 1)
-            {
-                return $"{count}";
-            }
-            else if(count > 1)
-            {
-                var index = palettes.IndexOf(current) + 1;
-                return $"{index}/{count}";
-            }
-
-            return string.Empty;
         }
 
         #endregion

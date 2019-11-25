@@ -71,6 +71,7 @@
     <Compile Include="Common\Clusters\Kmeans.cs" />
     <Compile Include="Extansion\ColorExtansion.cs" />
     <Compile Include="Helper\DialogWindowHelper.cs" />
+    <Compile Include="Helper\MathHelper.cs" />
     <Compile Include="Helper\UIHelper.cs" />
     <Compile Include="Resource\Converter\AdaptiveHeightContainer.cs" />
     <Compile Include="Resource\Converter\AdaptiveWidthConverter.cs" />
