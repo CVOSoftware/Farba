@@ -19,7 +19,7 @@
             TabStripPlacement="Left">
             <TabItem 
                 Style="{StaticResource ResourceKey=@Style/TabItem}" 
-                DataContext="{Binding PaletteVM}">
+                DataContext="{Binding PaletteGeneratorVM}">
                 <TabItem.Header>
                     <Image
                         Width="30"
@@ -27,12 +27,12 @@
                         Source="{StaticResource ResourceKey=@Image/Palette}" />
                 </TabItem.Header>
                 <TabItem.Content>
-                    <component:PaletteGenerator/>
+                    <component:PaletteGenerator />
                 </TabItem.Content>
             </TabItem>
             <TabItem 
                 Style="{StaticResource ResourceKey=@Style/TabItem}" 
-                DataContext="{Binding PaletteVM.ConverterVM}">
+                DataContext="{Binding ColorConverterVM}">
                 <TabItem.Header>
                     <Image
                         Width="30"
@@ -44,7 +44,8 @@
                 </TabItem.Content>
             </TabItem>
             <TabItem 
-                Style="{StaticResource ResourceKey=@Style/TabItem}">
+                Style="{StaticResource ResourceKey=@Style/TabItem}"
+                DataContext="{Binding PaletteListVM}">
                 <TabItem.Header>
                     <Image
                         Width="30"

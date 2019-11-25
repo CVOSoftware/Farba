@@ -74,6 +74,7 @@
     <Compile Include="Helper\UIHelper.cs" />
     <Compile Include="Resource\Converter\AdaptiveHeightContainer.cs" />
     <Compile Include="Resource\Converter\AdaptiveWidthConverter.cs" />
+    <Compile Include="ViewModel\PaletteListViewModel.cs" />
     <Compile Include="View\Component\ColorCombination.xaml.cs">
       <DependentUpon>ColorCombination.xaml</DependentUpon>
     </Compile>
@@ -161,9 +162,9 @@
     <Compile Include="Resource\Converter\BrushConverter.cs" />
     <Compile Include="Resource\Converter\HEXConverter.cs" />
     <Compile Include="Resource\Converter\RGBConverter.cs" />
-    <Compile Include="ViewModel\ConverterViewModel.cs" />
+    <Compile Include="ViewModel\ColorConverterViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\PalettesViewModel.cs" />
+    <Compile Include="ViewModel\PaletteGeneratorViewModel.cs" />
     <Compile Include="View\Component\PaletteGeneratorMain.xaml.cs">
       <DependentUpon>PaletteGeneratorMain.xaml</DependentUpon>
     </Compile>

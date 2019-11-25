@@ -9,7 +9,7 @@ using Farba.Common.Clusters;
 
 namespace Farba.ViewModel
 { 
-    class PalettesViewModel : BaseViewModel
+    class PaletteGeneratorViewModel : BaseViewModel
     {
         #region CommandFields
 
@@ -43,7 +43,7 @@ namespace Farba.ViewModel
 
         #region Constructor
 
-        public PalettesViewModel()
+        public PaletteGeneratorViewModel()
         {
             palettes = new ObservableCollection<PaletteViewModel>();
             activePalette = null;
