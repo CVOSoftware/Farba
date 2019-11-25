@@ -7,7 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Farba.View.Component"
     mc:Ignorable="d" 
-    d:DesignHeight="570" 
+    d:DesignHeight="800" 
     d:DesignWidth="1140">
     <Grid>
         <Grid.ColumnDefinitions>

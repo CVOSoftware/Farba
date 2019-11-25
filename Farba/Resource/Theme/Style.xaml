@@ -152,6 +152,9 @@
                             x:Name="Border"
                             Width="60"
                             Height="60"
+                            Margin="0, 0, 0, 5"
+                            BorderThickness="1"
+                            BorderBrush="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}"
                             Background="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}"
                             Cursor="Hand">
                             <ContentPresenter
@@ -167,6 +170,10 @@
                         <Trigger Property="IsSelected" Value="True">
                             <Setter Property="Panel.ZIndex" Value="100" />
                             <Setter TargetName="Border" Property="Background" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{Binding ElementName=Border, Path=Background}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
