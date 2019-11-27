@@ -550,77 +550,166 @@
     </Style>
 
     <Style x:Key="@Style/ListBoxCombination" TargetType="{x:Type ListBox}">
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="ItemContainerStyle" Value="{StaticResource ResourceKey=@Style/ListBoxItemCombination}" />
-        <Setter Property="ItemTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <Border
-                        x:Name="BorderOne"
-                        BorderBrush="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}"
-                        BorderThickness="1">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
+        <Style.Resources>
+            <Style x:Key="@Border/Outer" TargetType="{x:Type Border}">
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}"/>
+            </Style>
+            <Style x:Key="@Border/OuterSquareBrushOne" TargetType="{x:Type Border}">
+                <Setter Property="Padding" Value="15,15,0,15"/>
+                <Setter Property="Background" Value="{Binding BrushOne}"/>
+            </Style>
+            <Style x:Key="@Border/OuterSquareBrushTwo" TargetType="{x:Type Border}">
+                <Setter Property="Padding" Value="0,15,15,15"/>
+                <Setter Property="Background" Value="{Binding BrushTwo}"/>
+            </Style>
+            <DataTemplate x:Key="@DataTemplate/Square">
+                <Border x:Name="BorderOne" Style="{StaticResource ResourceKey=@Border/Outer}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Style="{StaticResource ResourceKey=@Border/OuterSquareBrushOne}">
+                                <Border 
+                                    Padding="10" 
+                                    Background="{Binding BrushTwo}" />
+                            </Border>
+                            <Border Grid.Column="1" Style="{StaticResource ResourceKey=@Border/OuterSquareBrushTwo}">
+                                <Border 
+                                    Padding="10" 
+                                    Background="{Binding BrushOne}" />
+                            </Border>
+                        </Grid>
+                        <Border
+                            x:Name="BorderTwo"
+                            Grid.Row="1"
+                            Padding="2"
+                            Background="{StaticResource ResourceKey=@SolidColorBrush/DoubleGray30}"
+                            BorderBrush="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}"
+                            BorderThickness="0,1,0,0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Border
+                                <TextBlock
+                                    x:Name="TextOne"
                                     Grid.Column="0"
-                                    Padding="15,15,0,15"
-                                    Background="{Binding BrushOne}">
-                                    <Border Padding="10" Background="{Binding BrushTwo}" />
-                                </Border>
-                                <Border
+                                    Text="{Binding HexOne}"
+                                    TextAlignment="Center" />
+                                <TextBlock
+                                    x:Name="TextTwo"
                                     Grid.Column="1"
-                                    Padding="0,15,15,15"
-                                    Background="{Binding BrushTwo}">
-                                    <Border Padding="10" Background="{Binding BrushOne}" />
-                                </Border>
+                                    Text="{Binding HexTwo}"
+                                    TextAlignment="Center" />
                             </Grid>
-                            <Border
-                                x:Name="BorderTwo"
-                                Grid.Row="1"
-                                Padding="2"
-                                Background="{StaticResource ResourceKey=@SolidColorBrush/DoubleGray30}"
-                                BorderBrush="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}"
-                                BorderThickness="0,1,0,0">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock
-                                        x:Name="TextOne"
-                                        Grid.Column="0"
-                                        Text="{Binding HexOne}"
-                                        TextAlignment="Center" />
-                                    <TextBlock
-                                        x:Name="TextTwo"
-                                        Grid.Column="1"
-                                        Text="{Binding HexTwo}"
-                                        TextAlignment="Center" />
-                                </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+                <DataTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="BorderOne" Property="Background" Value="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}" />
+                        <Setter TargetName="BorderOne" Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
+                        <Setter TargetName="BorderTwo" Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
+                        <Setter TargetName="TextOne" Property="Foreground" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
+                        <Setter TargetName="TextTwo" Property="Foreground" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
+                    </Trigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+            <DataTemplate x:Key="@DataTemplate/Circle">
+                <DataTemplate.Resources>
+                    <Style x:Key="@StackPanel/CircleOrientation" TargetType="{x:Type StackPanel}">
+                        <Setter Property="Orientation" Value="Horizontal"/>
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                    </Style>
+                    <Style x:Key="@Border/InnerCircle" TargetType="{x:Type Border}">
+                        <Setter Property="Padding" Value="10"/>
+                        <Setter Property="CornerRadius" Value="10" />
+                    </Style>
+                    <Style x:Key="@Border/InnerCircleBrushOne" TargetType="{x:Type Border}" BasedOn="{StaticResource ResourceKey=@Border/InnerCircle}">
+                        <Setter Property="Background" Value="{Binding BrushOne}"/>
+                    </Style>
+                    <Style x:Key="@Border/InnerCircleBrushTwo" TargetType="{x:Type Border}" BasedOn="{StaticResource ResourceKey=@Border/InnerCircle}">
+                        <Setter Property="Background" Value="{Binding BrushTwo}"/>
+                    </Style>
+                </DataTemplate.Resources>
+                <Border x:Name="BorderOne" Style="{StaticResource ResourceKey=@Border/Outer}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Style="{StaticResource ResourceKey=@Border/OuterSquareBrushOne}">
+                                <StackPanel Style="{StaticResource ResourceKey=@StackPanel/CircleOrientation}">
+                                    <Border Margin="0, 0, 10, 0" Style="{StaticResource ResourceKey=@Border/InnerCircleBrushTwo}" />
+                                    <Border Margin="0, 0, 10, 0" Style="{StaticResource ResourceKey=@Border/InnerCircleBrushTwo}" />
+                                    <Border Margin="0, 0, 10, 0" Style="{StaticResource ResourceKey=@Border/InnerCircleBrushTwo}"/>
+                                    <Border Margin="0, 0, 10, 0" Style="{StaticResource ResourceKey=@Border/InnerCircleBrushTwo}"/>
+                                    <Border Style="{StaticResource ResourceKey=@Border/InnerCircle}"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Grid.Column="1" Style="{StaticResource ResourceKey=@Border/OuterSquareBrushTwo}">
+                                <StackPanel Style="{StaticResource ResourceKey=@StackPanel/CircleOrientation}">
+                                    <Border Margin="0, 0, 10, 0" Style="{StaticResource ResourceKey=@Border/InnerCircleBrushOne}" />
+                                    <Border Margin="0, 0, 10, 0" Style="{StaticResource ResourceKey=@Border/InnerCircleBrushOne}" />
+                                    <Border Margin="0, 0, 10, 0" Style="{StaticResource ResourceKey=@Border/InnerCircleBrushOne}"/>
+                                    <Border Margin="0, 0, 10, 0" Style="{StaticResource ResourceKey=@Border/InnerCircleBrushOne}"/>
+                                    <Border Style="{StaticResource ResourceKey=@Border/InnerCircle}"/>
+                                </StackPanel>
                             </Border>
                         </Grid>
-                    </Border>
-                    <DataTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="BorderOne" Property="Background" Value="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}" />
-                            <Setter TargetName="BorderOne" Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
-                            <Setter TargetName="BorderTwo" Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
-                            <Setter TargetName="TextOne" Property="Foreground" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
-                            <Setter TargetName="TextTwo" Property="Foreground" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
-                        </Trigger>
-                    </DataTemplate.Triggers>
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
+                        <Border
+                            x:Name="BorderTwo"
+                            Grid.Row="1"
+                            Padding="2"
+                            Background="{StaticResource ResourceKey=@SolidColorBrush/DoubleGray30}"
+                            BorderBrush="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}"
+                            BorderThickness="0,1,0,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    x:Name="TextOne"
+                                    Grid.Column="0"
+                                    Text="{Binding HexOne}"
+                                    TextAlignment="Center" />
+                                <TextBlock
+                                    x:Name="TextTwo"
+                                    Grid.Column="1"
+                                    Text="{Binding HexTwo}"
+                                    TextAlignment="Center" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+                <DataTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="BorderOne" Property="Background" Value="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}" />
+                        <Setter TargetName="BorderOne" Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
+                        <Setter TargetName="BorderTwo" Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
+                        <Setter TargetName="TextOne" Property="Foreground" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
+                        <Setter TargetName="TextTwo" Property="Foreground" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
+                    </Trigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+        </Style.Resources>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource ResourceKey=@Style/ListBoxItemCombination}" />
+        <Setter Property="ItemTemplate" Value="{DynamicResource Test}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBox}">
@@ -630,6 +719,24 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ActivePalette.ColorCombinationType}" Value="{StaticResource ResourceKey=@ColorCombinationType/Square}"/>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="ItemTemplate" Value="{StaticResource @DataTemplate/Square}"/>
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ActivePalette.ColorCombinationType}" Value="{StaticResource ResourceKey=@ColorCombinationType/Circle}"/>
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="ItemTemplate" Value="{StaticResource @DataTemplate/Circle}"/>
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>
