@@ -2,38 +2,62 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Farba.View.Component"
              mc:Ignorable="d" 
              d:DesignHeight="230" 
              d:DesignWidth="800">
     <Grid Style="{StaticResource ResourceKey=@Style/BackgroundView}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid
+        <Border
             Grid.Row="0"
-            Margin="0,0,0,10"
-            Style="{StaticResource ResourceKey=@Style/BackgroundMegaGray}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="auto" />
-            </Grid.ColumnDefinitions>
-            <TextBlock
-                Grid.Column="0"
-                Margin="10,0,0,0"
-                VerticalAlignment="Center"
-                Text="{StaticResource ResourceKey=@String/CombinationTitle}" />
-            <TextBlock
-                Margin="0, 0, 10, 0"
-                Grid.Column="1"
-                VerticalAlignment="Center"
-                Text="{Binding ActivePalette.ColorCombination}" />
-        </Grid>
+            Margin="0, 0, 0, 10"
+            Background="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Column="0"
+                    Margin="10,0,0,0"
+                    VerticalAlignment="Center"
+                    Text="{StaticResource ResourceKey=@String/CombinationTitle}" />
+                <TextBlock
+                    Margin="0, 0, 10, 0"
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Text="{Binding ActivePalette.CombinationCount}" />
+                <Border 
+                    Padding="10"
+                    Grid.Column="2">
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton
+                            Margin="0, 0, 10, 0"
+                            GroupName="CombinationType"
+                            IsEnabled="{Binding IsNotActivePalette}"
+                            IsChecked="{Binding ActivePalette.ColorCombinationType, Converter={StaticResource ResourceKey=@Converter/ColorCombinationTypeConverter}, ConverterParameter={StaticResource ResourceKey=@ColorCombinationType/Square}}"
+                            Style="{StaticResource ResourceKey=Style/RadioButton/CombinationType}">
+                            <Image Source="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type RadioButton}}, Path=IsChecked, Converter={StaticResource ResourceKey=@Converter/SwitchSquareImage}}" />
+                        </RadioButton>
+                        <RadioButton
+                            GroupName="CombinationType"
+                            IsEnabled="{Binding IsNotActivePalette}"
+                            IsChecked="{Binding ActivePalette.ColorCombinationType, Converter={StaticResource ResourceKey=@Converter/ColorCombinationTypeConverter}, ConverterParameter={StaticResource ResourceKey=@ColorCombinationType/Circle}}"
+                            Style="{StaticResource ResourceKey=Style/RadioButton/CombinationType}">
+                            <Image Source="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type RadioButton}}, Path=IsChecked, Converter={StaticResource ResourceKey=@Converter/SwitchCircleImage}}" />
+                        </RadioButton>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
         <ListBox
             Grid.Row="1"
-            ItemsSource="{Binding ActivePalette.Comb}"
+            ItemsSource="{Binding ActivePalette.ColorCombinationList}"
             Style="{StaticResource ResourceKey=@Style/ListBoxCombination}" />
     </Grid>
 </UserControl>

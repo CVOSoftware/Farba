@@ -11,5 +11,9 @@
     <BitmapImage x:Key="@Image/List" UriSource="pack://application:,,,/Resource/Image/List.ico" />
     <BitmapImage x:Key="@Image/Left" UriSource="pack://application:,,,/Resource/Image/Left.ico" />
     <BitmapImage x:Key="@Image/Right" UriSource="pack://application:,,,/Resource/Image/Right.ico" />
+    <BitmapImage x:Key="@Image/Square" UriSource="pack://application:,,,/Resource/Image/Square.ico" />
+    <BitmapImage x:Key="@Image/SquareFill" UriSource="pack://application:,,,/Resource/Image/SquareFill.ico" />
+    <BitmapImage x:Key="@Image/Circle" UriSource="pack://application:,,,/Resource/Image/Circle.ico" />
+    <BitmapImage x:Key="@Image/CircleFill" UriSource="pack://application:,,,/Resource/Image/CircleFill.ico" />
 
 </ResourceDictionary>

@@ -29,15 +29,17 @@ namespace Farba.ViewModel
 
         #region ViewModelFields
 
-        private ObservableCollection<PaletteViewModel> palettes;
-
-        private PaletteViewModel activePalette;
+        private bool isNotActivePalette;
 
         private int imageViewerTab;
         
         private string imageViewerConter;
 
-        private List<ColorCombViewModel> combination;
+        private PaletteViewModel activePalette;
+
+        private List<ColorCombinationViewModel> combination;
+
+        private ObservableCollection<PaletteViewModel> palettes;
 
         #endregion
 
@@ -47,6 +49,7 @@ namespace Farba.ViewModel
         {
             palettes = new ObservableCollection<PaletteViewModel>();
             activePalette = null;
+            isNotActivePalette = false;
             imageViewerTab = 0;
             imageViewerConter = string.Empty;
             combination = null;
@@ -72,6 +75,12 @@ namespace Farba.ViewModel
 
         #region ViewModelProperties
 
+        public bool IsNotActivePalette
+        {
+            get => isNotActivePalette;
+            set => SetValue(ref isNotActivePalette, value);
+        }
+
         public ObservableCollection<PaletteViewModel> Palettes
         {
             get => palettes;
@@ -84,7 +93,7 @@ namespace Farba.ViewModel
             set => SetValue(ref activePalette, value);
         }
 
-        public List<ColorCombViewModel> Combination
+        public List<ColorCombinationViewModel> Combination
         {
             get => combination;
             set => SetValue(ref combination, value);
@@ -118,6 +127,10 @@ namespace Farba.ViewModel
                 Palettes.Add(palette);
                 ActivePalette = palette;
                 ImageViewerCounter = GetCurrentImageCountStringFormat();
+                if (IsNotActivePalette == false)
+                {
+                    IsNotActivePalette = true;
+                }
             }
         }
         
@@ -145,6 +158,11 @@ namespace Farba.ViewModel
                     ActivePalette = palettes[index];
                 }
                 ImageViewerCounter = GetCurrentImageCountStringFormat();
+            }
+            
+            if(count == 0)
+            {
+                IsNotActivePalette = false;
             }
         }
 
@@ -215,13 +233,13 @@ namespace Farba.ViewModel
         protected void SetCombination()
         {
             var length = activePalette.Cluster.Count;
-            var combList = new List<ColorCombViewModel>();
+            var combList = new List<ColorCombinationViewModel>();
 
             for (var i = 0; i < length - 1; i++)
             {
                 for (var j = i + 1; j < length; j++)
                 {
-                    ColorCombViewModel cc = new ColorCombViewModel(
+                    ColorCombinationViewModel cc = new ColorCombinationViewModel(
                         activePalette.Cluster[i].Hex,
                         activePalette.Cluster[j].Hex,
                         activePalette.Cluster[i].Brush,
@@ -233,8 +251,8 @@ namespace Farba.ViewModel
 
             var count = MathHelper.CombinationCount(length, 2);
 
-            activePalette.ColorCombination = count != -1 ? count.ToString() : String.Empty;
-            activePalette.Comb = combList;
+            activePalette.CombinationCount = count != -1 ? count.ToString() : String.Empty;
+            activePalette.ColorCombinationList = combList;
         }
 
         protected bool IsAddPalette(string fileName)

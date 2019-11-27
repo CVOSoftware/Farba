@@ -5,7 +5,7 @@ using System.Windows.Media;
 using System.Globalization;
 using Farba.Extansion;
 
-namespace Farba.Resources.Converter
+namespace Farba.Resource.Converter
 {
     class HEXConverter : IValueConverter
     {

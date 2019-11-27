@@ -3,11 +3,11 @@ using Farba.ViewModel.Base;
 
 namespace Farba.ViewModel
 {
-    class ColorCombViewModel : BaseViewModel
+    class ColorCombinationViewModel : BaseViewModel
     {
         #region Constructor
 
-        public ColorCombViewModel(string hexOne, string hexTwo, SolidColorBrush brushOne, SolidColorBrush brushTwo)
+        public ColorCombinationViewModel(string hexOne, string hexTwo, SolidColorBrush brushOne, SolidColorBrush brushTwo)
         {
             HexOne = hexOne;
             HexTwo = hexTwo;

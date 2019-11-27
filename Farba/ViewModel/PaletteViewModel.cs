@@ -1,21 +1,24 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Farba.ViewModel.Base;
 using Farba.Common.Clusters;
+using Farba.Enum;
 
 namespace Farba.ViewModel
 {
     class PaletteViewModel : BaseViewModel
     {
-        #region Fields
+        #region ViewModelFields
 
         private string colorCombination;
 
-        private BitmapImage image;
+        private ColorCombinationType colorCombinationType;
 
         private List<ClusterColor> cluster;
 
-        private List<ColorCombViewModel> comb;
+        private List<ColorCombinationViewModel> colorCombinatinList;
 
         #endregion
 
@@ -25,23 +28,30 @@ namespace Farba.ViewModel
         {
             IsProcess = true;
             FileName = fileName;
+            colorCombinationType = ColorCombinationType.Square;
             Image = image;
             cluster = null;
-            comb = null;
+            colorCombinatinList = null;
         }
 
         #endregion
 
-        #region Properties
+        #region ViewModelProperties
 
         public bool IsProcess { get; set; }
 
         public string FileName { get; }
 
-        public string ColorCombination
+        public string CombinationCount
         {
             get => colorCombination;
             set => SetValue(ref colorCombination, value);
+        }
+
+        public ColorCombinationType ColorCombinationType
+        {
+            get => colorCombinationType;
+            set => SetValue(ref colorCombinationType, value);
         }
 
         public BitmapImage Image { get; }
@@ -52,10 +62,10 @@ namespace Farba.ViewModel
             set => SetValue(ref cluster, value);
         }
 
-        public List<ColorCombViewModel> Comb
+        public List<ColorCombinationViewModel> ColorCombinationList
         {
-            get => comb;
-            set => SetValue(ref comb, value);
+            get => colorCombinatinList;
+            set => SetValue(ref colorCombinatinList, value);
         }
 
         #endregion

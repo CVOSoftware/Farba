@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="pack://application:,,,/Resource/String.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Resource/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Resource/Images.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resource/Enum.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Resource/Converter.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Resource/Theme/Color.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Resource/Theme/Brush.xaml" />

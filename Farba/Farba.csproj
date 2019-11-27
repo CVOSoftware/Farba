@@ -69,12 +69,17 @@
     </ApplicationDefinition>
     <Compile Include="Common\Clusters\ClusterColor.cs" />
     <Compile Include="Common\Clusters\Kmeans.cs" />
+    <Compile Include="Enum\ColorCombinationType.cs" />
     <Compile Include="Extansion\ColorExtansion.cs" />
     <Compile Include="Helper\DialogWindowHelper.cs" />
     <Compile Include="Helper\MathHelper.cs" />
     <Compile Include="Helper\UIHelper.cs" />
     <Compile Include="Resource\Converter\AdaptiveHeightContainer.cs" />
     <Compile Include="Resource\Converter\AdaptiveWidthConverter.cs" />
+    <Compile Include="Resource\Converter\ColorCombinationTypeConverter.cs" />
+    <Compile Include="Resource\Converter\HEXConverter.cs" />
+    <Compile Include="Resource\Converter\RGBConverter.cs" />
+    <Compile Include="Resource\Converter\SwitchImageConverter.cs" />
     <Compile Include="ViewModel\PaletteListViewModel.cs" />
     <Compile Include="View\Component\ColorCombination.xaml.cs">
       <DependentUpon>ColorCombination.xaml</DependentUpon>
@@ -89,6 +94,10 @@
       <DependentUpon>PaletteGenerator.xaml</DependentUpon>
     </Compile>
     <Page Include="Resource\Converter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resource\Enum.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -158,11 +167,9 @@
     </Compile>
     <Compile Include="ViewModel\Base\RelayCommand.cs" />
     <Compile Include="ViewModel\Base\BaseViewModel.cs" />
-    <Compile Include="ViewModel\ColorCombViewModel.cs" />
+    <Compile Include="ViewModel\ColorCombinationViewModel.cs" />
     <Compile Include="ViewModel\PaletteViewModel.cs" />
     <Compile Include="Resource\Converter\BrushConverter.cs" />
-    <Compile Include="Resource\Converter\HEXConverter.cs" />
-    <Compile Include="Resource\Converter\RGBConverter.cs" />
     <Compile Include="ViewModel\ColorConverterViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\PaletteGeneratorViewModel.cs" />
@@ -239,5 +246,14 @@
   <ItemGroup>
     <Resource Include="Resource\Image\SaveList.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Image\Circle.ico" />
+    <Resource Include="Resource\Image\Square.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Image\CircleFill.ico" />
+    <Resource Include="Resource\Image\SquareFill.ico" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

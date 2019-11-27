@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Farba.Resources.Converter
+namespace Farba.Resource.Converter
 {
     internal class AdaptiveHeightConverter : IValueConverter
     {
