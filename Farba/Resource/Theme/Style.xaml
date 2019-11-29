@@ -551,9 +551,30 @@
 
     <Style x:Key="@Style/ListBoxCombination" TargetType="{x:Type ListBox}">
         <Style.Resources>
-            <Style x:Key="@Border/Outer" TargetType="{x:Type Border}">
+            <Style x:Key="@StackPanel/CentralOrientation" TargetType="{x:Type StackPanel}">
+                <Setter Property="Orientation" Value="Horizontal"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+            </Style>
+            <Style x:Key="@Border/Common" TargetType="{x:Type Border}">
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}"/>
+            </Style>
+            <Style x:Key="@Border/Preview" TargetType="{x:Type Border}" BasedOn="{StaticResource ResourceKey=@Border/Common}">
+                <Setter Property="Width" Value="10"/>
+                <Setter Property="Height" Value="10"/>
+                <Setter Property="Margin" Value="0,0,5,0"/>
+            </Style>
+            <Style x:Key="@Border/Preview/BrushOne" TargetType="{x:Type Border}" BasedOn="{StaticResource ResourceKey=@Border/Preview}">
+                <Setter Property="Background" Value="{Binding BrushOne}"/>
+            </Style>
+            <Style x:Key="@Border/Preview/BrushTwo" TargetType="{x:Type Border}" BasedOn="{StaticResource ResourceKey=@Border/Preview}">
+                <Setter Property="Background" Value="{Binding BrushTwo}"/>
+            </Style>
+            <Style x:Key="@Border/Bottom/BorderInfo" TargetType="{x:Type Border}">
+                <Setter Property="Padding" Value="2"/>
+                <Setter Property="Background" Value="{StaticResource ResourceKey=@SolidColorBrush/DoubleGray30}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}"/>
+                <Setter Property="BorderThickness" Value="0,1,0,0"/>
             </Style>
             <Style x:Key="@Border/OuterSquareBrushOne" TargetType="{x:Type Border}">
                 <Setter Property="Padding" Value="15,15,0,15"/>
@@ -563,8 +584,28 @@
                 <Setter Property="Padding" Value="0,15,15,15"/>
                 <Setter Property="Background" Value="{Binding BrushTwo}"/>
             </Style>
+            <Style x:Key="@Text/Center" TargetType="{x:Type TextBlock}">
+                <Setter Property="TextAlignment" Value="Center"/>
+            </Style>
+            <Style x:Key="@Text/Center/One" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ResourceKey=@Text/Center}">
+                <Setter Property="Text" Value="{Binding HexOne}"/>
+            </Style>
+            <Style x:Key="@Text/Center/Two" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ResourceKey=@Text/Center}">
+                <Setter Property="Text" Value="{Binding HexTwo}"/>
+            </Style>
             <DataTemplate x:Key="@DataTemplate/Square">
-                <Border x:Name="BorderOne" Style="{StaticResource ResourceKey=@Border/Outer}">
+                <DataTemplate.Resources>
+                    <Style x:Key="@Border/InnerSquare" TargetType="{x:Type Border}">
+                        <Setter Property="Padding" Value="10"/>
+                    </Style>
+                    <Style x:Key="@Border/InnerSquareBrushOne" TargetType="{x:Type Border}" BasedOn="{StaticResource ResourceKey=@Border/InnerSquare}">
+                        <Setter Property="Background" Value="{Binding BrushOne}"/>
+                    </Style>
+                    <Style x:Key="@Border/InnerSquareBrushTwo" TargetType="{x:Type Border}" BasedOn="{StaticResource ResourceKey=@Border/InnerSquare}">
+                        <Setter Property="Background" Value="{Binding BrushTwo}"/>
+                    </Style>
+                </DataTemplate.Resources>
+                <Border x:Name="BorderOne" Style="{StaticResource ResourceKey=@Border/Common}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -576,38 +617,26 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Border Grid.Column="0" Style="{StaticResource ResourceKey=@Border/OuterSquareBrushOne}">
-                                <Border 
-                                    Padding="10" 
-                                    Background="{Binding BrushTwo}" />
+                                <Border Style="{StaticResource ResourceKey=@Border/InnerSquareBrushTwo}"/>
                             </Border>
                             <Border Grid.Column="1" Style="{StaticResource ResourceKey=@Border/OuterSquareBrushTwo}">
-                                <Border 
-                                    Padding="10" 
-                                    Background="{Binding BrushOne}" />
+                                <Border Style="{StaticResource ResourceKey=@Border/InnerSquareBrushOne}"/>
                             </Border>
                         </Grid>
-                        <Border
-                            x:Name="BorderTwo"
-                            Grid.Row="1"
-                            Padding="2"
-                            Background="{StaticResource ResourceKey=@SolidColorBrush/DoubleGray30}"
-                            BorderBrush="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}"
-                            BorderThickness="0,1,0,0">
+                        <Border x:Name="BorderTwo" Grid.Row="1" Style="{StaticResource ResourceKey=@Border/Bottom/BorderInfo}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock
-                                    x:Name="TextOne"
-                                    Grid.Column="0"
-                                    Text="{Binding HexOne}"
-                                    TextAlignment="Center" />
-                                <TextBlock
-                                    x:Name="TextTwo"
-                                    Grid.Column="1"
-                                    Text="{Binding HexTwo}"
-                                    TextAlignment="Center" />
+                                <StackPanel Grid.Column="0" Style="{StaticResource ResourceKey=@StackPanel/CentralOrientation}">
+                                    <Border x:Name="BorderOneInfo" Style="{StaticResource ResourceKey=@Border/Preview/BrushOne}"/>
+                                    <TextBlock x:Name="TextOne" Style="{StaticResource ResourceKey=@Text/Center/One}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Style="{StaticResource ResourceKey=@StackPanel/CentralOrientation}">
+                                    <Border x:Name="BorderTwoInfo" Style="{StaticResource ResourceKey=@Border/Preview/BrushTwo}"/>
+                                    <TextBlock x:Name="TextTwo" Style="{StaticResource ResourceKey=@Text/Center/Two}"/>
+                                </StackPanel>
                             </Grid>
                         </Border>
                     </Grid>
@@ -617,6 +646,8 @@
                         <Setter TargetName="BorderOne" Property="Background" Value="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}" />
                         <Setter TargetName="BorderOne" Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
                         <Setter TargetName="BorderTwo" Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
+                        <Setter TargetName="BorderOneInfo" Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
+                        <Setter TargetName="BorderTwoInfo" Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
                         <Setter TargetName="TextOne" Property="Foreground" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
                         <Setter TargetName="TextTwo" Property="Foreground" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
                     </Trigger>
@@ -624,10 +655,6 @@
             </DataTemplate>
             <DataTemplate x:Key="@DataTemplate/Circle">
                 <DataTemplate.Resources>
-                    <Style x:Key="@StackPanel/CircleOrientation" TargetType="{x:Type StackPanel}">
-                        <Setter Property="Orientation" Value="Horizontal"/>
-                        <Setter Property="HorizontalAlignment" Value="Center"/>
-                    </Style>
                     <Style x:Key="@Border/InnerCircle" TargetType="{x:Type Border}">
                         <Setter Property="Padding" Value="10"/>
                         <Setter Property="CornerRadius" Value="10" />
@@ -639,7 +666,7 @@
                         <Setter Property="Background" Value="{Binding BrushTwo}"/>
                     </Style>
                 </DataTemplate.Resources>
-                <Border x:Name="BorderOne" Style="{StaticResource ResourceKey=@Border/Outer}">
+                <Border x:Name="BorderOne" Style="{StaticResource ResourceKey=@Border/Common}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -651,7 +678,7 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <Border Grid.Column="0" Style="{StaticResource ResourceKey=@Border/OuterSquareBrushOne}">
-                                <StackPanel Style="{StaticResource ResourceKey=@StackPanel/CircleOrientation}">
+                                <StackPanel Style="{StaticResource ResourceKey=@StackPanel/CentralOrientation}">
                                     <Border Margin="0, 0, 10, 0" Style="{StaticResource ResourceKey=@Border/InnerCircleBrushTwo}" />
                                     <Border Margin="0, 0, 10, 0" Style="{StaticResource ResourceKey=@Border/InnerCircleBrushTwo}" />
                                     <Border Margin="0, 0, 10, 0" Style="{StaticResource ResourceKey=@Border/InnerCircleBrushTwo}"/>
@@ -660,7 +687,7 @@
                                 </StackPanel>
                             </Border>
                             <Border Grid.Column="1" Style="{StaticResource ResourceKey=@Border/OuterSquareBrushTwo}">
-                                <StackPanel Style="{StaticResource ResourceKey=@StackPanel/CircleOrientation}">
+                                <StackPanel Style="{StaticResource ResourceKey=@StackPanel/CentralOrientation}">
                                     <Border Margin="0, 0, 10, 0" Style="{StaticResource ResourceKey=@Border/InnerCircleBrushOne}" />
                                     <Border Margin="0, 0, 10, 0" Style="{StaticResource ResourceKey=@Border/InnerCircleBrushOne}" />
                                     <Border Margin="0, 0, 10, 0" Style="{StaticResource ResourceKey=@Border/InnerCircleBrushOne}"/>
@@ -669,28 +696,20 @@
                                 </StackPanel>
                             </Border>
                         </Grid>
-                        <Border
-                            x:Name="BorderTwo"
-                            Grid.Row="1"
-                            Padding="2"
-                            Background="{StaticResource ResourceKey=@SolidColorBrush/DoubleGray30}"
-                            BorderBrush="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}"
-                            BorderThickness="0,1,0,0">
+                        <Border x:Name="BorderTwo" Grid.Row="1" Style="{StaticResource ResourceKey=@Border/Bottom/BorderInfo}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock
-                                    x:Name="TextOne"
-                                    Grid.Column="0"
-                                    Text="{Binding HexOne}"
-                                    TextAlignment="Center" />
-                                <TextBlock
-                                    x:Name="TextTwo"
-                                    Grid.Column="1"
-                                    Text="{Binding HexTwo}"
-                                    TextAlignment="Center" />
+                                <StackPanel Grid.Column="0" Style="{StaticResource ResourceKey=@StackPanel/CentralOrientation}">
+                                    <Border x:Name="BorderOneInfo" Style="{StaticResource ResourceKey=@Border/Preview/BrushOne}"/>
+                                    <TextBlock x:Name="TextOne" Style="{StaticResource ResourceKey=@Text/Center/One}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Style="{StaticResource ResourceKey=@StackPanel/CentralOrientation}">
+                                    <Border x:Name="BorderTwoInfo" Style="{StaticResource ResourceKey=@Border/Preview/BrushTwo}"/>
+                                    <TextBlock x:Name="TextTwo" Style="{StaticResource ResourceKey=@Text/Center/Two}"/>
+                                </StackPanel>
                             </Grid>
                         </Border>
                     </Grid>
@@ -700,6 +719,8 @@
                         <Setter TargetName="BorderOne" Property="Background" Value="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}" />
                         <Setter TargetName="BorderOne" Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
                         <Setter TargetName="BorderTwo" Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
+                        <Setter TargetName="BorderOneInfo" Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
+                        <Setter TargetName="BorderTwoInfo" Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
                         <Setter TargetName="TextOne" Property="Foreground" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
                         <Setter TargetName="TextTwo" Property="Foreground" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
                     </Trigger>
