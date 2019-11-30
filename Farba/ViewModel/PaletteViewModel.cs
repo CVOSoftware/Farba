@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Farba.ViewModel.Base;
@@ -10,7 +11,15 @@ namespace Farba.ViewModel
 {
     class PaletteViewModel : BaseViewModel
     {
+        #region CommandFields
+
+        private RelayCommand reverseColorCommand;
+
+        #endregion
+
         #region ViewModelFields
+
+        private bool isProcess;
 
         private string colorCombination;
 
@@ -26,7 +35,7 @@ namespace Farba.ViewModel
 
         public PaletteViewModel(string fileName, BitmapImage image)
         {
-            IsProcess = true;
+            isProcess = true;
             FileName = fileName;
             colorCombinationType = ColorCombinationType.Square;
             Image = image;
@@ -36,9 +45,19 @@ namespace Farba.ViewModel
 
         #endregion
 
+        #region CommandProperties
+
+        public ICommand ReverseColorCommand => RelayCommand.Register(ref reverseColorCommand, OnReverseColor, CanReverseColor);
+
+        #endregion
+
         #region ViewModelProperties
 
-        public bool IsProcess { get; set; }
+        public bool IsProcess
+        {
+            get => isProcess;
+            set => SetValue(ref isProcess, value);
+        }
 
         public string FileName { get; }
 
@@ -66,6 +85,24 @@ namespace Farba.ViewModel
         {
             get => colorCombinatinList;
             set => SetValue(ref colorCombinatinList, value);
+        }
+
+        #endregion
+
+        #region CommandExecuteMethod
+
+        private void OnReverseColor(object param)
+        {
+            foreach (var colorCombinationItem in ColorCombinationList)
+            {
+                colorCombinationItem.ReverseHex();
+                colorCombinationItem.ReverseBrush();
+            }
+        }
+
+        private bool CanReverseColor(object param)
+        {
+            return ColorCombinationList != null;
         }
 
         #endregion

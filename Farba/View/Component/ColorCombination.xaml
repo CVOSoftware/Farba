@@ -10,53 +10,87 @@
     <Grid Style="{StaticResource ResourceKey=@Style/BackgroundView}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Border
             Grid.Row="0"
-            Margin="0, 0, 0, 10"
             Background="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}">
             <Grid>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="300" />
                 </Grid.ColumnDefinitions>
-                <TextBlock
+                <StackPanel
                     Grid.Column="0"
-                    Margin="10,0,0,0"
-                    VerticalAlignment="Center"
-                    Text="{StaticResource ResourceKey=@String/CombinationTitle}" />
-                <TextBlock
-                    Margin="0, 0, 10, 0"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        Margin="10,0"
+                        VerticalAlignment="Center"
+                        Text="{StaticResource ResourceKey=@String/CombinationTitle}" />
+                </StackPanel>
+                <Border
                     Grid.Column="1"
-                    VerticalAlignment="Center"
-                    Text="{Binding ActivePalette.CombinationCount}" />
-                <Border 
-                    Padding="10"
-                    Grid.Column="2">
-                    <StackPanel Orientation="Horizontal">
-                        <RadioButton
-                            Margin="0, 0, 10, 0"
-                            GroupName="CombinationType"
-                            IsEnabled="{Binding IsNotActivePalette}"
-                            IsChecked="{Binding ActivePalette.ColorCombinationType, Converter={StaticResource ResourceKey=@Converter/ColorCombinationTypeConverter}, ConverterParameter={StaticResource ResourceKey=@ColorCombinationType/Square}}"
-                            Style="{StaticResource ResourceKey=Style/RadioButton/CombinationType}">
-                            <Image Source="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type RadioButton}}, Path=IsChecked, Converter={StaticResource ResourceKey=@Converter/SwitchSquareImage}}" />
-                        </RadioButton>
-                        <RadioButton
-                            GroupName="CombinationType"
-                            IsEnabled="{Binding IsNotActivePalette}"
-                            IsChecked="{Binding ActivePalette.ColorCombinationType, Converter={StaticResource ResourceKey=@Converter/ColorCombinationTypeConverter}, ConverterParameter={StaticResource ResourceKey=@ColorCombinationType/Circle}}"
-                            Style="{StaticResource ResourceKey=Style/RadioButton/CombinationType}">
-                            <Image Source="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type RadioButton}}, Path=IsChecked, Converter={StaticResource ResourceKey=@Converter/SwitchCircleImage}}" />
-                        </RadioButton>
-                    </StackPanel>
+                    Style="{StaticResource ResourceKey=@Style/Border/Counter/ColorCombination}">
+                    <TextBlock
+                        FontSize="14"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Text="{Binding ActivePalette.CombinationCount}" />
                 </Border>
+                <StackPanel
+                    Grid.Column="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+                    <Border 
+                        Padding="10"
+                        Grid.Column="2">
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton
+                                Margin="0, 0, 10, 0"
+                                GroupName="CombinationType"
+                                IsEnabled="{Binding IsNotActivePalette}"
+                                IsChecked="{Binding ActivePalette.ColorCombinationType, Converter={StaticResource ResourceKey=@Converter/ColorCombinationTypeConverter}, ConverterParameter={StaticResource ResourceKey=@ColorCombinationType/Square}}"
+                                Style="{StaticResource ResourceKey=Style/RadioButton/CombinationType}">
+                                <Image Source="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type RadioButton}}, Path=IsChecked, Converter={StaticResource ResourceKey=@Converter/SwitchSquareImage}}" />
+                            </RadioButton>
+                            <RadioButton
+                                GroupName="CombinationType"
+                                IsEnabled="{Binding IsNotActivePalette}"
+                                IsChecked="{Binding ActivePalette.ColorCombinationType, Converter={StaticResource ResourceKey=@Converter/ColorCombinationTypeConverter}, ConverterParameter={StaticResource ResourceKey=@ColorCombinationType/Circle}}"
+                                Style="{StaticResource ResourceKey=Style/RadioButton/CombinationType}">
+                                <Image Source="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type RadioButton}}, Path=IsChecked, Converter={StaticResource ResourceKey=@Converter/SwitchCircleImage}}" />
+                            </RadioButton>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
             </Grid>
         </Border>
-        <ListBox
+        <Border
             Grid.Row="1"
+            Padding="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Button
+                    Grid.Column="1"
+                    Style="{StaticResource ResourceKey=@Style/Button/Reverse}"
+                    Command="{Binding ActivePalette.ReverseColorCommand}"
+                    Content="Reverse">
+                </Button>
+            </Grid>
+        </Border>
+        <Separator
+            Grid.Row="2"
+            Margin="0, 0, 0, 10"
+            BorderThickness="0, 0, 0, 1"
+            BorderBrush="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}"/>
+        <ListBox
+            Grid.Row="3"
             ItemsSource="{Binding ActivePalette.ColorCombinationList}"
             Style="{StaticResource ResourceKey=@Style/ListBoxCombination}" />
     </Grid>
