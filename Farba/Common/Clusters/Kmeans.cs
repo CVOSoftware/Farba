@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Media.Imaging;
 using System.IO;
+using System.Linq;
 
 namespace Farba.Common.Clusters
 {
@@ -81,14 +82,15 @@ namespace Farba.Common.Clusters
         private List<ClusterColor> ConvertClusters()
         {
             var clusters = new List<ClusterColor>(CLUSTER_COUNT);
-            for (var i = 0; i < CLUSTER_COUNT; i++)
+            var pixels = BitmapData.Height * BitmapData.Width;
+
+            foreach (var cluster in Clusters)
             {
-                var r = Clusters[i].Centroid.R;
-                var g = Clusters[i].Centroid.G;
-                var b = Clusters[i].Centroid.B;
-                clusters.Add(new ClusterColor(r, g, b));
+                clusters.Add(cluster.GetClusterColor(pixels));
             }
+
             Clusters.Clear();
+
             return clusters;
         }
 
@@ -172,13 +174,14 @@ namespace Farba.Common.Clusters
                 var breakSort = false;
                 for (var j = 0; j < CLUSTER_COUNT - i - 1; j++)
                 {
-                    if (Clusters[j + 1].Vector.Count > Clusters[j].Vector.Count)
+                    if (Clusters[j + 1].Vector.Count <= Clusters[j].Vector.Count)
                     {
-                        var temp = Clusters[j + 1];
-                        Clusters[j + 1] = Clusters[j];
-                        Clusters[j] = temp;
-                        breakSort = true;
+                        continue;
                     }
+                    var temp = Clusters[j + 1];
+                    Clusters[j + 1] = Clusters[j];
+                    Clusters[j] = temp;
+                    breakSort = true;
                 }
                 if (breakSort == false)
                 {
@@ -223,12 +226,15 @@ namespace Farba.Common.Clusters
 
         private class Cluster
         {
-            public Color Centroid { get; set; }
+            public double Percent { get; private set; }
 
-            public List<Color> Vector { get; set; }
+            public Color Centroid { get; private set; }
+
+            public List<Color> Vector { get; }
 
             public Cluster(Color centroid)
             {
+                Percent = 0;
                 Centroid = centroid;
                 Vector = new List<Color>();
             }
@@ -252,6 +258,12 @@ namespace Farba.Common.Clusters
                     b /= count;
                     Centroid = Color.FromArgb(ALPHA, r, g, b);
                 }
+            }
+
+            public ClusterColor GetClusterColor(int pixels)
+            {
+                Percent = Math.Round(100.0 * Vector.Count / pixels);
+                return new ClusterColor(Percent, Centroid.R, Centroid.G, Centroid.B);
             }
 
             public void ClearVector()

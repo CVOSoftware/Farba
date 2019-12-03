@@ -239,12 +239,7 @@ namespace Farba.ViewModel
             {
                 for (var j = i + 1; j < length; j++)
                 {
-                    ColorCombinationViewModel cc = new ColorCombinationViewModel(
-                        activePalette.Cluster[i].Hex,
-                        activePalette.Cluster[j].Hex,
-                        activePalette.Cluster[i].Brush,
-                        activePalette.Cluster[j].Brush
-                    );
+                    var cc = new ColorCombinationViewModel(activePalette.Cluster[i], activePalette.Cluster[j]);
                     combList.Add(cc);
                 }
             }

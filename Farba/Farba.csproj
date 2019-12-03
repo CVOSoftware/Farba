@@ -69,6 +69,11 @@
     </ApplicationDefinition>
     <Compile Include="Common\Clusters\ClusterColor.cs" />
     <Compile Include="Common\Clusters\Kmeans.cs" />
+    <Compile Include="Common\ColorDifference\Base\BaseColorDifference.cs" />
+    <Compile Include="Common\ColorDifference\CIE74.cs" />
+    <Compile Include="Common\ColorDifference\CIE94.cs" />
+    <Compile Include="Common\ColorDifference\CIEDE2000.cs" />
+    <Compile Include="Common\ColorDifference\Euclidian.cs" />
     <Compile Include="Enum\ColorCombinationType.cs" />
     <Compile Include="Extansion\ColorExtansion.cs" />
     <Compile Include="Helper\DialogWindowHelper.cs" />

@@ -1,4 +1,10 @@
-﻿using System.Windows.Media;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows.Media;
+using Farba.Common.Clusters;
+using Farba.Common.ColorDifference;
+using Farba.Common.ColorDifference.Base;
 using Farba.ViewModel.Base;
 
 namespace Farba.ViewModel
@@ -6,6 +12,8 @@ namespace Farba.ViewModel
     class ColorCombinationViewModel : BaseViewModel
     {
         #region ViewModelFields
+
+        private double difference;
 
         private string hexOne;
 
@@ -19,40 +27,46 @@ namespace Farba.ViewModel
 
         #region Constructor
 
-        public ColorCombinationViewModel(string hexOne, string hexTwo, SolidColorBrush brushOne, SolidColorBrush brushTwo)
+        public ColorCombinationViewModel(ClusterColor one, ClusterColor two)
         {
-            this.hexOne = hexOne;
-            this.hexTwo = hexTwo;
-            this.brushOne = brushOne;
-            this.brushTwo = brushTwo;
+            hexOne = one.Hex;
+            hexTwo = two.Hex;
+            brushOne = one.Brush;
+            brushTwo = two.Brush;
         }
 
         #endregion
 
         #region ViewModelProperties
 
+        public double Difference
+        {
+            get => difference;
+            private set => SetValue(ref difference, value);
+        }
+
         public string HexOne
         {
             get => hexOne;
-            set => SetValue(ref hexOne, value);
+            private set => SetValue(ref hexOne, value);
         }
 
         public string HexTwo
         {
             get => hexTwo;
-            set => SetValue(ref hexTwo, value);
+            private set => SetValue(ref hexTwo, value);
         }
 
         public SolidColorBrush BrushOne
         {
             get => brushOne;
-            set => SetValue(ref brushOne, value);
+            private set => SetValue(ref brushOne, value);
         }
 
         public SolidColorBrush BrushTwo
         {
             get => brushTwo;
-            set => SetValue(ref brushTwo, value);
+            private set => SetValue(ref brushTwo, value);
         }
 
         #endregion

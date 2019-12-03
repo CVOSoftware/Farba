@@ -13,8 +13,9 @@ namespace Farba.Common.Clusters
 
         #region Constructor
 
-        public ClusterColor(int r, int g, int b)
+        public ClusterColor(double percent, int r, int g, int b)
         {
+            Percent = percent;
             Color = Color.FromArgb(ALPHA, (byte)r, (byte)g, (byte)b);
             Brush = Color.GetBrash();
             Hex = Color.HexFormat();
@@ -24,6 +25,8 @@ namespace Farba.Common.Clusters
         #endregion
 
         #region Properties
+
+        public double Percent { get; }
 
         public Color Color { get; }
 
