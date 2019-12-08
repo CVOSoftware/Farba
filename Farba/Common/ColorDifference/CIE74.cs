@@ -17,7 +17,15 @@ namespace Farba.Common.ColorDifference
 
         protected override double CalculateAction()
         {
-            return default;
+            var xyzOne = RGBtoXYZ(One);
+            var xyzTwo = RGBtoXYZ(Two);
+            var labOne = XYZtoLAB(xyzOne);
+            var labTwo = XYZtoLAB(xyzTwo);
+            var deltaL = Math.Pow(labTwo.L - labOne.L, 2);
+            var deltaA = Math.Pow(labTwo.A - labOne.A, 2); 
+            var deltaB = Math.Pow(labTwo.B - labOne.B, 2);
+
+            return Math.Sqrt(deltaL + deltaA + deltaB);
         }
     }
 }

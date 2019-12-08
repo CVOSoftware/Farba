@@ -8,7 +8,7 @@ namespace Farba.Helper
     {
         public static void UpdateUI(Action action)
         {
-            if ((action == null) || (Application.Current == null))
+            if (action == null || Application.Current == null)
             {
                 return;
             }

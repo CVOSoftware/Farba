@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Farba.ViewModel.Base;
@@ -136,12 +137,19 @@ namespace Farba.ViewModel
         
         private void OnCreatePalette(object parameter)
         {
-            using (var kmeans = new Kmeans(activePalette.Image))
+            activePalette.IsProcess = false;
+            ThreadPool.QueueUserWorkItem(callback =>
             {
-                activePalette.Cluster = kmeans.GetClusters();
-                activePalette.IsProcess = false;
-                SetCombination();
-            }
+                using (var kmeans = new Kmeans(activePalette.Image))
+                {
+                    UpdateUI(() =>
+                    {
+                        activePalette.Cluster = kmeans.GetClusters();
+                        activePalette.IsProcess = true;
+                        SetCombination();
+                    });
+                }
+            });
         }
 
         private void OmRemovePalette(object parameter)
