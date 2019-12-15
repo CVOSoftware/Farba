@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Farba.ViewModel.Base;
 using Farba.Common.Clusters;
+using Farba.Common.ColorDifference;
+using Farba.Common.ColorDifference.Base;
 using Farba.Enum;
 
 namespace Farba.ViewModel
@@ -22,6 +25,8 @@ namespace Farba.ViewModel
         private bool isProcess;
 
         private string colorCombination;
+
+        private string selectColorDifferenceType;
 
         private ColorCombinationType colorCombinationType;
 
@@ -41,6 +46,12 @@ namespace Farba.ViewModel
             Image = image;
             cluster = null;
             colorCombinatinList = null;
+            ColorDifferenceCollection = new List<string>
+            {
+                "CIE74",
+                "CIE94"
+            };
+            SelectColorDifferenceType = ColorDifferenceCollection.First();
         }
 
         #endregion
@@ -67,13 +78,29 @@ namespace Farba.ViewModel
             set => SetValue(ref colorCombination, value);
         }
 
+        public string SelectColorDifferenceType
+        {
+            get => selectColorDifferenceType;
+            set
+            {
+                if (SetValue(ref selectColorDifferenceType, value)
+                    && ColorCombinationList != null)
+                {
+                    SetColorDifferenceValue();
+                }
+            }
+        }
+
         public ColorCombinationType ColorCombinationType
         {
             get => colorCombinationType;
             set => SetValue(ref colorCombinationType, value);
         }
 
+
         public BitmapImage Image { get; }
+
+        public List<string> ColorDifferenceCollection { get; }
 
         public List<ClusterColor> Cluster
         {
@@ -84,7 +111,13 @@ namespace Farba.ViewModel
         public List<ColorCombinationViewModel> ColorCombinationList
         {
             get => colorCombinatinList;
-            set => SetValue(ref colorCombinatinList, value);
+            set
+            {
+                if (SetValue(ref colorCombinatinList, value))
+                {
+                    SetColorDifferenceValue();
+                }
+            }
         }
 
         #endregion
@@ -100,9 +133,39 @@ namespace Farba.ViewModel
             }
         }
 
+        #endregion
+
+        #region CommandCanExecuteMethods
+
         private bool CanReverseColor(object param)
         {
             return ColorCombinationList != null;
+        }
+
+        #endregion
+
+        #region Private
+
+        private BaseColorDifference GetColorDiffAlgorithm(Color colorOne, Color colorTwo)
+        {
+            switch (SelectColorDifferenceType)
+            {
+                case "CIE74":
+                    return new CIE74(colorOne, colorTwo);
+                case "CIE94":
+                    return new CIE94(colorOne, colorTwo);
+            }
+
+            return default;
+        }
+
+        private void SetColorDifferenceValue()
+        {
+            foreach (var colorComb in ColorCombinationList)
+            {
+                var colorDifferenceAlgorithm = GetColorDiffAlgorithm(colorComb.ColorOne, colorComb.ColorTwo);
+                colorComb.Difference = colorDifferenceAlgorithm.CalculateTheDifference();
+            }
         }
 
         #endregion

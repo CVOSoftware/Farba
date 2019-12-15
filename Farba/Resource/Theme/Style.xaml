@@ -664,13 +664,15 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0" Style="{StaticResource ResourceKey=@StackPanel/CentralOrientation}">
                                     <Border x:Name="BorderOneInfo" Style="{StaticResource ResourceKey=@Border/Preview/BrushOne}"/>
                                     <TextBlock x:Name="TextOne" Style="{StaticResource ResourceKey=@Text/Center/One}"/>
                                 </StackPanel>
-                                <StackPanel Grid.Column="1" Style="{StaticResource ResourceKey=@StackPanel/CentralOrientation}">
+                                <TextBlock x:Name="Diff" Grid.Column="1" Text="{Binding Difference}"/>
+                                <StackPanel Grid.Column="2" Style="{StaticResource ResourceKey=@StackPanel/CentralOrientation}">
                                     <Border x:Name="BorderTwoInfo" Style="{StaticResource ResourceKey=@Border/Preview/BrushTwo}"/>
                                     <TextBlock x:Name="TextTwo" Style="{StaticResource ResourceKey=@Text/Center/Two}"/>
                                 </StackPanel>
@@ -687,6 +689,7 @@
                         <Setter TargetName="BorderTwoInfo" Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
                         <Setter TargetName="TextOne" Property="Foreground" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
                         <Setter TargetName="TextTwo" Property="Foreground" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
+                        <Setter TargetName="Diff" Property="Foreground" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
                     </Trigger>
                 </DataTemplate.Triggers>
             </DataTemplate>
@@ -737,13 +740,15 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0" Style="{StaticResource ResourceKey=@StackPanel/CentralOrientation}">
                                     <Border x:Name="BorderOneInfo" Style="{StaticResource ResourceKey=@Border/Preview/BrushOne}"/>
                                     <TextBlock x:Name="TextOne" Style="{StaticResource ResourceKey=@Text/Center/One}"/>
                                 </StackPanel>
-                                <StackPanel Grid.Column="1" Style="{StaticResource ResourceKey=@StackPanel/CentralOrientation}">
+                                <TextBlock x:Name="Diff" Grid.Column="1" Text="{Binding Difference}"/>
+                                <StackPanel Grid.Column="2" Style="{StaticResource ResourceKey=@StackPanel/CentralOrientation}">
                                     <Border x:Name="BorderTwoInfo" Style="{StaticResource ResourceKey=@Border/Preview/BrushTwo}"/>
                                     <TextBlock x:Name="TextTwo" Style="{StaticResource ResourceKey=@Text/Center/Two}"/>
                                 </StackPanel>
@@ -760,6 +765,7 @@
                         <Setter TargetName="BorderTwoInfo" Property="BorderBrush" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
                         <Setter TargetName="TextOne" Property="Foreground" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
                         <Setter TargetName="TextTwo" Property="Foreground" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
+                        <Setter TargetName="Diff" Property="Foreground" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}" />
                     </Trigger>
                 </DataTemplate.Triggers>
             </DataTemplate>

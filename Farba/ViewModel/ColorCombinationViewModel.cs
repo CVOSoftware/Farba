@@ -33,6 +33,8 @@ namespace Farba.ViewModel
             hexTwo = two.Hex;
             brushOne = one.Brush;
             brushTwo = two.Brush;
+            ColorOne = one.Color;
+            ColorTwo = two.Color;
         }
 
         #endregion
@@ -42,7 +44,7 @@ namespace Farba.ViewModel
         public double Difference
         {
             get => difference;
-            private set => SetValue(ref difference, value);
+            set => SetValue(ref difference, value);
         }
 
         public string HexOne
@@ -56,6 +58,10 @@ namespace Farba.ViewModel
             get => hexTwo;
             private set => SetValue(ref hexTwo, value);
         }
+
+        public Color ColorOne { get; }
+
+        public Color ColorTwo { get; }
 
         public SolidColorBrush BrushOne
         {

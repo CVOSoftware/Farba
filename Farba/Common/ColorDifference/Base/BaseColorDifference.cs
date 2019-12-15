@@ -42,7 +42,7 @@ namespace Farba.Common.ColorDifference.Base
 
         private double NormalizeRGB(byte value)
         {
-            return value / 255;
+            return value / 255.0;
         }
 
         private double ConvertRGBTosRGB(double value)
@@ -52,7 +52,7 @@ namespace Farba.Common.ColorDifference.Base
 
         private double fXYZ(double value)
         {
-            return value > 0.008856 ? Math.Pow(value, 1 / 3) : (7.787 * value) + (16 / 116);
+            return value > 0.008856 ? Math.Pow(value, 1.0 / 3.0) : (7.787 * value) + (16.0 / 116.0);
         }
 
         protected ColorXYZ RGBtoXYZ(Color colorRGB)
@@ -77,9 +77,9 @@ namespace Farba.Common.ColorDifference.Base
             var n_y = fXYZ(colorXYZ.Y);
             var n_z = fXYZ(colorXYZ.Z);
 
-            var l = 116 / n_x - 16;
-            var a = 500 * (n_x - n_y);
-            var b = 200 * (n_y - n_z);
+            var l = 116.0 / n_x - 16;
+            var a = 500.0 * (n_x - n_y);
+            var b = 200.0 * (n_y - n_z);
 
             return new ColorLAB(l, a, b);
         }

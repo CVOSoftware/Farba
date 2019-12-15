@@ -37,8 +37,8 @@ namespace Farba.Common.ColorDifference
             var tempL = Math.Pow(deltaL / Kl, 2);
             var tempC = Math.Pow(deltaC / 1 + K1 * oneC, 2);
             var tempH = Math.Pow(deltaH / 1 + K2, 2);
-
-            return Math.Sqrt(tempL + tempC + tempH);
+            var result = Math.Sqrt(tempL + tempC + tempH);
+            return Math.Round(result, 2);
         }
     }
 }

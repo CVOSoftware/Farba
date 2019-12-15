@@ -73,11 +73,36 @@
             Padding="10">
             <Grid>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Button
+                <TextBlock 
+                    Grid.Column="0"
+                    Margin="0, 0, 10, 0"
+                    VerticalAlignment="Center"
+                    Text="Color diff"/>
+                <ComboBox
                     Grid.Column="1"
+                    Width="150"
+                    Margin="0, 0, 20, 0"
+                    IsEnabled="{Binding IsNotActivePalette}"
+                    SelectedItem="{Binding ActivePalette.SelectColorDifferenceType}"
+                    ItemsSource="{Binding ActivePalette.ColorDifferenceCollection}"/>
+                <TextBlock 
+                    Grid.Column="2"
+                    Margin="0, 0, 10, 0"
+                    VerticalAlignment="Center"
+                    Text="Space"/>
+                <ComboBox
+                    Grid.Column="3"
+                    Width="150"
+                    IsEnabled="{Binding IsNotActivePalette}"/>
+                <Button
+                    Grid.Column="5"
                     Style="{StaticResource ResourceKey=@Style/Button/Reverse}"
                     Command="{Binding ActivePalette.ReverseColorCommand}"
                     Content="Reverse">

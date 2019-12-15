@@ -138,18 +138,11 @@ namespace Farba.ViewModel
         private void OnCreatePalette(object parameter)
         {
             activePalette.IsProcess = false;
-            ThreadPool.QueueUserWorkItem(callback =>
+            using (var kmeans = new Kmeans(activePalette.Image))
             {
-                using (var kmeans = new Kmeans(activePalette.Image))
-                {
-                    UpdateUI(() =>
-                    {
-                        activePalette.Cluster = kmeans.GetClusters();
-                        activePalette.IsProcess = true;
-                        SetCombination();
-                    });
-                }
-            });
+                activePalette.Cluster = kmeans.GetClusters();
+                SetCombination();
+            }
         }
 
         private void OmRemovePalette(object parameter)
