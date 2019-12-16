@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 
 namespace Farba.Common.ColorDifference.Base
 {
@@ -33,53 +32,5 @@ namespace Farba.Common.ColorDifference.Base
 
             return Calculated;
         }
-
-        #region Color converter
-
-        private double NormalizeRGB(byte value)
-        {
-            return value / 255.0;
-        }
-
-        private double ConvertRGBTosRGB(double value)
-        {
-            return value > 0.04045 ? Math.Pow(value + 0.055 / 1.055, 2.2) : value / 12.92;
-        }
-
-        private double fXYZ(double value)
-        {
-            return value > 0.008856 ? Math.Pow(value, 1.0 / 3.0) : (7.787 * value) + (16.0 / 116.0);
-        }
-
-        protected ColorXYZ RGBtoXYZ(Color colorRGB)
-        {
-            var n_r = NormalizeRGB(colorRGB.R);
-            var n_g = NormalizeRGB(colorRGB.G);
-            var n_b = NormalizeRGB(colorRGB.B);
-
-            var s_r = ConvertRGBTosRGB(n_r) * 100;
-            var s_g = ConvertRGBTosRGB(n_g) * 100;
-            var s_b = ConvertRGBTosRGB(n_b) * 100;
-
-            var x = s_r * 0.4124 + s_g * 0.3576 + s_b * 0.1805;
-            var y = s_r * 0.2126 + s_g * 0.7152 + s_b * 0.0722;
-            var z = s_r * 0.0193 + s_g * 0.1192 + s_b * 0.9505;
-            return new ColorXYZ(x, y, z);
-        }
-
-        protected ColorLAB XYZtoLAB(ColorXYZ colorXYZ)
-        {
-            var n_x = fXYZ(colorXYZ.X);
-            var n_y = fXYZ(colorXYZ.Y);
-            var n_z = fXYZ(colorXYZ.Z);
-
-            var l = 116.0 / n_x - 16;
-            var a = 500.0 * (n_x - n_y);
-            var b = 200.0 * (n_y - n_z);
-
-            return new ColorLAB(l, a, b);
-        }
-
-        #endregion
     }
 }

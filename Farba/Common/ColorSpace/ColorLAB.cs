@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Farba.Common.ColorDifference.Base
+namespace Farba.Common.ColorSpace
 {
     internal struct ColorLAB
     {

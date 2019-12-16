@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Media;
 using Farba.Common.ColorDifference.Base;
+using Farba.Extansion;
 
 namespace Farba.Common.ColorDifference
 {
@@ -19,10 +20,8 @@ namespace Farba.Common.ColorDifference
 
         protected override double CalculateAction()
         {
-            var xyzOne = RGBtoXYZ(One);
-            var xyzTwo = RGBtoXYZ(Two);
-            var labOne = XYZtoLAB(xyzOne);
-            var labTwo = XYZtoLAB(xyzTwo);
+            var labOne = One.ToXyz().ToLab();
+            var labTwo = Two.ToXyz().ToLab();
             var oneC = Math.Sqrt(labOne.A * labOne.A + labOne.B * labOne.B);
             var twoC = Math.Sqrt(labTwo.A * labTwo.A + labTwo.B * labTwo.B);
             var deltaA = labTwo.A - labOne.A;
