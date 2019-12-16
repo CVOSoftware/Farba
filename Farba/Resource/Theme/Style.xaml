@@ -591,6 +591,7 @@
             <Style x:Key="@StackPanel/CentralOrientation" TargetType="{x:Type StackPanel}">
                 <Setter Property="Orientation" Value="Horizontal"/>
                 <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
             <Style x:Key="@Border/Common" TargetType="{x:Type Border}">
                 <Setter Property="BorderThickness" Value="1"/>
