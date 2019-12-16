@@ -6,9 +6,9 @@ using Farba.Extansion;
 
 namespace Farba.Common.ColorDifference
 {
-    internal class CIE74 : BaseColorDifference
+    internal class CIE76 : BaseColorDifference
     {
-        public CIE74(Color one, Color two) : base(one, two)
+        public CIE76(Color one, Color two) : base(one, two)
         {
 
         }

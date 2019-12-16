@@ -70,12 +70,13 @@
     <Compile Include="Common\Clusters\ClusterColor.cs" />
     <Compile Include="Common\Clusters\Kmeans.cs" />
     <Compile Include="Common\ColorDifference\Base\BaseColorDifference.cs" />
-    <Compile Include="Common\ColorDifference\CIE74.cs" />
+    <Compile Include="Common\ColorDifference\CIE76.cs" />
     <Compile Include="Common\ColorDifference\CIE94.cs" />
-    <Compile Include="Common\ColorDifference\CIEDE2000.cs" />
     <Compile Include="Common\ColorSpace\ColorLAB.cs" />
     <Compile Include="Common\ColorSpace\ColorXYZ.cs" />
     <Compile Include="Enum\ColorCombinationType.cs" />
+    <Compile Include="Enum\ColorDifferenceType.cs" />
+    <Compile Include="Enum\ColorSpaceType.cs" />
     <Compile Include="Extansion\ColorExtansion.cs" />
     <Compile Include="Helper\DialogWindowHelper.cs" />
     <Compile Include="Helper\MathHelper.cs" />

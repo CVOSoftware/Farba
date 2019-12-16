@@ -2,7 +2,7 @@
 {
     internal enum ColorCombinationType
     {
-        Square,
-        Circle
+        Square = 0,
+        Circle = 1
     }
 }

@@ -48,7 +48,7 @@ namespace Farba.ViewModel
             colorCombinatinList = null;
             ColorDifferenceCollection = new List<string>
             {
-                "CIE74",
+                "CIE76",
                 "CIE94"
             };
             SelectColorDifferenceType = ColorDifferenceCollection.First();
@@ -150,8 +150,8 @@ namespace Farba.ViewModel
         {
             switch (SelectColorDifferenceType)
             {
-                case "CIE74":
-                    return new CIE74(colorOne, colorTwo);
+                case "CIE76":
+                    return new CIE76(colorOne, colorTwo);
                 case "CIE94":
                     return new CIE94(colorOne, colorTwo);
             }
