@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 using Farba.Common.ColorDifference.Base;
 
@@ -29,8 +25,8 @@ namespace Farba.Common.ColorDifference
             var labTwo = XYZtoLAB(xyzTwo);
             var oneC = Math.Sqrt(labOne.A * labOne.A + labOne.B * labOne.B);
             var twoC = Math.Sqrt(labTwo.A * labTwo.A + labTwo.B * labTwo.B);
-            var deltaA = labTwo.A * labOne.A;
-            var deltaB = labTwo.B * labOne.B;
+            var deltaA = labTwo.A - labOne.A;
+            var deltaB = labTwo.B - labOne.B;
             var deltaL = labTwo.L - labOne.L;
             var deltaC = twoC - oneC;
             var deltaH = Math.Sqrt(deltaA * deltaA + deltaB * deltaB - deltaC * deltaC);
