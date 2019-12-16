@@ -131,6 +131,14 @@ namespace Farba.ViewModel
                 colorCombinationItem.ReverseHex();
                 colorCombinationItem.ReverseBrush();
             }
+
+            SortColorCombinationList();
+        }
+
+        private void SortColorCombinationList()
+        {
+            ColorCombinationList = ColorCombinationList.OrderByDescending(
+                combinationItem => ColorCombinationList.Count(_ => _.BrushOne == combinationItem.BrushOne)).ToList();
         }
 
         #endregion
