@@ -850,7 +850,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="@Style/ComboBox" TargetType="{x:Type ComboBox}">
+    <Style x:Key="@Style/ComboBoxEnum" TargetType="{x:Type ComboBox}">
         <Style.Resources>
             <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
                 <Grid>

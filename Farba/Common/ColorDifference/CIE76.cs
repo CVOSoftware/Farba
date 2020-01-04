@@ -2,7 +2,7 @@
 using System.Windows.Media;
 using Farba.Common.ColorDifference.Base;
 using Farba.Common.ColorSpace;
-using Farba.Extansion;
+using Farba.Extension;
 
 namespace Farba.Common.ColorDifference
 {

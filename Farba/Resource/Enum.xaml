@@ -3,6 +3,8 @@
                     xmlns:e="clr-namespace:Farba.Enum"
                     xmlns:local="clr-namespace:Farba.Resource">
     
+    <e:ColorDifferenceType x:Key="@Enum/ColorDifferenceType"/>
+
     <e:ColorCombinationType x:Key="@ColorCombinationType/Square">Square</e:ColorCombinationType>
     <e:ColorCombinationType x:Key="@ColorCombinationType/Circle">Circle</e:ColorCombinationType>
 

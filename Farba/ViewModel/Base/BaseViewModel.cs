@@ -25,10 +25,5 @@ namespace Farba.ViewModel.Base
             OnPropertyChanged(propertyName);
             return true;
         }
-
-        protected void UpdateUI(Action action)
-        {
-            UIHelper.UpdateUI(action);
-        }
     }
 }

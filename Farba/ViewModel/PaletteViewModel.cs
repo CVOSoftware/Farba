@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -9,6 +8,7 @@ using Farba.Common.Clusters;
 using Farba.Common.ColorDifference;
 using Farba.Common.ColorDifference.Base;
 using Farba.Enum;
+using Farba.Extension;
 
 namespace Farba.ViewModel
 {
@@ -26,7 +26,7 @@ namespace Farba.ViewModel
 
         private string colorCombination;
 
-        private string selectColorDifferenceType;
+        private ColorDifferenceType colorDifferenceType;
 
         private ColorCombinationType colorCombinationType;
 
@@ -46,12 +46,7 @@ namespace Farba.ViewModel
             Image = image;
             cluster = null;
             colorCombinatinList = null;
-            ColorDifferenceCollection = new List<string>
-            {
-                "CIE76",
-                "CIE94"
-            };
-            SelectColorDifferenceType = ColorDifferenceCollection.First();
+            ColorDifferenceType = ColorDifferenceType.CIE76;
         }
 
         #endregion
@@ -78,12 +73,12 @@ namespace Farba.ViewModel
             set => SetValue(ref colorCombination, value);
         }
 
-        public string SelectColorDifferenceType
+        public ColorDifferenceType ColorDifferenceType
         {
-            get => selectColorDifferenceType;
+            get => colorDifferenceType;
             set
             {
-                if (SetValue(ref selectColorDifferenceType, value)
+                if (SetValue(ref colorDifferenceType, value)
                     && ColorCombinationList != null)
                 {
                     SetColorDifferenceValue();
@@ -100,7 +95,8 @@ namespace Farba.ViewModel
 
         public BitmapImage Image { get; }
 
-        public List<string> ColorDifferenceCollection { get; }
+
+        public IEnumerable<(System.Enum, string)> ColorDifferenceTypeCollections => ColorDifferenceType.GetAllValuesAndDescriptions();
 
         public List<ClusterColor> Cluster
         {
@@ -156,11 +152,11 @@ namespace Farba.ViewModel
 
         private BaseColorDifference GetColorDiffAlgorithm(Color colorOne, Color colorTwo)
         {
-            switch (SelectColorDifferenceType)
+            switch (colorDifferenceType)
             {
-                case "CIE76":
+                case ColorDifferenceType.CIE76:
                     return new CIE76(colorOne, colorTwo);
-                case "CIE94":
+                case ColorDifferenceType.CIE94:
                     return new CIE94(colorOne, colorTwo);
             }
 

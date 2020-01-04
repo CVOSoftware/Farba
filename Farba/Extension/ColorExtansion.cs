@@ -2,9 +2,9 @@
 using System.Windows.Media;
 using Farba.Common.ColorSpace;
 
-namespace Farba.Extansion
+namespace Farba.Extension
 {
-    internal static class ColorExtansion
+    internal static class ColorExtension
     {
         public static string HexFormat(this Color color)
         {
