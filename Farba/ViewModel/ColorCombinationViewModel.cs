@@ -75,20 +75,6 @@ namespace Farba.ViewModel
 
         #region Public
 
-        public void ReverseHex()
-        {
-            var temp = ColorSpaceOne;
-            ColorSpaceOne = ColorSpaceTwo;
-            ColorSpaceTwo = temp;
-        }
-
-        public void ReverseBrush()
-        {
-            var temp = BrushOne;
-            BrushOne = BrushTwo;
-            BrushTwo = temp;
-        }
-
         public void SetColorSpaceText(ColorSpaceType type)
         {
             switch (type)

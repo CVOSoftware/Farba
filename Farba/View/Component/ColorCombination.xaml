@@ -107,10 +107,10 @@
                     ItemsSource="{Binding ActivePalette.ColorSpaceTypeCollections, Converter={StaticResource ResourceKey=@Converter/EnumCollectionConverter}}"/>
                 <Button
                     Grid.Column="5"
-                    Style="{StaticResource ResourceKey=@Style/Button/Reverse}"
-                    Command="{Binding ActivePalette.ReverseColorCommand}"
-                    Content="Reverse">
-                </Button>
+                    Width="63"
+                    Style="{StaticResource ResourceKey=@Style/Button/Sort}"
+                    Command="{Binding ActivePalette.SortColorCommand}"
+                    Content="Sort"/>
             </Grid>
         </Border>
         <Separator

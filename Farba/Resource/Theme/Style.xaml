@@ -85,7 +85,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="@Style/Button/Reverse" TargetType="{x:Type Button}" BasedOn="{StaticResource ResourceKey=@Style/Button}">
+    <Style x:Key="@Style/Button/Sort" TargetType="{x:Type Button}" BasedOn="{StaticResource ResourceKey=@Style/Button}">
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsNotActivePalette}" Value="False">
                 <Setter Property="Visibility" Value="Hidden"/>

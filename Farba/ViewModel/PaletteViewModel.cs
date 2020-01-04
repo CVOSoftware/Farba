@@ -16,13 +16,15 @@ namespace Farba.ViewModel
     {
         #region CommandFields
 
-        private RelayCommand reverseColorCommand;
+        private RelayCommand sortColorCommand;
 
         #endregion
 
         #region ViewModelFields
 
         private bool isProcess;
+
+        private bool isSort;
 
         private string colorCombination;
 
@@ -43,6 +45,7 @@ namespace Farba.ViewModel
         public PaletteViewModel(string fileName, BitmapImage image)
         {
             isProcess = true;
+            isSort = true;
             FileName = fileName;
             ColorSpaceType = ColorSpaceType.HEX;
             ColorDifferenceType = ColorDifferenceType.CIE76;
@@ -56,7 +59,7 @@ namespace Farba.ViewModel
 
         #region CommandProperties
 
-        public ICommand ReverseColorCommand => RelayCommand.Register(ref reverseColorCommand, OnReverseColor, CanReverseColor);
+        public ICommand SortColorCommand => RelayCommand.Register(ref sortColorCommand, OnSortColor, CanSortColor);
 
         #endregion
 
@@ -136,28 +139,22 @@ namespace Farba.ViewModel
 
         #region CommandExecuteMethod
 
-        private void OnReverseColor(object param)
+        private void OnSortColor(object param)
         {
-            foreach (var colorCombinationItem in ColorCombinationList)
-            {
-                colorCombinationItem.ReverseHex();
-                colorCombinationItem.ReverseBrush();
-            }
-
-            SortColorCombinationList();
-        }
-
-        private void SortColorCombinationList()
-        {
+            ColorCombinationList.Reverse();
             ColorCombinationList = ColorCombinationList.OrderByDescending(
-                combinationItem => ColorCombinationList.Count(_ => _.BrushOne == combinationItem.BrushOne)).ToList();
+                combinationItem => ColorCombinationList.Count(
+                    _ => isSort ? _.BrushTwo == combinationItem.BrushTwo 
+                                : _.BrushOne == combinationItem.BrushOne)).ToList();
+
+            isSort = !isSort;
         }
 
         #endregion
 
         #region CommandCanExecuteMethods
 
-        private bool CanReverseColor(object param)
+        private bool CanSortColor(object param)
         {
             return ColorCombinationList != null;
         }
