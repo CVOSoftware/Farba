@@ -740,11 +740,11 @@
                             </Border>
                             <Border Grid.Column="1" Style="{StaticResource ResourceKey=@Border/OuterSquareBrushTwo}">
                                 <StackPanel Style="{StaticResource ResourceKey=@StackPanel/CentralOrientation}">
-                                    <Border Margin="0, 0, 10, 0" Style="{StaticResource ResourceKey=@Border/InnerCircleBrushOne}" />
-                                    <Border Margin="0, 0, 10, 0" Style="{StaticResource ResourceKey=@Border/InnerCircleBrushOne}" />
-                                    <Border Margin="0, 0, 10, 0" Style="{StaticResource ResourceKey=@Border/InnerCircleBrushOne}"/>
-                                    <Border Margin="0, 0, 10, 0" Style="{StaticResource ResourceKey=@Border/InnerCircleBrushOne}"/>
                                     <Border Style="{StaticResource ResourceKey=@Border/InnerCircle}"/>
+                                    <Border Margin="10, 0, 0, 0" Style="{StaticResource ResourceKey=@Border/InnerCircleBrushOne}" />
+                                    <Border Margin="10, 0, 0, 0" Style="{StaticResource ResourceKey=@Border/InnerCircleBrushOne}" />
+                                    <Border Margin="10, 0, 0, 0" Style="{StaticResource ResourceKey=@Border/InnerCircleBrushOne}"/>
+                                    <Border Margin="10, 0, 0, 0" Style="{StaticResource ResourceKey=@Border/InnerCircleBrushOne}"/>
                                 </StackPanel>
                             </Border>
                         </Grid>
