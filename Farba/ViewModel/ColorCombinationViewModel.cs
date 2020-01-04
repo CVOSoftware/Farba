@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using Farba.Common.Clusters;
-using Farba.Common.ColorDifference;
-using Farba.Common.ColorDifference.Base;
+using Farba.Enum;
 using Farba.ViewModel.Base;
+using Farba.Extension;
 
 namespace Farba.ViewModel
 {
@@ -15,9 +12,9 @@ namespace Farba.ViewModel
 
         private double difference;
 
-        private string hexOne;
+        private string colorSpaceOne;
 
-        private string hexTwo;
+        private string colorSpaceTwo;
 
         private SolidColorBrush brushOne;
 
@@ -27,14 +24,13 @@ namespace Farba.ViewModel
 
         #region Constructor
 
-        public ColorCombinationViewModel(ClusterColor one, ClusterColor two)
+        public ColorCombinationViewModel(ClusterColor one, ClusterColor two, ColorSpaceType type)
         {
-            hexOne = one.Hex;
-            hexTwo = two.Hex;
             brushOne = one.Brush;
             brushTwo = two.Brush;
             ColorOne = one.Color;
             ColorTwo = two.Color;
+            SetColorSpaceText(type);
         }
 
         #endregion
@@ -47,16 +43,16 @@ namespace Farba.ViewModel
             set => SetValue(ref difference, value);
         }
 
-        public string HexOne
+        public string ColorSpaceOne
         {
-            get => hexOne;
-            private set => SetValue(ref hexOne, value);
+            get => colorSpaceOne;
+            set => SetValue(ref colorSpaceOne, value);
         }
 
-        public string HexTwo
+        public string ColorSpaceTwo
         {
-            get => hexTwo;
-            private set => SetValue(ref hexTwo, value);
+            get => colorSpaceTwo;
+            set => SetValue(ref colorSpaceTwo, value);
         }
 
         public Color ColorOne { get; }
@@ -81,9 +77,9 @@ namespace Farba.ViewModel
 
         public void ReverseHex()
         {
-            var temp = HexOne;
-            HexOne = HexTwo;
-            HexTwo = temp;
+            var temp = ColorSpaceOne;
+            ColorSpaceOne = ColorSpaceTwo;
+            ColorSpaceTwo = temp;
         }
 
         public void ReverseBrush()
@@ -91,6 +87,21 @@ namespace Farba.ViewModel
             var temp = BrushOne;
             BrushOne = BrushTwo;
             BrushTwo = temp;
+        }
+
+        public void SetColorSpaceText(ColorSpaceType type)
+        {
+            switch (type)
+            {
+                case ColorSpaceType.HEX:
+                    ColorSpaceOne = ColorOne.HexFormat();
+                    ColorSpaceTwo = ColorTwo.HexFormat();
+                    break;
+                case ColorSpaceType.RGB:
+                    ColorSpaceOne = ColorOne.RgbFormat();
+                    ColorSpaceTwo = ColorTwo.RgbFormat();
+                    break;
+            }
         }
 
         #endregion

@@ -92,8 +92,7 @@
                     Style="{StaticResource ResourceKey=@Style/ComboBoxEnum}"
                     IsEnabled="{Binding IsNotActivePalette}"
                     SelectedItem="{Binding ActivePalette.ColorDifferenceType, Converter={StaticResource @Converter/EnumToStringConverter}, ConverterParameter={StaticResource ResourceKey=@Enum/ColorDifferenceType}}"
-                    ItemsSource="{Binding ActivePalette.ColorDifferenceTypeCollections, Converter={StaticResource ResourceKey=@Converter/EnumCollectionConverter}}">
-                </ComboBox>
+                    ItemsSource="{Binding ActivePalette.ColorDifferenceTypeCollections, Converter={StaticResource ResourceKey=@Converter/EnumCollectionConverter}}"/>
                 <TextBlock 
                     Grid.Column="2"
                     Margin="0, 0, 10, 0"
@@ -103,7 +102,9 @@
                     Grid.Column="3"
                     Width="150"
                     Style="{StaticResource ResourceKey=@Style/ComboBoxEnum}"
-                    IsEnabled="{Binding IsNotActivePalette}"/>
+                    IsEnabled="{Binding IsNotActivePalette}"
+                    SelectedItem="{Binding ActivePalette.ColorSpaceType, Converter={StaticResource @Converter/EnumToStringConverter}, ConverterParameter={StaticResource ResourceKey=@Enum/ColorSpaceType}}"
+                    ItemsSource="{Binding ActivePalette.ColorSpaceTypeCollections, Converter={StaticResource ResourceKey=@Converter/EnumCollectionConverter}}"/>
                 <Button
                     Grid.Column="5"
                     Style="{StaticResource ResourceKey=@Style/Button/Reverse}"

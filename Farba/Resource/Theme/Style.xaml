@@ -634,10 +634,10 @@
                 <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
             <Style x:Key="@Text/Center/One" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ResourceKey=@Text/Center}">
-                <Setter Property="Text" Value="{Binding HexOne}"/>
+                <Setter Property="Text" Value="{Binding ColorSpaceOne}"/>
             </Style>
             <Style x:Key="@Text/Center/Two" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ResourceKey=@Text/Center}">
-                <Setter Property="Text" Value="{Binding HexTwo}"/>
+                <Setter Property="Text" Value="{Binding ColorSpaceTwo}"/>
             </Style>
             <DataTemplate x:Key="@DataTemplate/Square">
                 <DataTemplate.Resources>

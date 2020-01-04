@@ -26,6 +26,8 @@ namespace Farba.ViewModel
 
         private string colorCombination;
 
+        private ColorSpaceType colorSpaceType;
+
         private ColorDifferenceType colorDifferenceType;
 
         private ColorCombinationType colorCombinationType;
@@ -42,11 +44,12 @@ namespace Farba.ViewModel
         {
             isProcess = true;
             FileName = fileName;
+            ColorSpaceType = ColorSpaceType.HEX;
+            ColorDifferenceType = ColorDifferenceType.CIE76;
             colorCombinationType = ColorCombinationType.Square;
             Image = image;
             cluster = null;
             colorCombinatinList = null;
-            ColorDifferenceType = ColorDifferenceType.CIE76;
         }
 
         #endregion
@@ -73,6 +76,19 @@ namespace Farba.ViewModel
             set => SetValue(ref colorCombination, value);
         }
 
+        public ColorSpaceType ColorSpaceType
+        {
+            get => colorSpaceType;
+            set
+            {
+                if (SetValue(ref colorSpaceType, value)
+                    && ColorCombinationList != null)
+                {
+                    SetColorSpaceValue();
+                }
+            }
+        }
+
         public ColorDifferenceType ColorDifferenceType
         {
             get => colorDifferenceType;
@@ -92,9 +108,9 @@ namespace Farba.ViewModel
             set => SetValue(ref colorCombinationType, value);
         }
 
-
         public BitmapImage Image { get; }
 
+        public IEnumerable<(System.Enum, string)> ColorSpaceTypeCollections => ColorSpaceType.GetAllValuesAndDescriptions();
 
         public IEnumerable<(System.Enum, string)> ColorDifferenceTypeCollections => ColorDifferenceType.GetAllValuesAndDescriptions();
 
@@ -161,6 +177,14 @@ namespace Farba.ViewModel
             }
 
             return default;
+        }
+
+        private void SetColorSpaceValue()
+        {
+            foreach (var colorComb in ColorCombinationList)
+            {
+                colorComb.SetColorSpaceText(ColorSpaceType);
+            }
         }
 
         private void SetColorDifferenceValue()

@@ -240,7 +240,7 @@ namespace Farba.ViewModel
             {
                 for (var j = i + 1; j < length; j++)
                 {
-                    var cc = new ColorCombinationViewModel(activePalette.Cluster[i], activePalette.Cluster[j]);
+                    var cc = new ColorCombinationViewModel(activePalette.Cluster[i], activePalette.Cluster[j], activePalette.ColorSpaceType);
                     combList.Add(cc);
                 }
             }
