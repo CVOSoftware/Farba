@@ -51,14 +51,14 @@
                             <RadioButton
                                 Margin="0, 0, 10, 0"
                                 GroupName="CombinationType"
-                                IsEnabled="{Binding IsNotActivePalette}"
+                                IsEnabled="{Binding IsNotSelectActivePalette}"
                                 IsChecked="{Binding ActivePalette.ColorCombinationType, Converter={StaticResource ResourceKey=@Converter/ColorCombinationTypeConverter}, ConverterParameter={StaticResource ResourceKey=@ColorCombinationType/Square}}"
                                 Style="{StaticResource ResourceKey=Style/RadioButton/CombinationType}">
                                 <Image Source="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type RadioButton}}, Path=IsChecked, Converter={StaticResource ResourceKey=@Converter/SwitchSquareImage}}" />
                             </RadioButton>
                             <RadioButton
                                 GroupName="CombinationType"
-                                IsEnabled="{Binding IsNotActivePalette}"
+                                IsEnabled="{Binding IsNotSelectActivePalette}"
                                 IsChecked="{Binding ActivePalette.ColorCombinationType, Converter={StaticResource ResourceKey=@Converter/ColorCombinationTypeConverter}, ConverterParameter={StaticResource ResourceKey=@ColorCombinationType/Circle}}"
                                 Style="{StaticResource ResourceKey=Style/RadioButton/CombinationType}">
                                 <Image Source="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type RadioButton}}, Path=IsChecked, Converter={StaticResource ResourceKey=@Converter/SwitchCircleImage}}" />
@@ -84,33 +84,37 @@
                     Grid.Column="0"
                     Margin="0, 0, 10, 0"
                     VerticalAlignment="Center"
-                    Text="Color diff"/>
+                    Text="Space"/>
                 <ComboBox
                     Grid.Column="1"
                     Width="150"
                     Margin="0, 0, 20, 0"
                     Style="{StaticResource ResourceKey=@Style/ComboBoxEnum}"
-                    IsEnabled="{Binding IsNotActivePalette}"
-                    SelectedItem="{Binding ActivePalette.ColorDifferenceType, Converter={StaticResource @Converter/EnumToStringConverter}, ConverterParameter={StaticResource ResourceKey=@Enum/ColorDifferenceType}}"
-                    ItemsSource="{Binding ActivePalette.ColorDifferenceTypeCollections, Converter={StaticResource ResourceKey=@Converter/EnumCollectionConverter}}"/>
+                    IsEnabled="{Binding IsNotSelectActivePalette}"
+                    SelectedItem="{Binding ActivePalette.ColorSpaceType, Converter={StaticResource @Converter/EnumToStringConverter}, ConverterParameter={StaticResource ResourceKey=@Enum/ColorSpaceType}}"
+                    ItemsSource="{Binding ActivePalette.ColorSpaceTypeCollections, Converter={StaticResource ResourceKey=@Converter/EnumCollectionConverter}}"/>
                 <TextBlock 
                     Grid.Column="2"
                     Margin="0, 0, 10, 0"
                     VerticalAlignment="Center"
-                    Text="Space"/>
+                    Text="Color diff"/>
                 <ComboBox
                     Grid.Column="3"
                     Width="150"
                     Style="{StaticResource ResourceKey=@Style/ComboBoxEnum}"
-                    IsEnabled="{Binding IsNotActivePalette}"
-                    SelectedItem="{Binding ActivePalette.ColorSpaceType, Converter={StaticResource @Converter/EnumToStringConverter}, ConverterParameter={StaticResource ResourceKey=@Enum/ColorSpaceType}}"
-                    ItemsSource="{Binding ActivePalette.ColorSpaceTypeCollections, Converter={StaticResource ResourceKey=@Converter/EnumCollectionConverter}}"/>
+                    IsEnabled="{Binding IsNotSelectActivePalette}"
+                    SelectedItem="{Binding ActivePalette.ColorDifferenceType, Converter={StaticResource @Converter/EnumToStringConverter}, ConverterParameter={StaticResource ResourceKey=@Enum/ColorDifferenceType}}"
+                    ItemsSource="{Binding ActivePalette.ColorDifferenceTypeCollections, Converter={StaticResource ResourceKey=@Converter/EnumCollectionConverter}}"/>
                 <Button
                     Grid.Column="5"
                     Width="63"
                     Style="{StaticResource ResourceKey=@Style/Button/Sort}"
-                    Command="{Binding ActivePalette.SortColorCommand}"
-                    Content="Sort"/>
+                    Command="{Binding ActivePalette.SortColorCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Sort" Margin="0, 0, 10, 0"/>
+                        <Image Width="10" Height="10" Source="{Binding ActivePalette.IsSort, Converter={StaticResource ResourceKey=@Converter/SwitchSortImage}}"/>
+                    </StackPanel>
+                </Button>
             </Grid>
         </Border>
         <Separator

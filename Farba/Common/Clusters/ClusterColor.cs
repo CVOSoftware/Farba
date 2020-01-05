@@ -17,9 +17,6 @@ namespace Farba.Common.Clusters
         {
             Percent = percent;
             Color = Color.FromArgb(ALPHA, (byte)r, (byte)g, (byte)b);
-            Brush = Color.GetBrash();
-            Hex = Color.HexFormat();
-            Rgb = Color.RgbFormat();
         }
 
         #endregion
@@ -30,11 +27,11 @@ namespace Farba.Common.Clusters
 
         public Color Color { get; }
 
-        public SolidColorBrush Brush { get; }
+        public SolidColorBrush Brush { get; set; }
 
-        public string Hex { get; }
+        public string Hex { get; set; }
 
-        public string Rgb { get; }
+        public string Rgb { get; set; }
 
         #endregion
     }

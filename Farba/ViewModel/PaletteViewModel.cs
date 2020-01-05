@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -26,6 +27,8 @@ namespace Farba.ViewModel
 
         private bool isSort;
 
+        private bool paletteListIsEmpty;
+
         private string colorCombination;
 
         private ColorSpaceType colorSpaceType;
@@ -46,10 +49,12 @@ namespace Farba.ViewModel
         {
             isProcess = true;
             isSort = true;
+            paletteListIsEmpty = false;
             FileName = fileName;
             ColorSpaceType = ColorSpaceType.HEX;
             ColorDifferenceType = ColorDifferenceType.CIE76;
             colorCombinationType = ColorCombinationType.Square;
+            Id = Guid.NewGuid();
             Image = image;
             cluster = null;
             colorCombinatinList = null;
@@ -65,10 +70,22 @@ namespace Farba.ViewModel
 
         #region ViewModelProperties
 
+        public bool IsSort
+        {
+            get => isSort;
+            set => SetValue(ref isSort, value);
+        }
+
         public bool IsProcess
         {
             get => isProcess;
             set => SetValue(ref isProcess, value);
+        }
+
+        public bool PaletteListIsEmpty
+        {
+            get => paletteListIsEmpty;
+            set => SetValue(ref paletteListIsEmpty, value);
         }
 
         public string FileName { get; }
@@ -104,6 +121,8 @@ namespace Farba.ViewModel
                 }
             }
         }
+
+        public Guid Id { get; }
 
         public ColorCombinationType ColorCombinationType
         {
@@ -144,10 +163,10 @@ namespace Farba.ViewModel
             ColorCombinationList.Reverse();
             ColorCombinationList = ColorCombinationList.OrderByDescending(
                 combinationItem => ColorCombinationList.Count(
-                    _ => isSort ? _.BrushTwo == combinationItem.BrushTwo 
+                    _ => IsSort ? _.BrushTwo == combinationItem.BrushTwo 
                                 : _.BrushOne == combinationItem.BrushOne)).ToList();
 
-            isSort = !isSort;
+            IsSort = !IsSort;
         }
 
         #endregion
@@ -156,12 +175,30 @@ namespace Farba.ViewModel
 
         private bool CanSortColor(object param)
         {
-            return ColorCombinationList != null;
+            return IsProcess
+                   && ColorCombinationList != null;
+        }
+
+        #endregion
+
+        #region
+
+        public void StartProcess()
+        {
+            IsProcess = false;
+            PaletteListIsEmpty = false;
+            Clear();
         }
 
         #endregion
 
         #region Private
+
+        private void Clear()
+        {
+            Cluster = null;
+            ColorCombinationList = null;
+        }
 
         private BaseColorDifference GetColorDiffAlgorithm(Color colorOne, Color colorTwo)
         {
@@ -186,10 +223,13 @@ namespace Farba.ViewModel
 
         private void SetColorDifferenceValue()
         {
-            foreach (var colorComb in ColorCombinationList)
+            if (ColorCombinationList != null)
             {
-                var colorDifferenceAlgorithm = GetColorDiffAlgorithm(colorComb.ColorOne, colorComb.ColorTwo);
-                colorComb.Difference = colorDifferenceAlgorithm.CalculateTheDifference();
+                foreach (var colorComb in ColorCombinationList)
+                {
+                    var colorDifferenceAlgorithm = GetColorDiffAlgorithm(colorComb.ColorOne, colorComb.ColorTwo);
+                    colorComb.Difference = colorDifferenceAlgorithm.CalculateTheDifference();
+                }
             }
         }
 

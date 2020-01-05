@@ -9,7 +9,7 @@
     <Style x:Key="@Style/Border/Counter/ImageViewer" TargetType="{x:Type Border}" BasedOn="{StaticResource ResourceKey=@Style/Border/Counter}">
         <Setter Property="Background" Value="{StaticResource ResourceKey=@SolidColorBrush/MegaGray}"/>
         <Style.Triggers>
-            <DataTrigger Binding="{Binding IsNotActivePalette}" Value="False">
+            <DataTrigger Binding="{Binding IsNotSelectActivePalette}" Value="False">
                 <Setter Property="Visibility" Value="Hidden"/>
             </DataTrigger>
         </Style.Triggers>
@@ -18,10 +18,10 @@
     <Style x:Key="@Style/Border/Counter/ColorCombination" TargetType="{x:Type Border}" BasedOn="{StaticResource ResourceKey=@Style/Border/Counter}">
         <Setter Property="Background" Value="{StaticResource ResourceKey=@SolidColorBrush/Blue}"/>
         <Style.Triggers>
-            <DataTrigger Binding="{Binding IsNotActivePalette}" Value="False">
+            <DataTrigger Binding="{Binding ActivePalette.PaletteListIsEmpty}" Value="False">
                 <Setter Property="Visibility" Value="Hidden"/>
             </DataTrigger>
-            <DataTrigger Binding="{Binding ActivePalette.IsProcess}" Value="True">
+            <DataTrigger Binding="{Binding IsNotSelectActivePalette}" Value="False">
                 <Setter Property="Visibility" Value="Hidden"/>
             </DataTrigger>
         </Style.Triggers>
@@ -87,10 +87,10 @@
 
     <Style x:Key="@Style/Button/Sort" TargetType="{x:Type Button}" BasedOn="{StaticResource ResourceKey=@Style/Button}">
         <Style.Triggers>
-            <DataTrigger Binding="{Binding IsNotActivePalette}" Value="False">
+            <DataTrigger Binding="{Binding ActivePalette.PaletteListIsEmpty}" Value="False">
                 <Setter Property="Visibility" Value="Hidden"/>
             </DataTrigger>
-            <DataTrigger Binding="{Binding ActivePalette.IsProcess}" Value="True">
+            <DataTrigger Binding="{Binding IsNotSelectActivePalette}" Value="False">
                 <Setter Property="Visibility" Value="Hidden"/>
             </DataTrigger>
         </Style.Triggers>
@@ -600,13 +600,16 @@
             <Style x:Key="@Border/Preview" TargetType="{x:Type Border}" BasedOn="{StaticResource ResourceKey=@Border/Common}">
                 <Setter Property="Width" Value="10"/>
                 <Setter Property="Height" Value="10"/>
-                <Setter Property="Margin" Value="0,0,5,0"/>
             </Style>
             <Style x:Key="@Border/Preview/BrushOne" TargetType="{x:Type Border}" BasedOn="{StaticResource ResourceKey=@Border/Preview}">
                 <Setter Property="Background" Value="{Binding BrushOne}"/>
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+                <Setter Property="Margin" Value="0,0,5,0"/>
             </Style>
             <Style x:Key="@Border/Preview/BrushTwo" TargetType="{x:Type Border}" BasedOn="{StaticResource ResourceKey=@Border/Preview}">
                 <Setter Property="Background" Value="{Binding BrushTwo}"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+                <Setter Property="Margin" Value="5,0,0,0"/>
             </Style>
             <Style x:Key="@Border/Bottom/BorderInfo" TargetType="{x:Type Border}">
                 <Setter Property="Background" Value="{StaticResource ResourceKey=@SolidColorBrush/DoubleGray30}"/>
@@ -635,9 +638,11 @@
             </Style>
             <Style x:Key="@Text/Center/One" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ResourceKey=@Text/Center}">
                 <Setter Property="Text" Value="{Binding ColorSpaceOne}"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
             </Style>
             <Style x:Key="@Text/Center/Two" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ResourceKey=@Text/Center}">
                 <Setter Property="Text" Value="{Binding ColorSpaceTwo}"/>
+                <Setter Property="HorizontalAlignment" Value="Right"/>
             </Style>
             <DataTemplate x:Key="@DataTemplate/Square">
                 <DataTemplate.Resources>
@@ -676,17 +681,27 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" Style="{StaticResource ResourceKey=@StackPanel/CentralOrientation}">
-                                    <Border x:Name="BorderOneInfo" Style="{StaticResource ResourceKey=@Border/Preview/BrushOne}"/>
-                                    <TextBlock x:Name="TextOne" Style="{StaticResource ResourceKey=@Text/Center/One}"/>
-                                </StackPanel>
+                                <Grid Grid.Column="0"
+                                      VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="0" x:Name="BorderOneInfo" Style="{StaticResource ResourceKey=@Border/Preview/BrushOne}"/>
+                                    <TextBlock Grid.Column="1" x:Name="TextOne" Style="{StaticResource ResourceKey=@Text/Center/One}"/>
+                                </Grid>
                                 <Border x:Name="diffBorder" Grid.Column="1" Style="{StaticResource ResourceKey=@Border/ColorDifference}">
                                     <TextBlock x:Name="Diff" Style="{StaticResource @Text/HVCenter}" Text="{Binding Difference}"/>
                                 </Border>
-                                <StackPanel Grid.Column="2" Style="{StaticResource ResourceKey=@StackPanel/CentralOrientation}">
-                                    <Border x:Name="BorderTwoInfo" Style="{StaticResource ResourceKey=@Border/Preview/BrushTwo}"/>
-                                    <TextBlock x:Name="TextTwo" Style="{StaticResource ResourceKey=@Text/Center/Two}"/>
-                                </StackPanel>
+                                <Grid Grid.Column="2"
+                                      VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" x:Name="TextTwo" Style="{StaticResource ResourceKey=@Text/Center/Two}"/>
+                                    <Border Grid.Column="1" x:Name="BorderTwoInfo" Style="{StaticResource ResourceKey=@Border/Preview/BrushTwo}"/>
+                                </Grid>
                             </Grid>
                         </Border>
                     </Grid>
@@ -755,17 +770,27 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" Style="{StaticResource ResourceKey=@StackPanel/CentralOrientation}">
-                                    <Border x:Name="BorderOneInfo" Style="{StaticResource ResourceKey=@Border/Preview/BrushOne}"/>
-                                    <TextBlock x:Name="TextOne" Style="{StaticResource ResourceKey=@Text/Center/One}"/>
-                                </StackPanel>
+                                <Grid Grid.Column="0"
+                                      VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="0" x:Name="BorderOneInfo" Style="{StaticResource ResourceKey=@Border/Preview/BrushOne}"/>
+                                    <TextBlock Grid.Column="1" x:Name="TextOne" Style="{StaticResource ResourceKey=@Text/Center/One}"/>
+                                </Grid>
                                 <Border x:Name="diffBorder" Grid.Column="1" Style="{StaticResource ResourceKey=@Border/ColorDifference}">
                                     <TextBlock x:Name="Diff" Style="{StaticResource @Text/HVCenter}" Text="{Binding Difference}"/>
                                 </Border>
-                                <StackPanel Grid.Column="2" Style="{StaticResource ResourceKey=@StackPanel/CentralOrientation}">
-                                    <Border x:Name="BorderTwoInfo" Style="{StaticResource ResourceKey=@Border/Preview/BrushTwo}"/>
-                                    <TextBlock x:Name="TextTwo" Style="{StaticResource ResourceKey=@Text/Center/Two}"/>
-                                </StackPanel>
+                                <Grid Grid.Column="2"
+                                      VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" x:Name="TextTwo" Style="{StaticResource ResourceKey=@Text/Center/Two}"/>
+                                    <Border Grid.Column="1" x:Name="BorderTwoInfo" Style="{StaticResource ResourceKey=@Border/Preview/BrushTwo}"/>
+                                </Grid>
                             </Grid>
                         </Border>
                     </Grid>

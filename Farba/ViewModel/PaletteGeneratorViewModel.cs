@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
-using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Farba.ViewModel.Base;
 using Farba.Helper;
 using Farba.Common.Clusters;
+using Farba.Extension;
 
 namespace Farba.ViewModel
 { 
@@ -30,7 +32,7 @@ namespace Farba.ViewModel
 
         #region ViewModelFields
 
-        private bool isNotActivePalette;
+        private bool isNotSelectActivePalette;
 
         private int imageViewerTab;
         
@@ -50,7 +52,7 @@ namespace Farba.ViewModel
         {
             palettes = new ObservableCollection<PaletteViewModel>();
             activePalette = null;
-            isNotActivePalette = false;
+            isNotSelectActivePalette = false;
             imageViewerTab = 0;
             imageViewerConter = string.Empty;
             combination = null;
@@ -64,7 +66,7 @@ namespace Farba.ViewModel
 
         public ICommand CreatePaletteCommand => RelayCommand.Register(ref createPaletteCommand, OnCreatePalette, CanCreatePalette);
 
-        public ICommand RemovePaletteCommand => RelayCommand.Register(ref removePaletteCommand, OmRemovePalette, CanRemovePalette);
+        public ICommand RemovePaletteCommand => RelayCommand.Register(ref removePaletteCommand, OnRemovePalette, CanRemovePalette);
 
         public ICommand PrevImageCommand => RelayCommand.Register(ref prevImageCommand, OnPrevImage, CanPrevImage);
 
@@ -76,10 +78,10 @@ namespace Farba.ViewModel
 
         #region ViewModelProperties
 
-        public bool IsNotActivePalette
+        public bool IsNotSelectActivePalette
         {
-            get => isNotActivePalette;
-            set => SetValue(ref isNotActivePalette, value);
+            get => isNotSelectActivePalette;
+            set => SetValue(ref isNotSelectActivePalette, value);
         }
 
         public ObservableCollection<PaletteViewModel> Palettes
@@ -119,6 +121,7 @@ namespace Farba.ViewModel
         private void OnSelectImage(object parameter)
         {
             var fileName = DialogWindowHelper.FileDialog(FileFilter.Images);
+
             if(fileName != string.Empty 
                && IsAddPalette(fileName))
             {
@@ -128,29 +131,26 @@ namespace Farba.ViewModel
                 Palettes.Add(palette);
                 ActivePalette = palette;
                 ImageViewerCounter = GetCurrentImageCountStringFormat();
-                if (IsNotActivePalette == false)
+
+                if (IsNotSelectActivePalette == false)
                 {
-                    IsNotActivePalette = true;
+                    IsNotSelectActivePalette = true;
                 }
             }
         }
         
-        private void OnCreatePalette(object parameter)
+        private async void OnCreatePalette(object parameter)
         {
-            activePalette.IsProcess = false;
-            using (var kmeans = new Kmeans(activePalette.Image))
-            {
-                activePalette.Cluster = kmeans.GetClusters();
-                SetCombination();
-            }
+            activePalette.StartProcess();
+            await Task.Run(ClusteringProcess);
         }
 
-        private void OmRemovePalette(object parameter)
+        private void OnRemovePalette(object parameter)
         {
-            int count = palettes.Count;
+            var count = palettes.Count;
             if (count > 0)
             {
-                int index = palettes.IndexOf(activePalette);
+                var index = palettes.IndexOf(activePalette);
                 Palettes.Remove(activePalette);
                 count = palettes.Count;
                 if (count > 0)
@@ -163,7 +163,7 @@ namespace Farba.ViewModel
             
             if(count == 0)
             {
-                IsNotActivePalette = false;
+                IsNotSelectActivePalette = false;
             }
         }
 
@@ -210,7 +210,8 @@ namespace Farba.ViewModel
 
         private bool CanRemovePalette(object parameter)
         {
-            return palettes.Count > 0;
+            return palettes.Count > 0
+                   && ActivePalette.IsProcess;
         }
 
         private bool CanPrevImage(object parameter)
@@ -229,29 +230,61 @@ namespace Farba.ViewModel
 
         #endregion
 
-        #region Protected
+        #region Private
 
-        protected void SetCombination()
+        private void ClusteringProcess()
         {
-            var length = activePalette.Cluster.Count;
-            var combList = new List<ColorCombinationViewModel>();
-
-            for (var i = 0; i < length - 1; i++)
+            using (var kmeans = new Kmeans(activePalette.Image, activePalette.Id))
             {
-                for (var j = i + 1; j < length; j++)
+                var clusters = kmeans.GetClusters();
+
+                UIHelper.UpdateUI(() =>
                 {
-                    var cc = new ColorCombinationViewModel(activePalette.Cluster[i], activePalette.Cluster[j], activePalette.ColorSpaceType);
-                    combList.Add(cc);
-                }
+                    PostClusteringProcess(clusters, kmeans.Id);
+                    RelayCommand.RaiseCanExecuteChanged();
+                });
             }
-
-            var count = MathHelper.CombinationCount(length, 2);
-
-            activePalette.CombinationCount = count != -1 ? count.ToString() : string.Empty;
-            activePalette.ColorCombinationList = combList;
         }
 
-        protected bool IsAddPalette(string fileName)
+        private void PostClusteringProcess(List<ClusterColor> clusters, Guid id)
+        {
+            foreach (var cluster in clusters)
+            {
+                cluster.Hex = cluster.Color.HexFormat();
+                cluster.Rgb = cluster.Color.RgbFormat();
+                cluster.Brush = cluster.Color.GetBrash();
+            }
+
+            if (activePalette.Id == id)
+            {
+                activePalette.Cluster = clusters;
+                SetCombination(activePalette);
+            }
+            else
+            {
+                foreach (var palette in palettes)
+                {
+                    if (palette.Id == id)
+                    {
+                        palette.Cluster = clusters;
+                        SetCombination(palette);
+                    }
+                }
+            }
+        }
+
+        private void SetCombination(PaletteViewModel palette)
+        {
+            var combinationList = palette.IsSort ? DirectCombinationProcess(palette) 
+                                                 : BackCombinationProcess(palette);
+
+            palette.CombinationCount = combinationList.Count.ToString();
+            palette.ColorCombinationList = combinationList;
+            palette.PaletteListIsEmpty = true;
+            palette.IsProcess = true;
+        }
+
+        private bool IsAddPalette(string fileName)
         {
             var palettesCount = palettes.Count;
 
@@ -273,7 +306,7 @@ namespace Farba.ViewModel
             return true;
         }
 
-        protected string GetCurrentImageCountStringFormat()
+        private string GetCurrentImageCountStringFormat()
         {
             var palettesCount = palettes.Count;
 
@@ -290,6 +323,38 @@ namespace Farba.ViewModel
                     return $"{current}/{palettesCount}";
                 }
             }
+        }
+
+        private List<ColorCombinationViewModel> DirectCombinationProcess(PaletteViewModel palette)
+        {
+            var combinationList = new List<ColorCombinationViewModel>();
+
+            for (var i = 0; i < palette.Cluster.Count - 1; i++)
+            {
+                for (var j = i + 1; j < palette.Cluster.Count; j++)
+                {
+                    var cc = new ColorCombinationViewModel(palette.Cluster[i], palette.Cluster[j], palette.ColorSpaceType);
+                    combinationList.Add(cc);
+                }
+            }
+
+            return combinationList;
+        }
+
+        private List<ColorCombinationViewModel> BackCombinationProcess(PaletteViewModel palette)
+        {
+            var combinationList = new List<ColorCombinationViewModel>();
+
+            for (var i = palette.Cluster.Count - 1; i >= 0; i--)
+            {
+                for (var j = i - 1; j >= 0; j--)
+                {
+                    var cc = new ColorCombinationViewModel(palette.Cluster[j], palette.Cluster[i], palette.ColorSpaceType);
+                    combinationList.Add(cc);
+                }
+            }
+
+            return combinationList;
         }
 
         #endregion

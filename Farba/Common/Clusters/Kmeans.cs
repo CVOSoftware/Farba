@@ -33,8 +33,9 @@ namespace Farba.Common.Clusters
 
         #region Constructor
 
-        public Kmeans(BitmapImage bitmapImage)
+        public Kmeans(BitmapImage bitmapImage, Guid id)
         {
+            Id = id;
             Clusters = new List<Cluster>(CLUSTER_COUNT);
             BitmapData = ConvertBitmapIMageToBitmap(bitmapImage);
         }
@@ -50,6 +51,8 @@ namespace Farba.Common.Clusters
             SortClusters();
             return ConvertClusters();
         }
+
+        public Guid Id { get; }
 
         #endregion
 

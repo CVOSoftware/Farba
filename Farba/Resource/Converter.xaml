@@ -12,6 +12,7 @@
     <c:AdaptiveWidthConverter x:Key="@Converter/AdaptiveWidthConverter"/>
     <c:AdaptiveHeightConverter x:Key="@Converter/AdaptiveHeightConverter"/>
     <c:ColorCombinationTypeConveter x:Key="@Converter/ColorCombinationTypeConverter"/>
+    <c:SwitchImageConverter x:Key="@Converter/SwitchSortImage" First="{StaticResource ResourceKey=@Image/Up}" Second="{StaticResource ResourceKey=@Image/Down}" />
     <c:SwitchImageConverter x:Key="@Converter/SwitchSquareImage" First="{StaticResource ResourceKey=@Image/Square}" Second="{StaticResource ResourceKey=@Image/SquareFill}" />
     <c:SwitchImageConverter x:Key="@Converter/SwitchCircleImage" First="{StaticResource ResourceKey=@Image/Circle}" Second="{StaticResource ResourceKey=@Image/CircleFill}" />
 
