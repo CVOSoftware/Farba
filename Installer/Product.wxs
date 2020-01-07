@@ -29,6 +29,8 @@
 			<ComponentGroupRef Id="ProductComponents" />
       <ComponentRef Id="ApplicationShortcut"/>
       <ComponentRef Id="ApplicationDesktopShortcut"/>
+      <ComponentRef Id="ApplicationUninstallMenuFolderShortcut"/>
+      <ComponentRef Id="ApplicationUninstallInstallFolderShortcut"/>
 		</Feature>
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
     <UIRef Id="WixUI_InstallDir"/>
@@ -78,11 +80,6 @@
           Target="[INSTALLFOLDER]Farba.exe"
           WorkingDirectory="INSTALLFOLDER"
           Icon="MyShortcutIcon"/>
-        <Shortcut Id="UninstallProduct"             
-                  Name="Uninstall"
-                  Description="Uninstall Farba"
-                  Target="[SystemFolder]msiexec.exe"
-                  Arguments="/x [ProductCode]"/>
         <RemoveFolder
           Id="RemoveMfgStartMenuFolder"
           Directory="MfgStartMenuFolder"
@@ -113,6 +110,44 @@
           Root="HKCU"
           Key="Software\Farba\DesktopShortcut"
           Name="installed"
+          Type="integer"
+          Value="1"
+          KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Component Id="ApplicationUninstallInstallFolderShortcut" Guid="498dd725-dd5e-4074-b4b1-472705741071">
+        <Shortcut Id="UninstallProduct"             
+                  Name="Uninstall"
+                  Description="Uninstall Farba"
+                  Target="[SystemFolder]msiexec.exe"
+                  Arguments="/x [ProductCode]"/>
+        <RegistryValue
+          Root="HKCU"
+          Key="Software\Farba\InstallFolder"
+          Name="Uninstall"
+          Type="integer"
+          Value="1"
+          KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="MfgStartMenuFolder">
+      <Component Id="ApplicationUninstallMenuFolderShortcut" Guid="8f75df2e-02f0-4ccf-81b0-5c6f5513d66e">
+        <Shortcut Id="UninstallProduct1"             
+                  Name="Uninstall"
+                  Description="Uninstall Farba"
+                  Target="[SystemFolder]msiexec.exe"
+                  Arguments="/x [ProductCode]"/>
+        <RegistryValue
+          Root="HKCU"
+          Key="Software\Farba\ProgramMenuShortcut"
+          Name="Uninstall"
           Type="integer"
           Value="1"
           KeyPath="yes"/>
