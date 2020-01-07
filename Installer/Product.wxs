@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <?define ProductCode="b7eccc43-ace9-480e-9d6B-f9ba14fba94c" ?>
+  <?define ProductName="Farba" ?>
+  <?define Language="1033" ?>
+  <?define ProductVersion="1.0.0.0" ?>
+  <?define Manufacturer="CVOSoftware" ?>
+  <?define UpgradeCode="c61d4bb1-76af-49ea-a681-201a9df157d7" ?>
+
+  <Product 
+    Id="$(var.ProductCode)" 
+    Name="$(var.ProductName)" 
+    Language="$(var.Language)" 
+    Version="$(var.ProductVersion)" 
+    Manufacturer="$(var.Manufacturer)" 
+    UpgradeCode="$(var.UpgradeCode)">
+
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes"/>
+
+    <Icon Id="MyShortcutIcon" SourceFile="$(var.ProjectDir)Resource\Icon.ico"/>
+    <Property Id="ARPPRODUCTION" Value="MyShortcutIcon"/>
+
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)Resource\LICENSE.rtf"/>
+
+    <Feature Id="ProductFeature" Title="$(var.ProductName)" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+      <ComponentRef Id="ApplicationShortcut"/>
+      <ComponentRef Id="ApplicationDesktopShortcut"/>
+		</Feature>
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <UIRef Id="WixUI_InstallDir"/>
+
+  </Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="$(var.ProductName)" />
+			</Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="MfgStartMenuFolder" Name="$(var.ProductName)"/>
+      </Directory>
+      <Directory Id="DesktopFolder" Name="Desktop" />
+    </Directory>
+  </Fragment>
+
+  <?define MEI="Microsoft.Expression.Interactions.dll" ?>
+  <?define SWI="System.Windows.Interactivity.dll" ?>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="Farba.exe" Guid="ffeafa46-1880-4e89-8043-30bb6e61590b">
+        <File Id="Farba.exe" Name="Farba.exe" Source="$(var.Farba.TargetDir)Farba.exe" KeyPath="yes" />
+      </Component>
+      <Component Id="Farba.exe.config" Guid="1b101fb2-1a3a-4783-a8b2-70ca56b85312">
+        <File Id="Farba.exe.config" Name="Farba.exe.config" Source="$(var.Farba.TargetDir)Farba.exe.config" KeyPath="yes" />
+      </Component>
+      <Component Id="$(var.MEI)" Guid="6425a228-f797-4d94-b7c8-54f4a5a5de2a">
+        <File Id="$(var.MEI)" Name="$(var.MEI)" Source="$(var.Farba.TargetDir)$(var.MEI)" KeyPath="yes" />
+      </Component>
+      <Component Id="$(var.SWI)" Guid="c3ba04ba-181b-467d-9cf0-b2e07cce363e">
+        <File Id="$(var.SWI)" Name="$(var.SWI)" Source="$(var.Farba.TargetDir)$(var.SWI)" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+	</Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="MfgStartMenuFolder">
+      <Component Id="ApplicationShortcut" Guid="b53d45f5-76bf-4b0a-87cf-4ed4e018b3e6">
+        <Shortcut
+          Id="ApplicationStartMenuShortcut"
+          Name="$(var.ProductName)"
+          Description="$(var.ProductName)"
+          Directory="MfgStartMenuFolder"
+          Target="[INSTALLFOLDER]Farba.exe"
+          WorkingDirectory="INSTALLFOLDER"
+          Icon="MyShortcutIcon"/>
+        <Shortcut Id="UninstallProduct"             
+                  Name="Uninstall"
+                  Description="Uninstall Farba"
+                  Target="[SystemFolder]msiexec.exe"
+                  Arguments="/x [ProductCode]"/>
+        <RemoveFolder
+          Id="RemoveMfgStartMenuFolder"
+          Directory="MfgStartMenuFolder"
+          On="uninstall"/>
+        <RegistryValue
+          Root="HKCU"
+          Key="Software\Farba\ProgramMenuShortcut"
+          Name="installed"
+          Type="integer"
+          Value="1"
+          KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="DesktopFolder">
+      <Component Id="ApplicationDesktopShortcut" Guid="b00b1508-a5c6-42e8-b634-882a8e140d94">
+        <Shortcut
+          Id="MyDesktopShortcut"
+          Name="$(var.ProductName)"
+          Description="$(var.ProductName)"
+          Directory="DesktopFolder"
+          Target="[INSTALLFOLDER]Farba.exe"
+          WorkingDirectory="INSTALLFOLDER"
+          Icon="MyShortcutIcon"/>
+        <RegistryValue
+          Root="HKCU"
+          Key="Software\Farba\DesktopShortcut"
+          Name="installed"
+          Type="integer"
+          Value="1"
+          KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+</Wix>
