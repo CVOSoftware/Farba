@@ -2,7 +2,7 @@
 
 namespace Farba.Common.ColorDifference.Base
 {
-    internal abstract class BaseColorDifference
+    public abstract class BaseColorDifference
     {
         protected bool IsNotCalculated { get; set; }
 

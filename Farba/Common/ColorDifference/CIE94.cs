@@ -5,7 +5,7 @@ using Farba.Extension;
 
 namespace Farba.Common.ColorDifference
 {
-    internal class CIE94 : BaseColorDifference
+    public class CIE94 : BaseColorDifference
     {
         private double Kl = 1;
 

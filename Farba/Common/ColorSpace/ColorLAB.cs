@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Farba.Common.ColorSpace
 {
-    internal struct ColorLAB
+    public struct ColorLAB
     {
         public double L { get; }
 

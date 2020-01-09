@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Farba.Common.ColorSpace
 {
-    internal struct ColorXYZ
+    public struct ColorXYZ
     {
         public double X { get; }
 
