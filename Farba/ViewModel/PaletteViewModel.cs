@@ -29,6 +29,8 @@ namespace Farba.ViewModel
 
         private bool paletteListIsEmpty;
 
+        private int scrollValue;
+
         private string colorCombination;
 
         private ColorSpaceType colorSpaceType;
@@ -49,6 +51,9 @@ namespace Farba.ViewModel
         {
             isProcess = true;
             isSort = true;
+            scrollValue = 5;
+            ScrollMinimum = 2;
+            ScrollMaximum = 8;
             paletteListIsEmpty = false;
             FileName = fileName;
             ColorSpaceType = ColorSpaceType.HEX;
@@ -86,6 +91,16 @@ namespace Farba.ViewModel
         {
             get => paletteListIsEmpty;
             set => SetValue(ref paletteListIsEmpty, value);
+        }
+
+        public int ScrollMinimum { get; private set; }
+
+        public int ScrollMaximum { get; private set; }
+
+        public int ScrollValue
+        {
+            get => scrollValue;
+            set => SetValue(ref scrollValue, value);
         }
 
         public string FileName { get; }
@@ -163,7 +178,7 @@ namespace Farba.ViewModel
             ColorCombinationList.Reverse();
             ColorCombinationList = ColorCombinationList.OrderByDescending(
                 combinationItem => ColorCombinationList.Count(
-                    _ => IsSort ? _.BrushTwo == combinationItem.BrushTwo 
+                    _ => IsSort ? _.BrushTwo == combinationItem.BrushTwo
                                 : _.BrushOne == combinationItem.BrushOne)).ToList();
 
             IsSort = !IsSort;

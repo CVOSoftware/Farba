@@ -118,6 +118,8 @@
     <Compile Include="Common\ColorDifference\CIE94.cs" />
     <Compile Include="Common\ColorSpace\ColorLAB.cs" />
     <Compile Include="Common\ColorSpace\ColorXYZ.cs" />
+    <Compile Include="Common\Export\Base\IExport.cs" />
+    <Compile Include="Common\Export\ExportToHtml.cs" />
     <Compile Include="Enum\ColorCombinationType.cs" />
     <Compile Include="Enum\ColorDifferenceType.cs" />
     <Compile Include="Enum\ColorSpaceType.cs" />
@@ -311,5 +313,6 @@
     <Resource Include="Resource\Image\Up.ico" />
     <Resource Include="Resource\Image\Down.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

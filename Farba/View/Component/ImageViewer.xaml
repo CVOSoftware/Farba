@@ -57,6 +57,11 @@
                             Command="{Binding RemovePaletteCommand}"
                             Content="{StaticResource ResourceKey=@String/DeleteButton}"
                             Style="{StaticResource ResourceKey=@Style/Button}" />
+                        <Button
+                            Margin="5,10,5,10"
+                            Command="{Binding ExportPaletteCommand}"
+                            Content="{StaticResource ResourceKey=@String/ExportButton}"
+                            Style="{StaticResource ResourceKey=@Style/Button}" />
                     </StackPanel>
                     <Border
                         Grid.Column="1"

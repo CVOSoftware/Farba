@@ -1,26 +1,34 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.IO;
+using System.Reflection;
 using Farba.ViewModel.Base;
 using Farba.Helper;
 using Farba.Common.Clusters;
+using Farba.Common.Export;
 using Farba.Extension;
 
 namespace Farba.ViewModel
-{ 
+{
     class PaletteGeneratorViewModel : BaseViewModel
     {
         #region CommandFields
+
+        private RelayCommand referenceCommand;
 
         private RelayCommand selectImageCommand;
 
         private RelayCommand createPaletteCommand;
 
         private RelayCommand removePaletteCommand;
+
+        private RelayCommand exportPaletteCommand;
 
         private RelayCommand switchFirstTabImageViewerCommand;
 
@@ -35,7 +43,7 @@ namespace Farba.ViewModel
         private bool isNotSelectActivePalette;
 
         private int imageViewerTab;
-        
+
         private string imageViewerConter;
 
         private PaletteViewModel activePalette;
@@ -62,11 +70,15 @@ namespace Farba.ViewModel
 
         #region CommandProperties
 
+        public ICommand ReferenceCommand => RelayCommand.Register(ref referenceCommand, OnReference);
+
         public ICommand SelectImageCommand => RelayCommand.Register(ref selectImageCommand, OnSelectImage);
 
         public ICommand CreatePaletteCommand => RelayCommand.Register(ref createPaletteCommand, OnCreatePalette, CanCreatePalette);
 
         public ICommand RemovePaletteCommand => RelayCommand.Register(ref removePaletteCommand, OnRemovePalette, CanRemovePalette);
+
+        public ICommand ExportPaletteCommand => RelayCommand.Register(ref exportPaletteCommand, OnExportPalette, CanExportPalette);
 
         public ICommand PrevImageCommand => RelayCommand.Register(ref prevImageCommand, OnPrevImage, CanPrevImage);
 
@@ -82,6 +94,18 @@ namespace Farba.ViewModel
         {
             get => isNotSelectActivePalette;
             set => SetValue(ref isNotSelectActivePalette, value);
+        }
+
+        public int ImageViewerTab
+        {
+            get => imageViewerTab;
+            set => SetValue(ref imageViewerTab, value);
+        }
+
+        public string ImageViewerCounter
+        {
+            get => imageViewerConter;
+            set => SetValue(ref imageViewerConter, value);
         }
 
         public ObservableCollection<PaletteViewModel> Palettes
@@ -101,35 +125,41 @@ namespace Farba.ViewModel
             get => combination;
             set => SetValue(ref combination, value);
         }
-        
-        public int ImageViewerTab
-        {
-            get => imageViewerTab;
-            set => SetValue(ref imageViewerTab, value);
-        }
-        
-        public string ImageViewerCounter
-        {
-            get => imageViewerConter;
-            set => SetValue(ref imageViewerConter, value);
-        }
-        
+
         #endregion
 
         #region CommandExecuteMethods
 
+        private void OnReference(object parameter)
+        {
+            try
+            {
+                var location = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var referencePath = Path.Combine(location, "Reference.chm");
+
+                Process.Start(referencePath);
+            }
+            catch
+            {
+                DialogWindowHelper.MessageInfoDialog("Справка не может быть вызвана");
+            }
+        }
+
         private void OnSelectImage(object parameter)
         {
-            var fileName = DialogWindowHelper.FileDialog(FileFilter.Images);
+            var fileNames = DialogWindowHelper.FileDialog(FileFilter.Images, multiSelect: true);
 
-            if(fileName != string.Empty 
-               && IsAddPalette(fileName))
+            if (fileNames != null && IsAddPalette(fileNames))
             {
-                var uri = new Uri(fileName);
-                var image = new BitmapImage(uri);
-                var palette = new PaletteViewModel(fileName, image);
-                Palettes.Add(palette);
-                ActivePalette = palette;
+                foreach (var fileName in fileNames)
+                {
+                    var uri = new Uri(fileName);
+                    var image = new BitmapImage(uri);
+                    var palette = new PaletteViewModel(fileName, image);
+                    Palettes.Add(palette);
+                }
+
+                ActivePalette = Palettes.Last();
                 ImageViewerCounter = GetCurrentImageCountStringFormat();
 
                 if (IsNotSelectActivePalette == false)
@@ -138,7 +168,7 @@ namespace Farba.ViewModel
                 }
             }
         }
-        
+
         private async void OnCreatePalette(object parameter)
         {
             activePalette.StartProcess();
@@ -160,10 +190,28 @@ namespace Farba.ViewModel
                 }
                 ImageViewerCounter = GetCurrentImageCountStringFormat();
             }
-            
-            if(count == 0)
+
+            if (count == 0)
             {
                 IsNotSelectActivePalette = false;
+            }
+        }
+
+        private void OnExportPalette(object parameter)
+        {
+            var selectedPath = DialogWindowHelper.FolderBrowseDialog();
+
+            if (selectedPath != null)
+            {
+                var exportTitle = $"Farba {DateTime.Now:MM-dd-yyyy hh-mm-ss}.html";
+
+                selectedPath = Path.Combine(selectedPath, exportTitle);
+
+                var exportWorker = new ExportToHtml(selectedPath, ActivePalette);
+                var exportMessage = $"Данные экспортированны в {selectedPath}";
+
+                exportWorker.Export();
+                DialogWindowHelper.MessageInfoDialog(exportMessage);
             }
         }
 
@@ -182,7 +230,7 @@ namespace Farba.ViewModel
         {
             int count = palettes.Count,
                 index = palettes.IndexOf(activePalette);
-            if(count > 1 && index != 0)
+            if (count > 1 && index != 0)
             {
                 ActivePalette = palettes[index - 1];
             }
@@ -204,28 +252,35 @@ namespace Farba.ViewModel
 
         private bool CanCreatePalette(object parameter)
         {
-            return activePalette != null
-                   && activePalette.IsProcess == true; 
+            return ActivePalette != null
+                   && ActivePalette.IsProcess == true;
         }
 
         private bool CanRemovePalette(object parameter)
         {
-            return palettes.Count > 0
+            return Palettes.Count > 0
                    && ActivePalette.IsProcess;
+        }
+
+        private bool CanExportPalette(object parameter)
+        {
+            return Palettes.Count > 0
+                   && ActivePalette.IsProcess
+                   && ActivePalette.PaletteListIsEmpty;
         }
 
         private bool CanPrevImage(object parameter)
         {
-            return palettes.Count > 1
-                   && palettes[0] != activePalette;
+            return Palettes.Count > 1
+                   && Palettes[0] != ActivePalette;
         }
 
         private bool CanNextImage(object parameter)
         {
-            var palettesCount = palettes.Count;
+            var palettesCount = Palettes.Count;
 
             return palettesCount > 1
-                   && palettes[palettesCount - 1] != activePalette;
+                   && Palettes[palettesCount - 1] != ActivePalette;
         }
 
         #endregion
@@ -234,7 +289,7 @@ namespace Farba.ViewModel
 
         private void ClusteringProcess()
         {
-            using (var kmeans = new Kmeans(activePalette.Image, activePalette.Id))
+            using (var kmeans = new Kmeans(ActivePalette.Image, ActivePalette.Id, ActivePalette.ScrollValue))
             {
                 var clusters = kmeans.GetClusters();
 
@@ -275,7 +330,7 @@ namespace Farba.ViewModel
 
         private void SetCombination(PaletteViewModel palette)
         {
-            var combinationList = palette.IsSort ? DirectCombinationProcess(palette) 
+            var combinationList = palette.IsSort ? DirectCombinationProcess(palette)
                                                  : BackCombinationProcess(palette);
 
             palette.CombinationCount = combinationList.Count.ToString();
@@ -284,26 +339,44 @@ namespace Farba.ViewModel
             palette.IsProcess = true;
         }
 
-        private bool IsAddPalette(string fileName)
+        private bool IsAddPalette(string[] fileNames)
         {
-            var palettesCount = palettes.Count;
-
-            if (palettesCount == 0)
+            if (Palettes.Count == 0)
             {
                 return true;
             }
 
-            for (var i = 0; i < palettesCount; i++)
+            var filterFileNames = new List<string>();
+
+            for (var i = 0; i < fileNames.Length; i++)
             {
-                if (palettes[i].FileName != fileName)
+                var isSearch = false;
+
+                for (var j = 0; j < Palettes.Count; j++)
+                {
+                    if (fileNames[i] == Palettes[j].FileName)
+                    {
+                        isSearch = true;
+                        break;
+                    }
+                }
+
+                if (isSearch)
                 {
                     continue;
                 }
 
-                return false;
+                filterFileNames.Add(fileNames[i]);
             }
 
-            return true;
+            if (filterFileNames.Count > 0)
+            {
+                fileNames = filterFileNames.ToArray();
+
+                return true;
+            }
+
+            return false;
         }
 
         private string GetCurrentImageCountStringFormat()
@@ -317,11 +390,11 @@ namespace Farba.ViewModel
                 case 1:
                     return palettesCount.ToString();
                 default:
-                {
-                    var current = palettes.IndexOf(activePalette) + 1;
+                    {
+                        var current = palettes.IndexOf(activePalette) + 1;
 
-                    return $"{current}/{palettesCount}";
-                }
+                        return $"{current}/{palettesCount}";
+                    }
             }
         }
 

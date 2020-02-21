@@ -7,10 +7,15 @@
     <system:String x:Key="@String/SelectButton">Select image</system:String>
     <system:String x:Key="@String/ProcessButton">Process</system:String>
     <system:String x:Key="@String/DeleteButton">Delete</system:String>
+    <system:String x:Key="@String/ExportButton">Export</system:String>
     <system:String x:Key="@String/PrevButton">Prev</system:String>
     <system:String x:Key="@String/NextButton">Next</system:String>
     <system:String x:Key="@String/TabView">View</system:String>
     <system:String x:Key="@String/TabImages">Images</system:String>
     <system:String x:Key="@String/CombinationTitle">Color combination</system:String>
+    <system:String x:Key="@String/ColorSpace">Space</system:String>
+    <system:String x:Key="@String/ColorDiff">Diff</system:String>
+    <system:String x:Key="@String/Sort">Sort</system:String>
+
 
 </ResourceDictionary>

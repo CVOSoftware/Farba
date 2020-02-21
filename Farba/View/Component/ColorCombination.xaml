@@ -84,7 +84,7 @@
                     Grid.Column="0"
                     Margin="0, 0, 10, 0"
                     VerticalAlignment="Center"
-                    Text="Space"/>
+                    Text="{StaticResource ResourceKey=@String/ColorSpace}"/>
                 <ComboBox
                     Grid.Column="1"
                     Width="150"
@@ -97,7 +97,7 @@
                     Grid.Column="2"
                     Margin="0, 0, 10, 0"
                     VerticalAlignment="Center"
-                    Text="Color diff"/>
+                    Text="{StaticResource ResourceKey=@String/ColorDiff}"/>
                 <ComboBox
                     Grid.Column="3"
                     Width="150"
@@ -107,11 +107,11 @@
                     ItemsSource="{Binding ActivePalette.ColorDifferenceTypeCollections, Converter={StaticResource ResourceKey=@Converter/EnumCollectionConverter}}"/>
                 <Button
                     Grid.Column="5"
-                    Width="63"
+                    Width="100"
                     Style="{StaticResource ResourceKey=@Style/Button/Sort}"
                     Command="{Binding ActivePalette.SortColorCommand}">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Sort" Margin="0, 0, 10, 0"/>
+                        <TextBlock Text="{StaticResource ResourceKey=@String/Sort}" Margin="0, 0, 10, 0"/>
                         <Image Width="10" Height="10" Source="{Binding ActivePalette.IsSort, Converter={StaticResource ResourceKey=@Converter/SwitchSortImage}}"/>
                     </StackPanel>
                 </Button>

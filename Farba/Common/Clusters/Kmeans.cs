@@ -11,8 +11,6 @@ namespace Farba.Common.Clusters
     {
         #region Const
 
-        private const int CLUSTER_COUNT = 5;
-
         private const int ITERATION_COUNT = 20;
 
         private const int SCALABLE_WIDTH = 200;
@@ -25,6 +23,8 @@ namespace Farba.Common.Clusters
 
         #region Fields
 
+        private int ClusterCount;
+
         private Bitmap BitmapData;
 
         private List<Cluster> Clusters;
@@ -33,10 +33,11 @@ namespace Farba.Common.Clusters
 
         #region Constructor
 
-        public Kmeans(BitmapImage bitmapImage, Guid id)
+        public Kmeans(BitmapImage bitmapImage, Guid id, int clusterCount)
         {
             Id = id;
-            Clusters = new List<Cluster>(CLUSTER_COUNT);
+            ClusterCount = clusterCount;
+            Clusters = new List<Cluster>(ClusterCount);
             BitmapData = ConvertBitmapIMageToBitmap(bitmapImage);
         }
 
@@ -84,7 +85,7 @@ namespace Farba.Common.Clusters
 
         private List<ClusterColor> ConvertClusters()
         {
-            var clusters = new List<ClusterColor>(CLUSTER_COUNT);
+            var clusters = new List<ClusterColor>(ClusterCount);
             var pixels = BitmapData.Height * BitmapData.Width;
 
             foreach (var cluster in Clusters)
@@ -104,7 +105,7 @@ namespace Farba.Common.Clusters
         private void IdentifyCenters()
         {
             var random = new Random();
-            for(var i = 0; i < CLUSTER_COUNT; i++)
+            for (var i = 0; i < ClusterCount; i++)
             {
                 var x = random.Next(0, BitmapData.Width);
                 var y = random.Next(0, BitmapData.Height);
@@ -125,14 +126,14 @@ namespace Farba.Common.Clusters
 
         private void Clustering()
         {
-            for(var i = 0; i < ITERATION_COUNT; i++)
+            for (var i = 0; i < ITERATION_COUNT; i++)
             {
-                for(var y = 0; y < BitmapData.Height; y++)
+                for (var y = 0; y < BitmapData.Height; y++)
                 {
-                    for(var x = 0; x < BitmapData.Width; x++)
+                    for (var x = 0; x < BitmapData.Width; x++)
                     {
-                        var distance = new double[CLUSTER_COUNT];
-                        for (var k = 0; k < CLUSTER_COUNT; k++)
+                        var distance = new double[ClusterCount];
+                        for (var k = 0; k < ClusterCount; k++)
                         {
                             distance[k] = EuclidDistance(Clusters[k].Centroid, BitmapData.GetPixel(x, y));
                         }
@@ -148,7 +149,7 @@ namespace Farba.Common.Clusters
         private int MinimumValueIndexSearch(double[] distance)
         {
             var index = 0;
-            for (int i = 0; i < CLUSTER_COUNT; i++)
+            for (int i = 0; i < ClusterCount; i++)
             {
                 if (distance[index] > distance[i])
                 {
@@ -160,10 +161,10 @@ namespace Farba.Common.Clusters
 
         private void CalculateCentroids(int iter)
         {
-            for (var i = 0; i < CLUSTER_COUNT; i++)
+            for (var i = 0; i < ClusterCount; i++)
             {
                 Clusters[i].Average();
-                if(iter < ITERATION_COUNT - 1)
+                if (iter < ITERATION_COUNT - 1)
                 {
                     Clusters[i].ClearVector();
                 }
@@ -172,10 +173,10 @@ namespace Farba.Common.Clusters
 
         private void SortClusters()
         {
-            for (var i = 0; i < CLUSTER_COUNT - 1; i++)
+            for (var i = 0; i < ClusterCount - 1; i++)
             {
                 var breakSort = false;
-                for (var j = 0; j < CLUSTER_COUNT - i - 1; j++)
+                for (var j = 0; j < ClusterCount - i - 1; j++)
                 {
                     if (Clusters[j + 1].Vector.Count <= Clusters[j].Vector.Count)
                     {
