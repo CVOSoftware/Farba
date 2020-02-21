@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.IO;
 using Farba.ViewModel;
@@ -18,7 +12,7 @@ namespace Farba.Common.Export
     {
         #region Field
 
-        private string Filename;
+        private string fileName;
 
         private string exportData;
 
@@ -30,7 +24,7 @@ namespace Farba.Common.Export
 
         public ExportToHtml(string filePath, PaletteViewModel palette)
         {
-            Filename = filePath;
+            fileName = filePath;
             Palette = palette;
         }
 
@@ -50,13 +44,12 @@ namespace Farba.Common.Export
 
         private void PrepareExportData()
         {
-            var data = Palette.Image.UriSource.AbsolutePath;
-            exportData = CreateDocument(Filename);
+            exportData = CreateDocument(fileName);
         }
 
         private void WriteToFile()
         {
-            using (var fileStream = new FileStream(Filename, FileMode.Create, FileAccess.Write))
+            using (var fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
             {
                 using (var streamWriter = new StreamWriter(fileStream))
                 {
@@ -67,7 +60,7 @@ namespace Farba.Common.Export
 
         #endregion
 
-        #region HTML Template
+        #region Template engine
 
         private string CreateDocument(string Title)
         {
@@ -228,8 +221,7 @@ namespace Farba.Common.Export
                 height: 30px;
                 border-radius: 15px;
                 margin:0 10px;
-            }
-            ";
+            }";
         }
 
         private string CreatePaletteInfo()
@@ -254,12 +246,11 @@ namespace Farba.Common.Export
             <div class=""palette-item"">
                 <div class=""palette-item__square"" style=""background: {hex};""></div>
                 <div>
-                    <div>Процент: {percent}%</div>
+                    <div>Percent: {percent}%</div>
                     <div>HEX: {hex}</div>
                     <div>RGB: {rgb}</div>
                 </div>
-            </div>
-            ";
+            </div>";
         }
 
         private string CreateImage()
@@ -281,9 +272,9 @@ namespace Farba.Common.Export
         {
             return $@"
             <div class=""setting"">
-                <div class=""setting-item"">Цветовое пространство: {Palette.ColorSpaceType.ToString()}</div>
-                <div class=""setting-item"">Цветовая разница: {Palette.ColorDifferenceType.ToString()}</div>
-                <div class=""setting-item"">Количество комбинаций: {Palette.CombinationCount}</div>
+                <div class=""setting-item"">Color space: {Palette.ColorSpaceType.ToString()}</div>
+                <div class=""setting-item"">Color diff: {Palette.ColorDifferenceType.ToString()}</div>
+                <div class=""setting-item"">Combination count: {Palette.CombinationCount}</div>
             </div>";
         }
 
