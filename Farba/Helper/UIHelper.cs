@@ -14,6 +14,7 @@ namespace Farba.Helper
             }
 
             var dispatcher = Application.Current.Dispatcher;
+
             if (dispatcher.CheckAccess())
             {
                 action();

@@ -31,19 +31,6 @@
                 </TabItem.Content>
             </TabItem>
             <TabItem 
-                Style="{StaticResource ResourceKey=@Style/TabItem}" 
-                DataContext="{Binding ColorConverterVM}">
-                <TabItem.Header>
-                    <Image
-                        Width="30"
-                        Height="30"
-                        Source="{StaticResource ResourceKey=@Image/Converter}" />
-                </TabItem.Header>
-                <TabItem.Content>
-                    <component:ColorConverter/>
-                </TabItem.Content>
-            </TabItem>
-            <TabItem 
                 Style="{StaticResource ResourceKey=@Style/TabItem}"
                 DataContext="{Binding PaletteListVM}">
                 <TabItem.Header>

@@ -225,7 +225,6 @@
     <Compile Include="ViewModel\ColorCombinationViewModel.cs" />
     <Compile Include="ViewModel\PaletteViewModel.cs" />
     <Compile Include="Resource\Converter\BrushConverter.cs" />
-    <Compile Include="ViewModel\ColorConverterViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\PaletteGeneratorViewModel.cs" />
     <Compile Include="View\Component\PaletteGeneratorMain.xaml.cs">

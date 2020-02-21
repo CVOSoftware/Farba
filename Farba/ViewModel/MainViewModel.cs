@@ -7,15 +7,12 @@ namespace Farba.ViewModel
         public MainViewModel()
         {
             PaletteGeneratorVM = new PaletteGeneratorViewModel();
-            ColorConverterVM = new ColorConverterViewModel();
             PaletteListVM = new PaletteListViewModel();
         }
 
         #region ViewModelProperties
 
         public PaletteGeneratorViewModel PaletteGeneratorVM { get; }
-
-        public ColorConverterViewModel ColorConverterVM { get; }
 
         public PaletteListViewModel PaletteListVM { get; }
 
