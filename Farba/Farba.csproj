@@ -212,6 +212,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Component\PaletteListSidebar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -235,6 +239,9 @@
     </Compile>
     <Compile Include="View\Component\PaletteList.xaml.cs">
       <DependentUpon>PaletteList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Component\PaletteListSidebar.xaml.cs">
+      <DependentUpon>PaletteListSidebar.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
