@@ -31,6 +31,7 @@
                 </TabItem.Content>
             </TabItem>
             <TabItem 
+                Visibility="Collapsed"
                 Style="{StaticResource ResourceKey=@Style/TabItem}"
                 DataContext="{Binding PaletteListVM}">
                 <TabItem.Header>

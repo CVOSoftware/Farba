@@ -42,7 +42,7 @@
                     Orientation="Horizontal"
                     HorizontalAlignment="Stretch">
                     <TextBlock 
-                        Text="Количество кластеров цвета"
+                        Text="Number of clusters"
                         VerticalAlignment="Center"
                         TextAlignment="Left"
                         Margin="0, 0, 31, 0"/>
