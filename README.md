@@ -15,7 +15,8 @@ To work correctly, it must be installed .NET Framework 4.7.2+ The program is dis
 * [Proposal to expand the functionality of the program](https://github.com/CVOSoftware/Farba/issues/new?assignees=CVOSoftware&labels=enhancement&template=FEATURE_REQUEST.md&title=%5BFeature%5D)
 
 ### Preview
+#####User interface
 ![Preview](https://github.com/CVOSoftware/Farba/blob/master/.github/RESOURCE/PREVIEW.png)
 
-##### Export received data as html pages
+#####Export received data as html pages
 ![Preview](https://github.com/CVOSoftware/Farba/blob/master/.github/RESOURCE/PREVIEW2.png)
